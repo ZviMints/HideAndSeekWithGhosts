@@ -4,33 +4,25 @@
  * @version 4.0
  */
 package myFrame;
-import java.awt.BasicStroke;
+
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.geom.Line2D;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Vector;
-
 import javax.swing.JPanel;
-
 import Fruit.Fruit;
 import Game.Game;
 import Geom.Point3D;
+import Ghost.Ghost;
 import Map.Map;
 import Pacman.Pacman;
-import Pacman.PacmanThread;
-import Path.Path;
+import Player.Player;
 import ShortestPathAlgo.Algo;
 
 public class GamePanel extends JPanel implements MouseListener{
-
+	private static final long serialVersionUID = 1L;
 	/* * * * * * * * * * * * * *  Initialization Variables * * * * * * * * * * * * * * * */
 	private List<Fruit> FruitsList; // All the Fruits
 	private List<Pacman> PacmansList; // All the Pacmans
@@ -43,7 +35,6 @@ public class GamePanel extends JPanel implements MouseListener{
 	private Image PacmanImage = Toolkit.getDefaultToolkit().getImage("./img/Pacman.png"); // Pacman image
 	private Image FruitImage = Toolkit.getDefaultToolkit().getImage("./img/Fruit.png"); // Fruit image
 	private Image GhostImage = Toolkit.getDefaultToolkit().getImage("./img/Ghost.png"); //  Ghost image
-	private boolean GotDamage = false;
 
 
 	/* * * * * * * * * * * * * * * * * *   Constructor * * * * * * * * * * * * * * * */
@@ -53,7 +44,7 @@ public class GamePanel extends JPanel implements MouseListener{
 		this.map = map;
 		FruitsList = this.game.getFruitList();
 		PacmansList = this.game.getPacmanList();
-		GhostsList = this.game.getGhostsList();
+		GhostsList = this.game.getGhostList();
 		addMouseListener(this); // Mouse Clicks
 		setFocusable(true);
 	}
@@ -63,7 +54,7 @@ public class GamePanel extends JPanel implements MouseListener{
 		super.paintComponent(g); // Reprint
 		g.drawImage(this.map.getBgImage() , 0, 0, map.getWidth(),map.getHeight(), this); // Regular Map
 		
-		if(GotDamage);
+		if(player != null && player.getInfo().Damaged())
 		g.drawImage(this.map.getBgImageHover() , 0, 0,map.getWidth(),map.getHeight(), this); // Got Damage
 
 		// ************ Print all Fruits ************ //
@@ -72,7 +63,7 @@ public class GamePanel extends JPanel implements MouseListener{
 			Fruit fruit = FruitsList.get(i);
 			if(!fruit.getInfo().Dead()) // If Fruit is Alive we need to Print it
 			{
-				Point3D p = (Point3D) fruit.getGeom(); 
+				Point3D p = fruit.get3DPoint();
 				Point3D p_pixels = map.getPixelFromCord(p);
 				int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
 				g.drawImage(FruitImage, x-25, y-25, this);
@@ -81,7 +72,7 @@ public class GamePanel extends JPanel implements MouseListener{
 		// ************ Print all Pacmans ************ //
 		for(Pacman pacman : PacmansList)
 		{
-			Point3D p = (Point3D) pacman.getGeom();
+			Point3D p = pacman.get3DPoint();
 			Point3D p_pixels = map.getPixelFromCord(p);
 			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
 			g.drawImage(PacmanImage, x-25, y-25, this);
@@ -89,7 +80,7 @@ public class GamePanel extends JPanel implements MouseListener{
 		// ************ Print all Ghosts ************ //
 		for(Ghost ghost : GhostsList)
 		{
-			Point3D p = (Point3D) ghost.getGeom();
+			Point3D p = (Point3D) ghost.get3DPoint();
 			Point3D p_pixels = map.getPixelFromCord(p);
 			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
 			g.drawImage(GhostImage, x-25, y-25, this);
@@ -97,7 +88,7 @@ public class GamePanel extends JPanel implements MouseListener{
 		// ************ Print Player ************ //
 		if(this.player != null)
 		{
-			Point3D p = (Point3D) this.player.getGeom();
+			Point3D p = this.player.get3DPoint();
 			Point3D p_pixels = map.getPixelFromCord(p);
 			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
 			g.drawImage(PlayerImage, x-25, y-25, this);
@@ -107,10 +98,11 @@ public class GamePanel extends JPanel implements MouseListener{
 	/* * * * * * * * * * * * * * * * * * Mouse Listener * * * * * * * * * * * * * * * */
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if(e.getButton() == MouseEvent.BUTTON1 && player = null)) // Left Click
+		if(e.getButton() == MouseEvent.BUTTON1 && player == null) // Left Click
 		{
 			Point3D p = map.getCordFromPixel(new Point3D(e.getX(),e.getY(),0));	
-			this.player = new Player(p);
+			String name = "Tzvi and Or";
+			this.player = new Player(name,p);
 		}
 		repaint();
 	}

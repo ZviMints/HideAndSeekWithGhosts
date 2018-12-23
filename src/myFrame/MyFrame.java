@@ -1,9 +1,19 @@
 package myFrame;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.beans.*;
-import javax.swing.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import Game.Game;
+import Geom.Point3D;
+import Map.Map;
 
 public class MyFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -22,7 +32,7 @@ public class MyFrame extends JFrame {
 	}
 	public MyFrame() 
 	{
-		game = new Game("./data/Start.csv");
+		game = new Game("./data/Ex4_OOP_example8.csv");
 		StartPanel();
 	}
 	/* * * * * * * * * * * * * * * * * * Initialize Window * * * * * * * * * * * * * * * */ 

@@ -16,7 +16,7 @@ public class Map {
 	private int width;
 	private int height;
 	private Image bgImage;
-	private Image bgImageHover = Toolkit.getDefaultToolkit().getImage("./img/BackGroundHover.png");
+	private Image bgHoverDanger = Toolkit.getDefaultToolkit().getImage("./img/background_danger.png");
 	// p00     p01 //
 	//     **      //
 	//     **      //
@@ -42,8 +42,8 @@ public class Map {
 	public void setWidth(int d) { this.width = d;}
 	public Image getBgImage() { return bgImage; }
 	public void setBgImage(Image bgImage) { this.bgImage = bgImage; }
-	public Image getBgImageHover() { return bgImageHover; }
-	public void setBgImageHover(Image bgImageHover) { this.bgImageHover = bgImageHover; }
+	public Image getBgImageHover() { return bgHoverDanger; }
+	public void setBgImageHover(Image bgHoverDanger) { this.bgHoverDanger = bgHoverDanger; }
 
 	/* * * * * * * * * * * * * * * * * * GetCord * * * * * * * * * * * * * * * */
 	/**

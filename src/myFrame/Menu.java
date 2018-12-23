@@ -29,11 +29,6 @@ public class Menu extends JPanel{
 	private  MyFrame MainFrame;
 	private  GamePanel Panel;
 
-	 protected void paintComponent(Graphics g) {
-	    g.drawImage(MenuBackground,0,0, getWidth(), getHeight(), this);
-	    super.paintComponent(g);
-	  }
-
 	/* * * * * * * * * * * * * * Setters and Getters * * * * * * * * * * * * * * * */
 
 	/* * * * * * * * * * * * * *  Constructor  * * * * * * * * * * * * * * * */
@@ -41,6 +36,12 @@ public class Menu extends JPanel{
 	{
 		initialize();
 	}
+	/* * * * * * * * * * * * * * * * * * Paint Background  * * * * * * * * * * * * * * * */
+    @Override
+    protected void paintComponent(Graphics g) {
+		    g.drawImage(MenuBackground,0,0, getWidth(), getHeight(), this);
+		    super.paintComponent(g);
+		  }
 	/* * * * * * * * * * * * * * * * * * Initialize Window * * * * * * * * * * * * * * * */
 	private void initialize() {
 		
