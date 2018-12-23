@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+
 import Game.Game;
 import Geom.Point3D;
 import Map.Map;
@@ -70,7 +71,7 @@ public class MyFrame extends JFrame {
 		mainSplittedPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,panel,MenuPanel); // Make Main Splitted Pane
 		mainSplittedPane.setOneTouchExpandable(true);
 		getContentPane().add(mainSplittedPane, BorderLayout.CENTER);
-		setPreferredSize(new Dimension(1645, 700));
+		setPreferredSize(new Dimension(1705, 700));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		mainSplittedPane.setResizeWeight(1);                            
 		mainSplittedPane.setDividerLocation(1433);

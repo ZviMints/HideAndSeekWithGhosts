@@ -37,11 +37,16 @@ public class Menu extends JPanel{
 		initialize();
 	}
 	/* * * * * * * * * * * * * * * * * * Paint Background  * * * * * * * * * * * * * * * */
-    @Override
-    protected void paintComponent(Graphics g) {
-		    g.drawImage(MenuBackground,0,0, getWidth(), getHeight(), this);
-		    super.paintComponent(g);
-		  }
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		for (int i = 0; i < getWidth(); i+=50) {
+			g.drawImage(MenuBackground,i,50,50,50, this);	
+			for (int j = 0; j < getHeight(); j+=50) {
+				g.drawImage(MenuBackground,i,j,50,50, this);
+			}		
+		}		    
+	}
 	/* * * * * * * * * * * * * * * * * * Initialize Window * * * * * * * * * * * * * * * */
 	private void initialize() {
 		
