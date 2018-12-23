@@ -1,5 +1,10 @@
 package Objects;
 
-public interface GIS_Pacman {
+import Geom.Geom_element;
+import Geom.Point3D;
 
+public interface GIS_Pacman {
+	public Geom_element getGeom();
+	public Meta_data getData();
+	public void translate(Point3D vec);
 }
