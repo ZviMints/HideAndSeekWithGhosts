@@ -58,7 +58,7 @@ public class MyFrame extends JFrame {
 	}
 	public MyFrame() 
 	{
-		this("./data/Ex4_OOP_example8.csv");
+		this("./data/Ex4_OOP_example2.csv");
 	}
 	/* * * * * * * * * * * * * * * * * * Initialize Window * * * * * * * * * * * * * * * */ 
 	public void StartPanel()

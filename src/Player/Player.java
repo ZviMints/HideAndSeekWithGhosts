@@ -10,14 +10,13 @@ public class Player {
 	/* * * * * * * * * * * * * *  Initialization Variables * * * * * * * * * * * * * * * */
 	private Point3D _p; // In [Lat,Lon,Alt]
 	private String _id;
-	private double speed;
-	private Point3D vec;
+	
+	public double ang;
 	/* * * * * * * * * * * * * *  Constructor * * * * * * * * * * * * * * * */
-	public Player(Point3D p, String id, double speed)
+	public Player(Point3D p, String id)
 	{
 		this._id = id;
 		this._p = p;
-		this.setSpeed(speed);
 	}
 	/* * * * * * * * * * * * * *  toString * * * * * * * * * * * * * * * */
 	public String toString()
@@ -39,19 +38,10 @@ public class Player {
 	public String get_id() {
 		return _id;
 	}
+	public void setP(Point3D _p) {
+		this._p = _p;
+	}
 	public void set_id(String _id) {
 		this._id = _id;
-	}
-	public double getSpeed() {
-		return speed;
-	}
-	public void setSpeed(double speed) {
-		this.speed = speed;
-	}
-	public Point3D getVec() {
-		return vec;
-	}
-	public void setVec(Point3D vec) {
-		this.vec = vec;
 	}
 }

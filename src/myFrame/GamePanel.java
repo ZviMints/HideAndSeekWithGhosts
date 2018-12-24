@@ -115,16 +115,16 @@ public class GamePanel extends JPanel implements MouseListener{
 	public void mousePressed(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON1 && player == null) // Left Click
 		{
-			player = new Player(map.getCordFromPixel(new Point3D(e.getX() - 20 ,e.getY() - 20,0)),"Tzvi and Or Player",10);
+			player = new Player(map.getCordFromPixel(new Point3D(e.getX() - 20 ,e.getY() - 20,0)),"Tzvi and Or Player");
 			repaint();
 		}
 		if(started)
 		{
 			MyCoords coords = new MyCoords();
 			Point3D clicked = map.getCordFromPixel(new Point3D(e.getX(),e.getY(),0));
-			Point3D vec = coords.vector3D(player.getP(), clicked);
-			vec.MakeNormal();
-			player.setVec(vec);
+			Point3D source = player.getP();
+			double ang = coords.azimuth(source.x(), source.y(), clicked.x(), clicked.y());
+			player.ang = ang;
 		}
 	}
 	/* * * * * * * * * * * * * * * * * * Not Used * * * * * * * * * * * * * * * */
@@ -139,7 +139,7 @@ public class GamePanel extends JPanel implements MouseListener{
 			play.setInitLocation(player.getP().x(),player.getP().y());
 			started = true;
 			play.start();
-			Animate thread = new Animate(this,player);
+			Animate thread = new Animate(this);
 			thread.start();
 		}
 	}
@@ -151,9 +151,9 @@ public class GamePanel extends JPanel implements MouseListener{
 		BoxsList.clear();
 		ArrayList<String> board_data = play.getBoard();
 		for(int a=0 ; a<board_data.size(); a++) {
-			if(board_data.get(a).charAt(0) != 'M')
-				UpdateGame(board_data.get(a));
+			UpdateGame(board_data.get(a));
 		}
+		play.rotate(player.ang);
 		repaint();
 	}
 	/* * * * * * * * * * * * * * * * * *  update Game * * * * * * * * * * * * * * * */
@@ -179,6 +179,11 @@ public class GamePanel extends JPanel implements MouseListener{
 			Ghost ghost = game.MakeGhost(array);
 			GhostsList.add(ghost);
 			break;
+		case "M":
+			double x = Double.parseDouble(array.get(2));
+			double y = Double.parseDouble(array.get(3));
+			double z = Double.parseDouble(array.get(4));
+			player.setP(new Point3D(x,y,z));
 		}
 	}
 }
