@@ -1,48 +1,37 @@
 /**
- * This Class represent Fruit 
+ * This Class represent Pacman 
  * @author Tzvi Mints and Or Abuhazira
  */
-package Player;
-import Coords.MyCoords;
+package Objects;
 import Geom.Point3D;
 
-public class Player {
+public class Pacman {
 	/* * * * * * * * * * * * * *  Initialization Variables * * * * * * * * * * * * * * * */
 	private Point3D _p; // In [Lat,Lon,Alt]
-	private boolean Damaged; 
 	private String _id;
+	private double _speed;
+	private double _radius;
 	/* * * * * * * * * * * * * *  Constructor * * * * * * * * * * * * * * * */
-	public Player(Point3D p, String id)
+	public Pacman(Point3D p, String id, double speed, double radius)
 	{
 		this._id = id;
+		this._speed = speed;
+		this._radius = radius;
 		this._p = p;
-		Damaged = false;
 	}
 	/* * * * * * * * * * * * * *  toString * * * * * * * * * * * * * * * */
 	public String toString()
 	{
 		String ans = "";
-		ans += "Player id: " + _id + " Point: " + _p + "Damaged: " + Damaged;
+		ans += "Pacman id: " + _id + " Point: " + _p + " Speed: " + _speed + " Radius: " + _radius;
 		return ans;
-	}
-	/* * * * * * * * * * * * * *  Transfer * * * * * * * * * * * * * * * */
-	public void transfer(Point3D vec)
-	{
-		MyCoords coords = new MyCoords();
-		this._p = coords.add(this._p, vec);
 	}
 	/* * * * * * * * * * * * * *  Setters and Getters * * * * * * * * * * * * * * * */
 	public Point3D getP() {
 		return _p;
 	}
-	public void setP(Point3D p) {
-		this._p = p;
-	}
-	public boolean isAlive() {
-		return Damaged;
-	}
-	public void setAlive(boolean alive) {
-		Damaged = alive;
+	public void setP(Point3D _p) {
+		this._p = _p;
 	}
 	public String get_id() {
 		return _id;
@@ -50,4 +39,16 @@ public class Player {
 	public void set_id(String _id) {
 		this._id = _id;
 	}
+	public double get_speed() {
+		return _speed;
+	}
+	public void set_speed(double _speed) {
+		this._speed = _speed;
+	}
+	public double get_radius() {
+		return _radius;
+	}
+	public void set_radius(double _radius) {
+		this._radius = _radius;
+	}	
 }

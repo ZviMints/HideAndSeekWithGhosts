@@ -4,6 +4,7 @@
  * @version 4.0
  */
 package myFrame;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -12,15 +13,17 @@ import java.awt.event.MouseListener;
 import java.util.List;
 import javax.swing.JPanel;
 
-import Box.Box;
-import Fruit.Fruit;
 import Game.Game;
 import Geom.Point3D;
-import Ghost.Ghost;
 import Map.Map;
-import Pacman.Pacman;
+import Objects.Box;
+import Objects.Fruit;
+import Objects.Ghost;
+import Objects.Pacman;
 import Player.Player;
 import ShortestPathAlgo.Algo;
+
+
 
 public class GamePanel extends JPanel implements MouseListener{
 	private static final long serialVersionUID = 1L;
@@ -59,64 +62,50 @@ public class GamePanel extends JPanel implements MouseListener{
 	{        
 		g.drawImage(this.map.getBgImage() , 0, 0, map.getWidth(),map.getHeight(), this); // Regular Map
 
-		if(player != null && player.getInfo().Damaged())
-			g.drawImage(this.map.getBgImageHover() , 0, 0 ,map.getWidth(),map.getHeight(), this); // Got Damage
-
 		// ************ Print all Boxs ************ //
 		for(Box box : BoxsList)
 		{
-			Point3D b_bottom = box.getBottom3DPoint();
-			Point3D b_upper = box.getUpper3DPoint();
-			Point3D b_bottom_pixels = map.getPixelFromCord(b_bottom);
-			Point3D b_upper_pixels = map.getPixelFromCord(b_upper);
-			int dx = (int)(b_upper_pixels.x() - b_bottom_pixels.x());
-			int dy = (int)(b_upper_pixels.y() - b_bottom_pixels.y());
-			g.drawImage(BoxImage, 
-					(int)b_bottom_pixels.x(), 
-					(int)b_bottom_pixels.y(), 
-					dx,
-					dy,
-					this);
-		}
 
+		}
 		// ************ Print all Fruits ************ //
+		g.setColor(Color.GREEN);
 		for(int i=0 ; i <FruitsList.size() ; i++)
 		{
 			Fruit fruit = FruitsList.get(i);
-			if(!fruit.getInfo().Dead()) // If Fruit is Alive we need to Print it
-			{
-				Point3D p = fruit.get3DPoint();
-				Point3D p_pixels = map.getPixelFromCord(p);
-				int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
-				g.drawImage(FruitImage, x-25, y-25,50,50, this);
-			}
+			Point3D p = fruit.getP();
+			Point3D p_pixels = map.getPixelFromCord(p);
+			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
+			g.fillOval(x, y, 25, 25);
 		}
 
 		// ************ Print all Pacmans ************ //
+		g.setColor(Color.YELLOW);
 		for(Pacman pacman : PacmansList)
 		{
-			Point3D p = pacman.get3DPoint();
+			Point3D p = pacman.getP();
 			Point3D p_pixels = map.getPixelFromCord(p);
 			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
-			g.drawImage(PacmanImage, x-25, y-25,50,50, this);
+			g.fillOval(x, y, 25, 25);
 		}
 
 		// ************ Print all Ghosts ************ //
+		g.setColor(Color.RED);
 		for(Ghost ghost : GhostsList)
 		{
-			Point3D p = ghost.get3DPoint();
+			Point3D p = ghost.getP();
 			Point3D p_pixels = map.getPixelFromCord(p);
 			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
-			g.drawImage(GhostImage, x-25, y-25,50,50, this);
+			g.fillOval(x, y, 40, 40);
 		}
-
+		
 		// ************ Print Player ************ //
+		g.setColor(Color.WHITE);
 		if(this.player != null)
 		{
-			Point3D p = this.player.get3DPoint();
+			Point3D p = player.getP();
 			Point3D p_pixels = map.getPixelFromCord(p);
 			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
-			g.drawImage(PlayerImage, x-25, y-25,50,50, this);
+			g.fillOval(x, y, 40, 40);
 		}
 	}
 
@@ -125,9 +114,7 @@ public class GamePanel extends JPanel implements MouseListener{
 	public void mousePressed(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON1 && player == null) // Left Click
 		{
-			Point3D p = map.getCordFromPixel(new Point3D(e.getX(),e.getY(),0));	
-			String name = "Tzvi and Or";
-			this.player = new Player(name,p);
+			player = new Player(map.getCordFromPixel(new Point3D(e.getX() - 20 ,e.getY() - 20,0)),"Tzvi and Or Player");
 		}
 		repaint();
 	}

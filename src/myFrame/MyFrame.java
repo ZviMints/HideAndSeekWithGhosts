@@ -26,31 +26,32 @@ public class MyFrame extends JFrame {
 	private Game game = null;
 	private Map map = null;
 
+	// p00(32.105848,35.202429) **  p01(32.105848,35.212541) //
+	//                          **                           //
+	//                          **                           //
+	// p10(32.101951,35.202429) **  p11(32.101951,35.212541) //
+	private static Point3D p00 = new Point3D(32.105848,35.202429);
+	private static Point3D p01 = new Point3D(32.105848,35.212541);
+	private static Point3D p10 = new Point3D(32.101951,35.202429);
+	private static Point3D p11 = new Point3D(32.101951,35.212541);
+
 	/* * * * * * * * * * * * * * * * * * Constructors * * * * * * * * * * * * * * * */
-	public MyFrame(String path) {
-		game = new Game(path);
+	public MyFrame(String path) 
+	{
+		// ******** Map ******** ///
+		map = new Map("./img/Background.png", p00, p01, p10, p11, 1433,642); 
+		// NOTE: 2 Points p10,p01 is Enough! but we did for 4 points.
+		game = new Game(path,map);
 		StartPanel();
 	}
 	public MyFrame() 
 	{
-		game = new Game("./data/Ex4_OOP_example8.csv");
-		StartPanel();
+		this("./data/Ex4_OOP_example8.csv");
 	}
 	/* * * * * * * * * * * * * * * * * * Initialize Window * * * * * * * * * * * * * * * */ 
 	public void StartPanel()
-	{
-		// ******** Map ******** ///
-		// p00(32.105848,35.202429) **  p01(32.105848,35.212541) //
-		//                          **                           //
-		//                          **                           //
-		// p10(32.101951,35.202429) **  p11(32.101951,35.212541) //
-		Point3D p00 = new Point3D(32.105848,35.202429);
-		Point3D p01 = new Point3D(32.105848,35.212541);
-		Point3D p10 = new Point3D(32.101951,35.202429);
-		Point3D p11 = new Point3D(32.101951,35.212541);
 
-		map = new Map("./img/Background.png", p00, p01, p10, p11, 1433,642); 
-		// NOTE: 2 Points p10,p01 is Enough! but we did for 4 points.
+	{
 		panel = new GamePanel(game, map);
 
 		// ******** Menu ******** ///
@@ -70,11 +71,10 @@ public class MyFrame extends JFrame {
 		this.setTitle("T&O OP_4 Exercise"); // Set Title to Frame 
 		mainSplittedPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,panel,MenuPanel); // Make Main Splitted Pane
 		mainSplittedPane.setOneTouchExpandable(true);
+		mainSplittedPane.setPreferredSize(new Dimension(1433, 642));
 		getContentPane().add(mainSplittedPane, BorderLayout.CENTER);
-		setPreferredSize(new Dimension(1705, 700));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		mainSplittedPane.setResizeWeight(1);                            
-		mainSplittedPane.setDividerLocation(1433);
+		mainSplittedPane.setDividerLocation(1433 - 400);
 		setVisible(true);
 		pack();
 
@@ -82,7 +82,7 @@ public class MyFrame extends JFrame {
 		mainSplittedPane.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent changeEvent) {
 				if (changeEvent.getPropertyName().equals(JSplitPane.DIVIDER_LOCATION_PROPERTY)) {
-					map.setWidth(mainSplittedPane.getWidth() - mainSplittedPane.getWidth() + mainSplittedPane.getDividerLocation());
+					map.setWidth(mainSplittedPane.getDividerLocation());
 				}
 			} 
 		});
@@ -91,7 +91,7 @@ public class MyFrame extends JFrame {
 		this.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
-				map.setWidth(mainSplittedPane.getWidth() - mainSplittedPane.getWidth() + mainSplittedPane.getDividerLocation());
+				map.setWidth(mainSplittedPane.getDividerLocation());
 				map.setHeight(mainSplittedPane.getSize().height);
 			}
 		});

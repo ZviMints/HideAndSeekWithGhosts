@@ -20,14 +20,13 @@ import javax.swing.JTextField;
 
 
 public class Menu extends JPanel{
+	private static final long serialVersionUID = 1L;
 	/* * * * * * * * * * * * * *  Initialization Variables * * * * * * * * * * * * * * * */
 	private  JLabel Start; // Start button
 	private  JLabel Load; // Load button
 	private  JTextField Score; // Score TextField
 	private Image MenuBackground = Toolkit.getDefaultToolkit().getImage("./img/MenuBackground.jpg"); // Menu background image path
 
-	private  MyFrame MainFrame;
-	private  GamePanel Panel;
 
 	/* * * * * * * * * * * * * * Setters and Getters * * * * * * * * * * * * * * * */
 

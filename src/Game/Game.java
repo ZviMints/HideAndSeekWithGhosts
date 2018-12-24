@@ -6,13 +6,13 @@
 package Game;
 import java.util.ArrayList;
 import java.util.List;
-
-import Box.Box;
 import File_format.CSVToMatrix;
-import Fruit.Fruit;
 import Geom.Point3D;
-import Ghost.Ghost;
-import Pacman.Pacman;
+import Map.Map;
+import Objects.Box;
+import Objects.Fruit;
+import Objects.Ghost;
+import Objects.Pacman;
 import Player.Player;
 public class Game{
 
@@ -22,6 +22,7 @@ public class Game{
 	private List<Ghost> Ghost_List;
 	private List<Box> Box_List;
 	private Player player;
+	private Map map;
 
 	/* * * * * * * * * * * * * * * * * * Setters and Getters * * * * * * * * * * * * * * * */
 	public List<Pacman> getPacmanList() { return Pacman_List; }
@@ -32,22 +33,14 @@ public class Game{
 
 
 	/* * * * * * * * * * * * * * * * * * Constructor * * * * * * * * * * * * * * * */
-	public Game() {
+	public Game(String path, Map map) {
 		// ************ initialize Set ************ //
 		Pacman_List = new ArrayList<Pacman>();
 		Fruit_List = new ArrayList<Fruit>();
 		Ghost_List = new ArrayList<Ghost>();
 		Box_List = new ArrayList<Box>();
 		this.player = null;
-	}
-	public Game(String path)
-	{
-		// ************ initialize Set ************ //
-		Pacman_List = new ArrayList<Pacman>();
-		Fruit_List = new ArrayList<Fruit>();
-		Box_List = new ArrayList<Box>();
-		Ghost_List = new ArrayList<Ghost>();
-
+		this.map = map;
 
 		// ************ initialize Sets ************ //
 		CSVToMatrix cr = new CSVToMatrix(path);
@@ -55,48 +48,67 @@ public class Game{
 		{
 			if(cr.getRowAtIndexI(i).get(0).equals("F")) // Its Fruit!
 			{
-				String id = cr.getRowAtIndexI(i).get(1);
-				Point3D p = new Point3D(Double.parseDouble(cr.getRowAtIndexI(i).get(2)) // Latitude
-						,Double.parseDouble(cr.getRowAtIndexI(i).get(3)) // Longitude
-						,Double.parseDouble(cr.getRowAtIndexI(i).get(4))); // Altitude
-				Fruit fruit = new Fruit(id,p);
+				Fruit fruit = MakeFruit(cr.getRowAtIndexI(i));
 				Fruit_List.add(fruit);
 			}
 			else if(cr.getRowAtIndexI(i).get(0).equals("P")) // Its Pacman!
 			{
-				String id = cr.getRowAtIndexI(i).get(1);
-				String speed = cr.getRowAtIndexI(i).get(5);
-				String radius = cr.getRowAtIndexI(i).get(6);
-				Point3D p = new Point3D(Double.parseDouble(cr.getRowAtIndexI(i).get(2)) // Latitude
-						,Double.parseDouble(cr.getRowAtIndexI(i).get(3)) // Longitude
-						,Double.parseDouble(cr.getRowAtIndexI(i).get(4))); // Altitude
-				Pacman pacman = new Pacman(id,speed, radius, p);
-				Pacman_List.add(pacman);	
+				Pacman pacman = MakePacman(cr.getRowAtIndexI(i));
+				Pacman_List.add(pacman);					
 			}
 			else if(cr.getRowAtIndexI(i).get(0).equals("G")) // Its Ghost!
 			{
-				String id = cr.getRowAtIndexI(i).get(1);
-				String speed = cr.getRowAtIndexI(i).get(5);
-				String radius = cr.getRowAtIndexI(i).get(6);
-				Point3D g = new Point3D(Double.parseDouble(cr.getRowAtIndexI(i).get(2)) // Latitude
-						,Double.parseDouble(cr.getRowAtIndexI(i).get(3)) // Longitude
-						,Double.parseDouble(cr.getRowAtIndexI(i).get(4))); // Altitude
-				Ghost ghost = new Ghost(id,speed, radius, g);
+				Ghost ghost = MakeGhost(cr.getRowAtIndexI(i));
 				Ghost_List.add(ghost);	
 			}
 			else // Its Box!
 			{
-				String id = cr.getRowAtIndexI(i).get(1);
-				Point3D p_bottom = new Point3D(Double.parseDouble(cr.getRowAtIndexI(i).get(2)) // Latitude
-						,Double.parseDouble(cr.getRowAtIndexI(i).get(3)) // Longitude
-						,Double.parseDouble(cr.getRowAtIndexI(i).get(4))); // Altitude
-				Point3D p_upper = new Point3D(Double.parseDouble(cr.getRowAtIndexI(i).get(5)) // Latitude
-						,Double.parseDouble(cr.getRowAtIndexI(i).get(6)) // Longitude
-						,Double.parseDouble(cr.getRowAtIndexI(i).get(7))); // Altitude
-				Box box = new Box(id,p_bottom,p_upper);
-				Box_List.add(box);
+				Box box = MakeBox(cr.getRowAtIndexI(i));
+				Box_List.add(box);	
 			}
 		}
+	}
+	/* * * * * * * * * * * * * * * * * * MakePacman * * * * * * * * * * * * * * * */
+	private Pacman MakePacman(ArrayList<String> cr) {
+		String id = cr.get(1);
+		double speed = Double.parseDouble(cr.get(5));
+		double radius = Double.parseDouble(cr.get(6));
+		Point3D p = new Point3D(Double.parseDouble(cr.get(2)) // Latitude
+				,Double.parseDouble(cr.get(3)) // Longitude
+				,Double.parseDouble(cr.get(4))); // Altitude
+		return new Pacman(p,id,speed,radius);
+	}
+	/* * * * * * * * * * * * * * * * * * MakeBox * * * * * * * * * * * * * * * */
+	private Box MakeBox(ArrayList<String> cr) {
+		String id = cr.get(1);
+		Point3D p0 = new Point3D(Double.parseDouble(cr.get(2)) // Latitude
+				,Double.parseDouble(cr.get(3)) // Longitude
+				,Double.parseDouble(cr.get(4))); // Altitude
+		Point3D p1 = new Point3D(Double.parseDouble(cr.get(5)) // Latitude
+				,Double.parseDouble(cr.get(6)) // Longitude
+				,Double.parseDouble(cr.get(7))); // Altitude
+		int width = (int) (p1.x() - p0.x());
+		int height = (int) (p0.y() - p1.y());
+		return new Box(id,(int)p0.x(),(int)p1.y(),width,height);
+	}
+	/* * * * * * * * * * * * * * * * * * MakeGhost * * * * * * * * * * * * * * * */
+	private Ghost MakeGhost(ArrayList<String> cr) {
+
+		String id = cr.get(1);
+		double speed = Double.parseDouble(cr.get(5));
+		double radius = Double.parseDouble(cr.get(6));
+		Point3D g = new Point3D(Double.parseDouble(cr.get(2)) // Latitude
+				,Double.parseDouble(cr.get(3)) // Longitude
+				,Double.parseDouble(cr.get(4))); // Altitude
+		return new Ghost(g,id,speed, radius);
+	}
+	/* * * * * * * * * * * * * * * * * * MakeFruit * * * * * * * * * * * * * * * */
+	private Fruit MakeFruit(ArrayList<String> cr) {
+		String id = cr.get(1);
+		Point3D p = new Point3D(Double.parseDouble(cr.get(2)) // Latitude
+				,Double.parseDouble(cr.get(3)) // Longitude
+				,Double.parseDouble(cr.get(4))); // Altitude
+		return new Fruit(p,id);
 	}
 	/* * * * * * * * * * * * * * * * * * toString * * * * * * * * * * * * * * * */
 	public String toString()
