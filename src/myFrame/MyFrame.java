@@ -1,33 +1,27 @@
 package myFrame;
 import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.Arrays;
 
-import javax.swing.BoxLayout;
+import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JSplitPane;
+import javax.swing.border.LineBorder;
 
 import Game.Game;
 import Geom.Point3D;
 import Map.Map;
 import Robot.Play;
 
-public class MyFrame extends JFrame {
-	private static final long serialVersionUID = 1L;
-
+public class MyFrame extends JPanel
+{
 	/* * * * * * * * * * * * * *  Initialization Variables * * * * * * * * * * * * * * * */
-	private JSplitPane mainSplittedPane; // Main Frame ( All Window )
-	private GamePanel panel; // Represent the Game ( Left Size )
-	private JPanel MenuPanel; // Menu Panel ( Right Size )
-	private Game game = null;
-	private Map map = null;
+	private static Game game = null;
+	private static Map map = null;
 
 	// p00 **  p01   //
 	//     **        //
@@ -37,12 +31,14 @@ public class MyFrame extends JFrame {
 	private static Point3D p01;
 	private static Point3D p10;
 	private static Point3D p11;
-	private Play play; // VS computer 
-
+	private static Play play; // VS computer 
+	private static GamePanel panel;
+	private static Box box;
 
 	/* * * * * * * * * * * * * * * * * * Constructors * * * * * * * * * * * * * * * */
-	public MyFrame(String path) 
-	{	
+	public MyFrame(String path)
+	{
+		// ******** Play ******** ///
 		play = new Play(path);
 		// ******** Map ******** ///
 		String map_data = play.getBoundingBox();
@@ -51,64 +47,71 @@ public class MyFrame extends JFrame {
 		p01 = new Point3D(Double.parseDouble(s[5]),Double.parseDouble(s[6]),Double.parseDouble(s[7]));
 		p00 = new Point3D(p01.x(),p10.y(),0);
 		p11 = new Point3D(p10.x(),p01.y(),0);
-		map = new Map("./img/Background.png", p00, p01, p10, p11, 1433,642); 
+		map = new Map("./img/Background.png", p00, p01, p10, p11, 900,500); 
 		// NOTE: 2 Points p10,p01 is Enough! but we did for 4 points.
+		// ******** Game ******** ///
 		game = new Game(path);
-		StartPanel();
+		
+		// ******** Game Panel ******** ///
+		panel = new GamePanel(game, map, play);
+		panel.setBorder(new LineBorder(Color.BLACK,5));
+		panel.setPreferredSize( new Dimension(900, 500) );
+		
+		// ******** GUI ******** ///
+		box = Box.createHorizontalBox();
+		
+		Menu menu = new Menu(panel);
+		menu.setBackground( Color.GREEN );
+		menu.setPreferredSize( new Dimension(600, 100) );
+		menu.setMaximumSize( menu.getPreferredSize() );
+		box.add( menu );
+
+		Score score = new Score();
+		score.setBackground( Color.CYAN );
+		score.setPreferredSize( new Dimension(300, 100) );
+		score.setMinimumSize( score.getPreferredSize() );
+		box.add( score );
+
+		setLayout( new BorderLayout() );
+		add(panel, BorderLayout.NORTH);
+		add(box, BorderLayout.CENTER);
 	}
 	public MyFrame() 
 	{
-		this("./data/Ex4_OOP_example2.csv");
+		this("./data/Ex4_OOP_example1.csv");
 	}
-	/* * * * * * * * * * * * * * * * * * Initialize Window * * * * * * * * * * * * * * * */ 
-	public void StartPanel()
+	/* * * * * * * * * * * * * * Create And Show GUI * * * * * * * * * * * * * * * */   
+	private static void createAndShowGUI()
 	{
-		// ******** Panel ******** ///
-		panel = new GamePanel(game, map,play);
-		// ******** Menu ******** ///
-		MenuPanel = new JPanel();
-		MenuPanel.setLayout(new BoxLayout(MenuPanel, BoxLayout.X_AXIS));
-		Menu menu = new Menu(panel);
-		menu.setAutoscrolls(true);
-		menu.setFocusable(false);
-		menu.setLayout(null);
-		menu.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		MenuPanel.add(menu);
-
-
-		// ******** Make JSplitPlane ******** ///
+		JFrame frame = new JFrame("T&O Exercise 4");
 		ImageIcon icon = new ImageIcon("./img/icon.png"); // Set Icon to Frame
-		this.setIconImage(icon.getImage()); // Set Icon to Frame
-		this.setTitle("T&O OP_4 Exercise"); // Set Title to Frame 
-		mainSplittedPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,panel,MenuPanel); // Make Main Splitted Pane
-		mainSplittedPane.setOneTouchExpandable(true);
-		mainSplittedPane.setPreferredSize(new Dimension(1433, 642));
-		getContentPane().add(mainSplittedPane, BorderLayout.CENTER);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		mainSplittedPane.setDividerLocation(1433 - 400);
-		setVisible(true);
-		pack();
-
-		/* * * * * * * * * * * * * * Make Resize able - Divider * * * * * * * * * * * * * * * */   
-		mainSplittedPane.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent changeEvent) {
-				if (changeEvent.getPropertyName().equals(JSplitPane.DIVIDER_LOCATION_PROPERTY)) {
-					map.setWidth(mainSplittedPane.getDividerLocation());
-				}
-			} 
-		});
-
+		frame.setIconImage(icon.getImage()); // Set Icon to Frame
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.add(new MyFrame());
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		frame.setVisible( true );
 		/* * * * * * * * * * * * * * Make Resize able - Panel * * * * * * * * * * * * * * * */   
-		this.addComponentListener(new ComponentAdapter() {
+		frame.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
-				map.setWidth(mainSplittedPane.getDividerLocation());
-				map.setHeight(mainSplittedPane.getSize().height);
+				if(frame.getSize().height < 536)
+				map.setHeight(frame.getSize().height - 35);
+				map.setWidth(panel.getSize().width);
+				panel.Refresh();
 			}
 		});
 	}
+	
 	/* * * * * * * * * * * * * * Main * * * * * * * * * * * * * * * */   
-	public static void main(String[] args) {
-		MyFrame Game = new MyFrame();
-	}
+	public static void main(String[] args)
+	{
+		EventQueue.invokeLater(new Runnable()
+		{
+			public void run()
+			{
+				createAndShowGUI();
+			}
+		});
+	}		
 }

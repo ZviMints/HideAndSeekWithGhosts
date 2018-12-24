@@ -36,11 +36,13 @@ public class GamePanel extends JPanel implements MouseListener{
 	private Game game; // This Game Database
 	private Algo algo; // Algorithm of the current game
 	private Map map; // Map of current game 
+	private double _ratio; // Ratio from scale the map (Paint Objects)
 
 	public Play play;
 	public volatile boolean started = false;
 	/* * * * * * * * * * * * * * * * * *   Setters and Getters * * * * * * * * * * * * * * * */
 	public List<Fruit> getFruitsList() { return FruitsList; }
+	public void Refresh() { this._ratio = (map.getWidth() + map.getHeight())/(double)(700 + 637);}
 
 	/* * * * * * * * * * * * * * * * * *   Constructor * * * * * * * * * * * * * * * */
 	public GamePanel(Game game, Map map, Play play)
@@ -48,6 +50,7 @@ public class GamePanel extends JPanel implements MouseListener{
 		this.game = game;
 		this.map = map;
 		this.play = play;
+		this._ratio = (map.getWidth() + map.getHeight())/(double)(700 + 637);
 		FruitsList = this.game.getFruitList();
 		PacmansList = this.game.getPacmanList();
 		GhostsList = this.game.getGhostList();
@@ -62,10 +65,18 @@ public class GamePanel extends JPanel implements MouseListener{
 		super.paintComponent(g);
 		g.drawImage(this.map.getBgImage() , 0, 0, map.getWidth(),map.getHeight(), this); // Regular Map
 
+		// ************ Print Player ************ //
+		g.setColor(Color.WHITE);
+		if(this.player != null)
+		{
+			Point3D p = player.getP();
+			Point3D p_pixels = map.getPixelFromCord(p);
+			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
+			g.fillOval(x, y, (int)(25*_ratio), (int)(25*_ratio));
+		}
 		// ************ Print all Boxs ************ //
 		for(Box box : BoxsList)
 		{
-
 
 		}
 		// ************ Print all Fruits ************ //
@@ -76,7 +87,7 @@ public class GamePanel extends JPanel implements MouseListener{
 			Point3D p = fruit.getP();
 			Point3D p_pixels = map.getPixelFromCord(p);
 			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
-			g.fillOval(x, y, 25, 25);
+			g.fillOval(x, y, (int)(20*_ratio), (int)(20*_ratio));
 		}
 
 		// ************ Print all Pacmans ************ //
@@ -86,7 +97,7 @@ public class GamePanel extends JPanel implements MouseListener{
 			Point3D p = pacman.getP();
 			Point3D p_pixels = map.getPixelFromCord(p);
 			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
-			g.fillOval(x, y, 25, 25);
+			g.fillOval(x, y, (int)(20*_ratio), (int)(20*_ratio));
 		}
 
 		// ************ Print all Ghosts ************ //
@@ -96,17 +107,7 @@ public class GamePanel extends JPanel implements MouseListener{
 			Point3D p = ghost.getP();
 			Point3D p_pixels = map.getPixelFromCord(p);
 			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
-			g.fillOval(x, y, 40, 40);
-		}
-
-		// ************ Print Player ************ //
-		g.setColor(Color.WHITE);
-		if(this.player != null)
-		{
-			Point3D p = player.getP();
-			Point3D p_pixels = map.getPixelFromCord(p);
-			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
-			g.fillOval(x, y, 40, 40);
+			g.fillOval(x, y, (int)(25*_ratio), (int)(25*_ratio));
 		}
 	}
 
@@ -115,7 +116,7 @@ public class GamePanel extends JPanel implements MouseListener{
 	public void mousePressed(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON1 && player == null) // Left Click
 		{
-			player = new Player(map.getCordFromPixel(new Point3D(e.getX() - 20 ,e.getY() - 20,0)),"Tzvi and Or Player");
+			player = new Player(map.getCordFromPixel(new Point3D(e.getX() - _ratio*12.5 ,e.getY() - _ratio*12.5,0)),"Tzvi and Or Player");
 			repaint();
 		}
 		if(started)

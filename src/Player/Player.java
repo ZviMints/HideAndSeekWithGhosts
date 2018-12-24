@@ -11,7 +11,7 @@ public class Player {
 	private Point3D _p; // In [Lat,Lon,Alt]
 	private String _id;
 	
-	public double ang;
+	public double ang = 30;
 	/* * * * * * * * * * * * * *  Constructor * * * * * * * * * * * * * * * */
 	public Player(Point3D p, String id)
 	{
@@ -35,13 +35,7 @@ public class Player {
 	public Point3D getP() {
 		return _p;
 	}
-	public String get_id() {
-		return _id;
-	}
 	public void setP(Point3D _p) {
 		this._p = _p;
-	}
-	public void set_id(String _id) {
-		this._id = _id;
 	}
 }

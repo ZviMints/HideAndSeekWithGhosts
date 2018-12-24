@@ -12,12 +12,11 @@ public class Animate extends Thread {
 	public void run() {
 		while(!g.getFruitsList().isEmpty())
 		{
-			try { Thread.sleep(20);} // The animation wont run too fast				 
+			try { Thread.sleep(30);} // The animation wont run too fast				 
 			catch (InterruptedException e) {e.printStackTrace();} 
 			g.update();
+				
 		}
 		g.started = false;
-		String info = g.play.getStatistics();
-		System.out.println(info);
 	}
 }
