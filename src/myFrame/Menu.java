@@ -107,7 +107,7 @@ public class Menu extends JPanel{
 		};	
 		Score.setHorizontalAlignment(JTextField.CENTER);
 		Score.setBorder(null);
-		Score.setVisible(false);
+		Score.setVisible(true);
 		Score.setText("0");
 		Score.setFont(new Font("Courier New", Font.PLAIN, 15));
 		Score.setForeground(Color.WHITE);

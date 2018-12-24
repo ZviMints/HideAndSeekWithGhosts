@@ -11,7 +11,7 @@ public class Player implements GIS_Player{
 	/* * * * * * * * * * * * * *  Initialization Variables * * * * * * * * * * * * * * * */
 	private Point3D point;
 	private PlayerData PlayerData;
-
+	
 	/* * * * * * * * * * * * * * * * * * Setters and Getters * * * * * * * * * * * * * * * */
 	public PlayerData getInfo() { return PlayerData; }
 	
