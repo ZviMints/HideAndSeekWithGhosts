@@ -220,4 +220,20 @@ public final static int DOWN = 6, UP = 7;
 	/** transform from radians to angles */
 	public static double d2r(double a) { return Math.toRadians(a);}
 	////////////////////////////////////////////////////////////////////////////////
+
+	public void MakeNormal() {
+		double x = this.x();
+		double y = this.y();
+		double z = this.z();
+		double len = Math.sqrt(x*x + y*y + z*z);
+		x /= len; y/= len; z/= len;
+		this._x = x;
+		this._y = y;
+		this._z = z;
+	}
+	public void Multiply(double x) {
+		_x *= x;
+		_y *= x;
+		_z *= x;
+	}
 }

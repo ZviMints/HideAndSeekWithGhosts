@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Robot.Play;
+
 
 public class Menu extends JPanel{
 	private static final long serialVersionUID = 1L;
@@ -26,13 +28,16 @@ public class Menu extends JPanel{
 	private  JLabel Load; // Load button
 	private  JTextField Score; // Score TextField
 	private Image MenuBackground = Toolkit.getDefaultToolkit().getImage("./img/MenuBackground.jpg"); // Menu background image path
-
+	private GamePanel panel;
+	private static final long Tzvi_ID = 314977489;
+	private static final long Or_ID = 311226617;
 
 	/* * * * * * * * * * * * * * Setters and Getters * * * * * * * * * * * * * * * */
 
 	/* * * * * * * * * * * * * *  Constructor  * * * * * * * * * * * * * * * */
-	public Menu(MyFrame myFrame)
+	public Menu(GamePanel panel)
 	{
+		this.panel = panel;
 		initialize();
 	}
 	/* * * * * * * * * * * * * * * * * * Paint Background  * * * * * * * * * * * * * * * */
@@ -58,7 +63,9 @@ public class Menu extends JPanel{
 		// **** Start Mouse Listener ***** //
 		Start.addMouseListener(new MouseAdapter() { 
 			public void mouseClicked(MouseEvent e) {
-				// Do Something
+				panel.play.setIDs(Tzvi_ID,Or_ID);
+				panel.StartGame();
+				Start.setVisible(false);
 			}
 		});
 

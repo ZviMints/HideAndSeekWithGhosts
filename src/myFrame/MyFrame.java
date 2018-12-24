@@ -6,6 +6,8 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Arrays;
+
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -15,6 +17,7 @@ import javax.swing.JSplitPane;
 import Game.Game;
 import Geom.Point3D;
 import Map.Map;
+import Robot.Play;
 
 public class MyFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -26,22 +29,31 @@ public class MyFrame extends JFrame {
 	private Game game = null;
 	private Map map = null;
 
-	// p00(32.105848,35.202429) **  p01(32.105848,35.212541) //
-	//                          **                           //
-	//                          **                           //
-	// p10(32.101951,35.202429) **  p11(32.101951,35.212541) //
-	private static Point3D p00 = new Point3D(32.105848,35.202429);
-	private static Point3D p01 = new Point3D(32.105848,35.212541);
-	private static Point3D p10 = new Point3D(32.101951,35.202429);
-	private static Point3D p11 = new Point3D(32.101951,35.212541);
+	// p00 **  p01   //
+	//     **        //
+	//     **        //
+	// p10() **  p11 //
+	private static Point3D p00;
+	private static Point3D p01;
+	private static Point3D p10;
+	private static Point3D p11;
+	private Play play; // VS computer 
+
 
 	/* * * * * * * * * * * * * * * * * * Constructors * * * * * * * * * * * * * * * */
 	public MyFrame(String path) 
-	{
+	{	
+		play = new Play(path);
 		// ******** Map ******** ///
+		String map_data = play.getBoundingBox();
+		String[] s = map_data.split(",");
+		p10 = new Point3D(Double.parseDouble(s[2]),Double.parseDouble(s[3]),Double.parseDouble(s[4]));
+		p01 = new Point3D(Double.parseDouble(s[5]),Double.parseDouble(s[6]),Double.parseDouble(s[7]));
+		p00 = new Point3D(p01.x(),p10.y(),0);
+		p11 = new Point3D(p10.x(),p01.y(),0);
 		map = new Map("./img/Background.png", p00, p01, p10, p11, 1433,642); 
 		// NOTE: 2 Points p10,p01 is Enough! but we did for 4 points.
-		game = new Game(path,map);
+		game = new Game(path);
 		StartPanel();
 	}
 	public MyFrame() 
@@ -50,14 +62,13 @@ public class MyFrame extends JFrame {
 	}
 	/* * * * * * * * * * * * * * * * * * Initialize Window * * * * * * * * * * * * * * * */ 
 	public void StartPanel()
-
 	{
-		panel = new GamePanel(game, map);
-
+		// ******** Panel ******** ///
+		panel = new GamePanel(game, map,play);
 		// ******** Menu ******** ///
 		MenuPanel = new JPanel();
 		MenuPanel.setLayout(new BoxLayout(MenuPanel, BoxLayout.X_AXIS));
-		Menu menu = new Menu(this);
+		Menu menu = new Menu(panel);
 		menu.setAutoscrolls(true);
 		menu.setFocusable(false);
 		menu.setLayout(null);

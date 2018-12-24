@@ -22,7 +22,8 @@ public class Game{
 	private List<Ghost> Ghost_List;
 	private List<Box> Box_List;
 	private Player player;
-	private Map map;
+	private String path;
+	
 
 	/* * * * * * * * * * * * * * * * * * Setters and Getters * * * * * * * * * * * * * * * */
 	public List<Pacman> getPacmanList() { return Pacman_List; }
@@ -30,17 +31,18 @@ public class Game{
 	public List<Ghost> getGhostList() { return Ghost_List; }
 	public List<Box> getBoxList() { return Box_List; }
 	public Player getPlayer() { return this.player; }
-
+	public String getPath() { return path; }
+	public void setPath(String path) { this.path = path; }
 
 	/* * * * * * * * * * * * * * * * * * Constructor * * * * * * * * * * * * * * * */
-	public Game(String path, Map map) {
+	public Game(String path) {
 		// ************ initialize Set ************ //
 		Pacman_List = new ArrayList<Pacman>();
 		Fruit_List = new ArrayList<Fruit>();
 		Ghost_List = new ArrayList<Ghost>();
 		Box_List = new ArrayList<Box>();
 		this.player = null;
-		this.map = map;
+		this.path = path;
 
 		// ************ initialize Sets ************ //
 		CSVToMatrix cr = new CSVToMatrix(path);
@@ -69,7 +71,7 @@ public class Game{
 		}
 	}
 	/* * * * * * * * * * * * * * * * * * MakePacman * * * * * * * * * * * * * * * */
-	private Pacman MakePacman(ArrayList<String> cr) {
+	public Pacman MakePacman(ArrayList<String> cr) {
 		String id = cr.get(1);
 		double speed = Double.parseDouble(cr.get(5));
 		double radius = Double.parseDouble(cr.get(6));
@@ -79,7 +81,7 @@ public class Game{
 		return new Pacman(p,id,speed,radius);
 	}
 	/* * * * * * * * * * * * * * * * * * MakeBox * * * * * * * * * * * * * * * */
-	private Box MakeBox(ArrayList<String> cr) {
+	public Box MakeBox(ArrayList<String> cr) {
 		String id = cr.get(1);
 		Point3D p0 = new Point3D(Double.parseDouble(cr.get(2)) // Latitude
 				,Double.parseDouble(cr.get(3)) // Longitude
@@ -92,7 +94,7 @@ public class Game{
 		return new Box(id,(int)p0.x(),(int)p1.y(),width,height);
 	}
 	/* * * * * * * * * * * * * * * * * * MakeGhost * * * * * * * * * * * * * * * */
-	private Ghost MakeGhost(ArrayList<String> cr) {
+	public Ghost MakeGhost(ArrayList<String> cr) {
 
 		String id = cr.get(1);
 		double speed = Double.parseDouble(cr.get(5));
@@ -103,7 +105,7 @@ public class Game{
 		return new Ghost(g,id,speed, radius);
 	}
 	/* * * * * * * * * * * * * * * * * * MakeFruit * * * * * * * * * * * * * * * */
-	private Fruit MakeFruit(ArrayList<String> cr) {
+	public Fruit MakeFruit(ArrayList<String> cr) {
 		String id = cr.get(1);
 		Point3D p = new Point3D(Double.parseDouble(cr.get(2)) // Latitude
 				,Double.parseDouble(cr.get(3)) // Longitude
