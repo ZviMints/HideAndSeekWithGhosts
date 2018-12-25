@@ -51,14 +51,12 @@ public class Menu extends JPanel{
 
 		Statistics.addMouseListener(new MouseAdapter() { 		
 			public void mouseClicked(MouseEvent e)  {
-				
 				Statistics stat = new Statistics();
-				JPanel panel = new JPanel();
-				panel.setLayout(null); //Do not do this, I'm just using this as an example
 				JTextArea ta = new JTextArea();
-				panel.add(ta);
 				ta.setText(stat.toString());
-				JOptionPane.showMessageDialog(null, ta);
+				ta.setEditable(false);
+				JScrollPane sp=new JScrollPane(ta,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+				JOptionPane.showMessageDialog(null, sp);
 			}});
 		
 		// **** Start Mouse Listener ***** //

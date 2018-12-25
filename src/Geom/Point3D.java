@@ -231,9 +231,4 @@ public final static int DOWN = 6, UP = 7;
 		this._y = y;
 		this._z = z;
 	}
-	public void Multiply(double x) {
-		_x *= x;
-		_y *= x;
-		_z *= x;
-	}
 }

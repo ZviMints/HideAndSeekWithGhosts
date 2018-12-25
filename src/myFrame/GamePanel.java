@@ -71,7 +71,7 @@ public class GamePanel extends JPanel implements MouseListener{
 			Point3D p = player.getP();
 			Point3D p_pixels = map.getPixelFromCord(p);
 			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
-			g.drawImage(player.getPlayerImage(), x, y,(int)(25*_ratio), (int)(25*_ratio), this);
+			g.drawImage(player.getPlayerImage(), x - (int)(_ratio*12.5), y - (int)(_ratio*12.5),(int)(25*_ratio), (int)(25*_ratio), this);
 		}
 		// ************ Print all Boxs ************ //
 		g.setColor(Color.BLACK);
@@ -88,10 +88,10 @@ public class GamePanel extends JPanel implements MouseListener{
 			int x0 = (int) p0_pixels.x(); int y0 = (int) p0_pixels.y();
 			int x1 = (int) p1_pixels.x(); int y1 = (int) p1_pixels.y();
 			
-			int width = (int) Math.abs(x0 - x1); // get width to print
-			int height = (int) Math.abs(y0 - y1); // get height to print
+			int width = (int) Math.abs(x0 - x1); 
+			int height = (int) Math.abs(y0 - y1);
 			
-			g.fillRect(x0, y1, width, height);
+			g.fillRect(x0 , y1, width, height);
 		}
 		// ************ Print all Fruits ************ //
 		g.setColor(Color.GREEN);
@@ -101,7 +101,7 @@ public class GamePanel extends JPanel implements MouseListener{
 			Point3D p = fruit.getP();
 			Point3D p_pixels = map.getPixelFromCord(p);
 			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
-			g.drawImage(fruit.getFruitImage(), x, y,(int)(20*_ratio), (int)(20*_ratio), this);
+			g.drawImage(fruit.getFruitImage(), x - (int)(_ratio*10), y - (int)(_ratio*10),(int)(20*_ratio), (int)(20*_ratio), this);
 		}
 
 		// ************ Print all Pacmans ************ //
@@ -112,7 +112,7 @@ public class GamePanel extends JPanel implements MouseListener{
 			Point3D p = pacman.getP();
 			Point3D p_pixels = map.getPixelFromCord(p);
 			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
-			g.drawImage(pacman.getPacmanImage(), x, y,(int)(25*_ratio), (int)(25*_ratio), this);
+			g.drawImage(pacman.getPacmanImage(), x - (int)(_ratio*12.5), y - (int)(_ratio*12.5),(int)(25*_ratio), (int)(25*_ratio), this);
 		}
 
 		// ************ Print all Ghosts ************ //
@@ -123,7 +123,7 @@ public class GamePanel extends JPanel implements MouseListener{
 			Point3D p = ghost.getP();
 			Point3D p_pixels = map.getPixelFromCord(p);
 			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
-			g.drawImage(ghost.getGhostImage(), x, y,(int)(25*_ratio), (int)(25*_ratio), this);
+			g.drawImage(ghost.getGhostImage(), x - (int)(_ratio*12.5), y - (int)(_ratio*12.5),(int)(25*_ratio), (int)(25*_ratio), this);
 		}
 	}
 
@@ -132,7 +132,9 @@ public class GamePanel extends JPanel implements MouseListener{
 	public void mousePressed(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON1 && player == null) // Left Click
 		{
-			player = new Player(map.getCordFromPixel(new Point3D(e.getX() - _ratio*10 ,e.getY() - _ratio*10,0)),"Tzvi and Or Player");
+			System.out.println(map.getCordFromPixel(new Point3D(e.getX(),e.getY())));
+			player = new Player(map.getCordFromPixel(new Point3D(e.getX(),e.getY(),0)),"Tzvi and Or Player");
+			System.out.println(player.getP());
 			repaint();
 		}
 		if(started)
