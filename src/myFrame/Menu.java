@@ -4,17 +4,16 @@
  * @version 4.0
  */
 package myFrame;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.UIManager;
 
 
 public class Menu extends JPanel{
@@ -22,7 +21,7 @@ public class Menu extends JPanel{
 	/* * * * * * * * * * * * * *  Initialization Variables * * * * * * * * * * * * * * * */
 	private  JButton Start; // Start button
 	private  JButton Load; // Load button
-	private Image MenuBackground = Toolkit.getDefaultToolkit().getImage("./img/MenuBackground.jpg"); // Menu background image path
+	private  JButton Statistics; // Statistics button
 	private GamePanel panel;
 	private static final long Tzvi_ID = 314977489;
 	private static final long Or_ID = 311226617;
@@ -37,12 +36,30 @@ public class Menu extends JPanel{
 	}
 	/* * * * * * * * * * * * * * * * * * Initialize Window * * * * * * * * * * * * * * * */
 	private void initialize() {
-		
+
 		// **** Start JButton ***** //
 		Start = new JButton("Start Game");
 		Start.setVisible(true);
-		Start.setBounds(120, 25, 100, 50);
+		Start.setBounds(10, 25, 100, 50);
 		this.add(Start);
+
+		// **** Statistics JButton ***** //
+		Statistics = new JButton("Statistics");
+		Statistics.setVisible(true);
+		Statistics.setBounds(130, 25, 100, 50);
+		this.add(Statistics);
+
+		Statistics.addMouseListener(new MouseAdapter() { 		
+			public void mouseClicked(MouseEvent e)  {
+				
+				Statistics stat = new Statistics();
+				JPanel panel = new JPanel();
+				panel.setLayout(null); //Do not do this, I'm just using this as an example
+				JTextArea ta = new JTextArea();
+				panel.add(ta);
+				ta.setText(stat.toString());
+				JOptionPane.showMessageDialog(null, ta);
+			}});
 		
 		// **** Start Mouse Listener ***** //
 		Start.addMouseListener(new MouseAdapter() { 
@@ -56,11 +73,11 @@ public class Menu extends JPanel{
 		// **** Load JButton ***** //
 		Load = new JButton("Load Game");
 		Load.setVisible(true);
-		Load.setBounds(240,25, 100, 50);
+		Load.setBounds(260,25, 100, 50);
 		this.add(Load);
 
 		// **** Load Mouse Listener ***** //
-		Load.addMouseListener(new MouseAdapter() { 		// ************** On Click Load
+		Load.addMouseListener(new MouseAdapter() { 		
 			public void mouseClicked(MouseEvent e)  {
 				JFileChooser chooser = new JFileChooser();
 				if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) 
@@ -68,12 +85,12 @@ public class Menu extends JPanel{
 					String _Filename = chooser.getSelectedFile().getAbsolutePath();
 					if(_Filename.contains(".csv")) 
 					{
-//						MyFrame.game = new Game(_Filename);
-//						MainFrame.mainSplittedPane.invalidate();
-//						MainFrame.mainSplittedPane.setVisible(false);
-//						MainFrame.mainSplittedPane.removeAll();
-//						MainFrame.panel = new DotsAndLines(MyFrame.game,MainFrame.map);
-//						MainFrame.StartPanel();
+						//						MyFrame.game = new Game(_Filename);
+						//						MainFrame.mainSplittedPane.invalidate();
+						//						MainFrame.mainSplittedPane.setVisible(false);
+						//						MainFrame.mainSplittedPane.removeAll();
+						//						MainFrame.panel = new DotsAndLines(MyFrame.game,MainFrame.map);
+						//						MainFrame.StartPanel();
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "This File is not .CSV file");
@@ -81,5 +98,11 @@ public class Menu extends JPanel{
 				}
 			}
 		});
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} 
+		catch ( Exception e) {
+			e.printStackTrace();
+		} 
 	}
 }

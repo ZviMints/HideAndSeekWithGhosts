@@ -11,7 +11,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
-
 import Game.Game;
 import Geom.Point3D;
 import Map.Map;
