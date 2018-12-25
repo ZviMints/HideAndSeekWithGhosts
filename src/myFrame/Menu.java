@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -67,7 +68,10 @@ public class Menu extends JPanel{
 				ta.setBounds(5,5,100,200);
 				ta.setText(stat.toString());
 				sp = new JScrollPane(ta,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-				sp.setBounds(0,0,700,500);
+				sp.setBounds(0,0,700,400);
+				JLabel info = new JLabel("Best:");
+				info.setBounds(200, 400, 500, 100);
+				frame.add(info);
 				frame.add(sp);
 
 			}});
