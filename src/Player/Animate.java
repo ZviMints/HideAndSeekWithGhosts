@@ -1,7 +1,5 @@
 package Player;
-import Geom.Point3D;
 import myFrame.GamePanel;
-import myFrame.Score;
 
 public class Animate extends Thread {
 	private GamePanel g;
@@ -13,12 +11,12 @@ public class Animate extends Thread {
 	public void run() {
 		while(!g.getFruitsList().isEmpty())
 		{
-			try { Thread.sleep(20);} // The animation wont run too fast				 
-			catch (InterruptedException e) {e.printStackTrace();} 
+			try { Thread.sleep(50);} // The animation wont run too fast				 
+			catch (InterruptedException e) {} 
 			g.update();
 				
 		}
-		g.started = false;
+		g.InGame = false;
 		g.play.stop();
 	}
 }

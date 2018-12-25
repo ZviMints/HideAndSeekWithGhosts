@@ -5,9 +5,13 @@
 package Player;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.List;
 
 import Coords.MyCoords;
 import Geom.Point3D;
+import Map.Map;
+import Objects.Box;
+import Objects.Ghost;
 
 public class Player {
 	/* * * * * * * * * * * * * *  Initialization Variables * * * * * * * * * * * * * * * */
@@ -15,6 +19,7 @@ public class Player {
 	private String _id;
 	private Image PlayerImage = Toolkit.getDefaultToolkit().getImage("./img/Player.png"); // Player image
 	public double ang = 30;
+	public boolean InDanger = false;
 	/* * * * * * * * * * * * * *  Constructor * * * * * * * * * * * * * * * */
 	public Player(Point3D p, String id)
 	{
@@ -46,5 +51,34 @@ public class Player {
 	}
 	public void setPlayerImage(Image playerImage) {
 		PlayerImage = playerImage;
+	}
+	/* * * * * * * * * * * * * *  intersect Ghosts * * * * * * * * * * * * * * * */
+	public boolean intersectGhost(List<Ghost> GhostsList, Map map) {
+		for(int i=0 ; i<GhostsList.size(); i++)
+		{
+			Ghost g = GhostsList.get(i);
+			Point3D g_p = map.getPixelFromCord((g.getP()));
+			Point3D p_p = map.getPixelFromCord(this.getP());
+			double eps = 2;
+			if(p_p.equals(g_p,eps))
+			{
+				return true;	
+			}
+		}
+		return false;
+	}
+	/* * * * * * * * * * * * * *  intersect Box * * * * * * * * * * * * * * * */
+	public boolean intersectBox(List<Box> BoxsList, Map map) {
+		for(int i=0 ; i<BoxsList.size(); i++)
+		{
+			Box b = BoxsList.get(i);
+			Point3D b_p0 = map.getPixelFromCord(b.getP0());
+			Point3D b_p1 = map.getPixelFromCord(b.getP1());
+			Point3D p = map.getPixelFromCord(this.getP());
+			double eps = 13;
+			if( p.x() >= b_p0.x() - eps && p.x() <= b_p1.x() + eps  && p.y() >= b_p1.y() - eps && p.y() < b_p0.y() + eps )
+				return true;
+		}
+		return false;
 	}
 }

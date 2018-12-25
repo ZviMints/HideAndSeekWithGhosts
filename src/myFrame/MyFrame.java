@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Frame;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -34,6 +35,7 @@ public class MyFrame extends JPanel
 	private static GamePanel panel;
 	public static Box box;
 	private static Menu menu;
+	private static Frame frame;
 
 	/* * * * * * * * * * * * * * * * * * Constructors * * * * * * * * * * * * * * * */
 	public MyFrame(String path)
@@ -52,21 +54,21 @@ public class MyFrame extends JPanel
 			p01 = new Point3D(Double.parseDouble(s[5]),Double.parseDouble(s[6]),Double.parseDouble(s[7]));
 			p00 = new Point3D(p01.x(),p10.y(),0);
 			p11 = new Point3D(p10.x(),p01.y(),0);
-			map = new Map("./img/Background.png", p00, p01, p10, p11, 900,500); 
+			map = new Map("./img/Background.png", p00, p01, p10, p11, 900,450); 
 			// NOTE: 2 Points p10,p01 is Enough! but we did for 4 points.
 			// ******** Game ******** ///
 			game = new Game(path);
 
 			// ******** Game Panel ******** ///
-			panel = new GamePanel(game, map, play);
-			panel.setBorder(new LineBorder(Color.CYAN,3));
-			panel.setPreferredSize( new Dimension(900, 500) );
-
+			panel = new GamePanel(game,map, play);
+			panel.setBorder(new LineBorder(Color.BLACK,3));
+			panel.setPreferredSize( new Dimension(900, 450) );
+			frame.setResizable(true);
 		}
 		else {
 			panel = new GamePanel();
-			panel.setBorder(new LineBorder(Color.CYAN,3));
-			panel.setPreferredSize( new Dimension(900, 500) );
+			panel.setBorder(new LineBorder(Color.BLACK,3));
+			panel.setPreferredSize( new Dimension(900, 450) );
 		}
 
 		// ******** GUI ******** ///
@@ -88,9 +90,8 @@ public class MyFrame extends JPanel
 		setLayout( new BorderLayout() );
 		add(panel, BorderLayout.NORTH);
 		add(box, BorderLayout.CENTER);
+		
 	}
-
-
 	public MyFrame() 
 	{
 		startPanel(null);
@@ -98,15 +99,15 @@ public class MyFrame extends JPanel
 	/* * * * * * * * * * * * * * Create And Show GUI * * * * * * * * * * * * * * * */   
 	private static void createAndShowGUI()
 	{
-		JFrame frame = new JFrame("T&O Exercise 4");
+		frame = new JFrame("T&O Exercise 4");
 		ImageIcon icon = new ImageIcon("./img/icon.png"); // Set Icon to Frame
 		frame.setIconImage(icon.getImage()); // Set Icon to Frame
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		((JFrame) frame).setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(new MyFrame());
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible( true );
-		//		frame.setResizable(false);
+		frame.setResizable(false);
 
 
 		/* * * * * * * * * * * * * * Make Resize able - Panel * * * * * * * * * * * * * * * */   

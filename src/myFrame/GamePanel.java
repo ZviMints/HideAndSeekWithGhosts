@@ -6,11 +6,15 @@
 package myFrame;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import Coords.MyCoords;
 import Game.Game;
@@ -38,16 +42,19 @@ public class GamePanel extends JPanel implements MouseListener{
 	private Map map; // Map of current game 
 	private double _ratio; // Ratio from scale the map (Paint Objects)
 	public Play play;
-	public volatile boolean started = false;
 	private boolean LoadedGame;
+	private Image StartImage = Toolkit.getDefaultToolkit().getImage("./img/StartImage.png");
+
+	public volatile boolean InGame = false;
+	public Animate _thread;
+	public Thread _timer;
+
 	/* * * * * * * * * * * * * * * * * *   Setters and Getters * * * * * * * * * * * * * * * */
 	public List<Fruit> getFruitsList() { return FruitsList; }
 	public void Refresh() { this._ratio = (map.getWidth() + map.getHeight())/(double)(700 + 637);}
+	public boolean HasPlayer() { return player != null; }
 
 	/* * * * * * * * * * * * * * * * * *   Constructor * * * * * * * * * * * * * * * */
-	public GamePanel() {
-		this.LoadedGame=false;
-	}
 	public GamePanel(Game game, Map map, Play play)
 	{	
 		this.game = game;
@@ -63,12 +70,15 @@ public class GamePanel extends JPanel implements MouseListener{
 		addMouseListener(this); // Mouse Clicks
 		setFocusable(true);
 	}
+	public GamePanel() {
+		this.LoadedGame = false;
+	}
 	/* * * * * * * * * * * * * * * Main Paint Method! * * * * * * * * * * * * * * * */
 	public void paintComponent(Graphics g)
 	{        
 		if(LoadedGame) {
 			super.paintComponent(g);
-			g.drawImage(this.map.getBgImage() , 0, 0, map.getWidth(),map.getHeight(), this); // Regular Map
+			g.drawImage(this.map.getMapImage() , 0, 0, map.getWidth(),map.getHeight(), this); // Regular Map
 
 			// ************ Print Player ************ //
 			g.setColor(Color.WHITE);
@@ -78,6 +88,10 @@ public class GamePanel extends JPanel implements MouseListener{
 				Point3D p_pixels = map.getPixelFromCord(p);
 				int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
 				g.drawImage(player.getPlayerImage(), x - (int)(_ratio*12.5), y - (int)(_ratio*12.5),(int)(25*_ratio), (int)(25*_ratio), this);
+				if(player.InDanger)
+				{
+					g.drawImage(this.map.getMapImageHover() , 0, 0, map.getWidth(),map.getHeight(), this); // Regular Map
+				}
 			}
 			// ************ Print all Boxs ************ //
 			g.setColor(Color.BLACK);
@@ -133,6 +147,10 @@ public class GamePanel extends JPanel implements MouseListener{
 				g.drawImage(ghost.getGhostImage(), x - (int)(_ratio*12.5), y - (int)(_ratio*12.5),(int)(25*_ratio), (int)(25*_ratio), this);
 			}
 		}
+		else
+		{
+			g.drawImage(StartImage , 0, 0, 900,450, this); // Regular Map
+		}
 	}
 
 	/* * * * * * * * * * * * * * * * * * Mouse Listener * * * * * * * * * * * * * * * */
@@ -141,9 +159,17 @@ public class GamePanel extends JPanel implements MouseListener{
 		if(e.getButton() == MouseEvent.BUTTON1 && player == null) // Left Click
 		{
 			player = new Player(map.getCordFromPixel(new Point3D(e.getX(),e.getY(),0)),"Tzvi and Or Player");
-			repaint();
+			if(player.intersectBox(BoxsList, map))
+			{
+				JOptionPane.showMessageDialog(null, "Cant Put Player Over Box!");
+				player = null;
+			}
+			else
+			{
+				repaint();
+			}
 		}
-		if(started)
+		if(InGame)
 		{
 			MyCoords coords = new MyCoords();
 			Point3D clicked = map.getCordFromPixel(new Point3D(e.getX(),e.getY(),0));
@@ -162,25 +188,39 @@ public class GamePanel extends JPanel implements MouseListener{
 		if(player != null)
 		{
 			play.setInitLocation(player.getP().x(),player.getP().y());
-			started = true;
+			InGame = true;
 			play.start();
-			Animate _thread = new Animate(this);
+			_thread = new Animate(this);
 			_thread.start();
-			Thread timer = new Thread(){
+			Thread _timer = new Thread(){
 				public void run(){
-					try {
-						sleep((long) Play.MAX_TIME);
+					while(true)
+					{
+						int start_index = play.getStatistics().indexOf(" Time left") + 11;
+						int end_index = play.getStatistics().indexOf(" kill") - 1;
+						double time = Double.parseDouble(play.getStatistics().substring(start_index, end_index));
+						if(time == 0.0 ) break;
+						try {
+							sleep(10);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+					if(InGame == true)
+					{
+						update();
 						_thread.stop();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+						InGame = false;
+						JOptionPane.showMessageDialog(null, "Game Over \nReason: 0.0 Time left");
 					}
 				}
 			};
-			timer.start();
+			_timer.start();
 		}
 	}
 	/* * * * * * * * * * * * * * * * * *  update * * * * * * * * * * * * * * * */
 	public void update() {
+		Point3D p = map.getPixelFromCord(player.getP());
 		PacmansList.clear();
 		GhostsList.clear();
 		FruitsList.clear();
@@ -189,7 +229,22 @@ public class GamePanel extends JPanel implements MouseListener{
 		for(int a=0 ; a<board_data.size(); a++) {
 			UpdateGame(board_data.get(a));
 		}
-		play.rotate(player.ang);
+
+
+		if(p.x() >= 17.5 && p.x() <= map.getWidth() - 18.5 && p.y() >= 17.5 && p.y() <= map.getHeight() - 17.5)  // Good Place
+		{
+			if(player.intersectGhost(GhostsList,map) || player.intersectBox(BoxsList,map))
+				player.InDanger = true;
+
+			else
+				player.InDanger = false;
+
+			play.rotate(player.ang);
+		}
+		else 
+		{
+			player.InDanger = true;
+		}
 		repaint();
 		Score.updateScore(play.getStatistics());
 	}

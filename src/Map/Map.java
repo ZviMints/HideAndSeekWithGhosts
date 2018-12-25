@@ -15,8 +15,9 @@ public class Map {
 	/* * * * * * * * * * * * * * * * * * Private constants * * * * * * * * * * * * * * * */
 	private int width;
 	private int height;
-	private Image bgImage;
-	private Image bgHoverDanger = Toolkit.getDefaultToolkit().getImage("./img/background_danger.png");
+	private Image MapBackground;
+	private Image MapBackgroundHover = Toolkit.getDefaultToolkit().getImage("./img/background_danger.png");
+
 	// p00     p01 //
 	//     **      //
 	//     **      //
@@ -27,7 +28,7 @@ public class Map {
 	private Point3D p11; // we left 4 points to next version
 	/* * * * * * * * * * * * * * * * * * Constructor * * * * * * * * * * * * * * * */
 	public Map(String ImagePath, Point3D p00, Point3D p01, Point3D p10, Point3D p11, int d, int e) {
-		this.bgImage = Toolkit.getDefaultToolkit().getImage(ImagePath);
+		this.MapBackground = Toolkit.getDefaultToolkit().getImage(ImagePath);
 		this.p00 = p00;
 		this.p01= p01;
 		this.p10 = p10;
@@ -40,10 +41,10 @@ public class Map {
 	public void setHeight(int e) { this.height = e;}
 	public int getWidth() { return width; }
 	public void setWidth(int d) { this.width = d;}
-	public Image getBgImage() { return bgImage; }
-	public void setBgImage(Image bgImage) { this.bgImage = bgImage; }
-	public Image getBgImageHover() { return bgHoverDanger; }
-	public void setBgImageHover(Image bgHoverDanger) { this.bgHoverDanger = bgHoverDanger; }
+	public Image getMapImage() { return MapBackground; }
+	public void setMapImage(Image bgImage) { this.MapBackground = bgImage; }
+	public Image getMapImageHover() { return MapBackgroundHover; }
+
 
 	/* * * * * * * * * * * * * * * * * * GetCord * * * * * * * * * * * * * * * */
 	/**
