@@ -13,7 +13,7 @@ public class Animate extends Thread {
 	public void run() {
 		while(!g.getFruitsList().isEmpty())
 		{
-			try { Thread.sleep(95);} // The animation wont run too fast				 
+			try { Thread.sleep(35);} // The animation wont run too fast				 
 			catch (InterruptedException e) {e.printStackTrace();} 
 			g.update();
 				

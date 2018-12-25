@@ -91,7 +91,8 @@ public class GamePanel extends JPanel implements MouseListener{
 			int width = (int) Math.abs(x0 - x1); 
 			int height = (int) Math.abs(y0 - y1);
 			
-			g.fillRect(x0 , y1, width, height);
+			g.fillRect(x0 , y1, width , height);
+
 		}
 		// ************ Print all Fruits ************ //
 		g.setColor(Color.GREEN);
@@ -132,9 +133,7 @@ public class GamePanel extends JPanel implements MouseListener{
 	public void mousePressed(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON1 && player == null) // Left Click
 		{
-			System.out.println(map.getCordFromPixel(new Point3D(e.getX(),e.getY())));
 			player = new Player(map.getCordFromPixel(new Point3D(e.getX(),e.getY(),0)),"Tzvi and Or Player");
-			System.out.println(player.getP());
 			repaint();
 		}
 		if(started)

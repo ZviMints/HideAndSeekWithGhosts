@@ -24,11 +24,13 @@ public class Statistics {
 			//Select data
 			String allCustomersQuery = "SELECT * FROM logs;";
 			ResultSet resultSet = statement.executeQuery(allCustomersQuery);
-			ans+= "FirstID\t\tSecondID\tThirdID\t\tLogTime\t\t\t\tPoint\t\tSomeDouble";
-			ans+= "\n";
+			ans+= "FirstID\t\t\tSecondID\tThirdID\t\tLogTime\t\t\t\tPoint\t\tSomeDouble";
+			ans+= "\n\n";
 			
 			while(resultSet.next())
 			{
+				if(resultSet.getInt("FirstID") == 314977489 || resultSet.getInt("FirstID") == 311226617)
+				{
 				ans+= resultSet.getInt("FirstID")+"\t\t" +
 						resultSet.getInt("SecondID")+"\t\t" +
 						resultSet.getInt("ThirdID")+"\t\t" +
@@ -36,6 +38,7 @@ public class Statistics {
 						resultSet.getDouble("Point") +"\t\t" +
 						resultSet.getDouble("SomeDouble");
 				ans+= "\n";
+				}
 			}
 			
 			resultSet.close();		

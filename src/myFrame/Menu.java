@@ -4,6 +4,7 @@
  * @version 4.0
  */
 package myFrame;
+import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -60,13 +61,13 @@ public class Menu extends JPanel{
 				frame.setLayout(null);
 				frame.setVisible(true);
 				frame.setResizable(false);
-				frame.setSize(500,500);
+				frame.setBounds(200,20,700,500);
 				Statistics stat = new Statistics();
 				ta = new JTextArea();
 				ta.setBounds(5,5,100,200);
 				ta.setText(stat.toString());
-				sp= new JScrollPane(ta,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-				sp.setBounds(0,0,488,465);
+				sp = new JScrollPane(ta,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+				sp.setBounds(0,0,700,500);
 				frame.add(sp);
 
 			}});
