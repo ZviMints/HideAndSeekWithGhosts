@@ -1,6 +1,7 @@
 package Player;
 import Geom.Point3D;
 import myFrame.GamePanel;
+import myFrame.Score;
 
 public class Animate extends Thread {
 	private GamePanel g;
@@ -18,5 +19,6 @@ public class Animate extends Thread {
 				
 		}
 		g.started = false;
+		g.play.stop();
 	}
 }

@@ -92,8 +92,9 @@ public class GamePanel extends JPanel implements MouseListener{
 
 		// ************ Print all Pacmans ************ //
 		g.setColor(Color.YELLOW);
-		for(Pacman pacman : PacmansList)
+		for(int i=0; i<PacmansList.size() ;i++)
 		{
+			Pacman pacman = PacmansList.get(i);
 			Point3D p = pacman.getP();
 			Point3D p_pixels = map.getPixelFromCord(p);
 			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
@@ -102,8 +103,9 @@ public class GamePanel extends JPanel implements MouseListener{
 
 		// ************ Print all Ghosts ************ //
 		g.setColor(Color.RED);
-		for(Ghost ghost : GhostsList)
+		for(int i=0; i<GhostsList.size() ;i++)
 		{
+			Ghost ghost = GhostsList.get(i);
 			Point3D p = ghost.getP();
 			Point3D p_pixels = map.getPixelFromCord(p);
 			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
@@ -140,8 +142,19 @@ public class GamePanel extends JPanel implements MouseListener{
 			play.setInitLocation(player.getP().x(),player.getP().y());
 			started = true;
 			play.start();
-			Animate thread = new Animate(this);
-			thread.start();
+			Animate _thread = new Animate(this);
+			_thread.start();
+			Thread timer = new Thread(){
+			    public void run(){
+			    	try {
+						sleep(30769);
+						_thread.stop();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+			    }
+			  };
+			  timer.start();
 		}
 	}
 	/* * * * * * * * * * * * * * * * * *  update * * * * * * * * * * * * * * * */
@@ -154,8 +167,10 @@ public class GamePanel extends JPanel implements MouseListener{
 		for(int a=0 ; a<board_data.size(); a++) {
 			UpdateGame(board_data.get(a));
 		}
+		System.out.println("HERE");
 		play.rotate(player.ang);
 		repaint();
+		Score.updateScore(play.getStatistics());
 	}
 	/* * * * * * * * * * * * * * * * * *  update Game * * * * * * * * * * * * * * * */
 	private void UpdateGame(String input) {

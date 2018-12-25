@@ -34,6 +34,7 @@ public class MyFrame extends JPanel
 	private static Play play; // VS computer 
 	private static GamePanel panel;
 	private static Box box;
+	private static Menu menu;
 
 	/* * * * * * * * * * * * * * * * * * Constructors * * * * * * * * * * * * * * * */
 	public MyFrame(String path)
@@ -54,22 +55,23 @@ public class MyFrame extends JPanel
 		
 		// ******** Game Panel ******** ///
 		panel = new GamePanel(game, map, play);
-		panel.setBorder(new LineBorder(Color.BLACK,5));
+		panel.setBorder(new LineBorder(Color.RED,3));
 		panel.setPreferredSize( new Dimension(900, 500) );
 		
 		// ******** GUI ******** ///
 		box = Box.createHorizontalBox();
 		
-		Menu menu = new Menu(panel);
-		menu.setBackground( Color.GREEN );
-		menu.setPreferredSize( new Dimension(600, 100) );
+		menu = new Menu(panel);
+		menu.setPreferredSize( new Dimension(460, 100) );
 		menu.setMaximumSize( menu.getPreferredSize() );
+		menu.setLayout(null);
 		box.add( menu );
 
 		Score score = new Score();
-		score.setBackground( Color.CYAN );
-		score.setPreferredSize( new Dimension(300, 100) );
+		score.setPreferredSize( new Dimension(440, 100) );
 		score.setMinimumSize( score.getPreferredSize() );
+		score.setLayout(null);
+
 		box.add( score );
 
 		setLayout( new BorderLayout() );
@@ -91,12 +93,14 @@ public class MyFrame extends JPanel
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible( true );
+		frame.setResizable(false);
+
+
 		/* * * * * * * * * * * * * * Make Resize able - Panel * * * * * * * * * * * * * * * */   
 		frame.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
-				if(frame.getSize().height < 536)
-				map.setHeight(frame.getSize().height - 35);
+				map.setHeight(panel.getSize().height);
 				map.setWidth(panel.getSize().width);
 				panel.Refresh();
 			}
