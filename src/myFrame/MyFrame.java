@@ -32,35 +32,47 @@ public class MyFrame extends JPanel
 	private static Point3D p11;
 	private static Play play; // VS computer 
 	private static GamePanel panel;
-	private static Box box;
+	public static Box box;
 	private static Menu menu;
 
 	/* * * * * * * * * * * * * * * * * * Constructors * * * * * * * * * * * * * * * */
 	public MyFrame(String path)
 	{
-		// ******** Play ******** ///
-		play = new Play(path);
-		// ******** Map ******** ///
-		String map_data = play.getBoundingBox();
-		String[] s = map_data.split(",");
-		p10 = new Point3D(Double.parseDouble(s[2]),Double.parseDouble(s[3]),Double.parseDouble(s[4]));
-		p01 = new Point3D(Double.parseDouble(s[5]),Double.parseDouble(s[6]),Double.parseDouble(s[7]));
-		p00 = new Point3D(p01.x(),p10.y(),0);
-		p11 = new Point3D(p10.x(),p01.y(),0);
-		map = new Map("./img/Background.png", p00, p01, p10, p11, 900,500); 
-		// NOTE: 2 Points p10,p01 is Enough! but we did for 4 points.
-		// ******** Game ******** ///
-		game = new Game(path);
-		
-		// ******** Game Panel ******** ///
-		panel = new GamePanel(game, map, play);
-		panel.setBorder(new LineBorder(Color.CYAN,3));
-		panel.setPreferredSize( new Dimension(900, 500) );
-		
+		startPanel(path);
+	}
+	public void startPanel(String path) 
+	{
+		if(path != null) {
+			// ******** Play ******** ///
+			play = new Play(path);
+			// ******** Map ******** ///
+			String map_data = play.getBoundingBox();
+			String[] s = map_data.split(",");
+			p10 = new Point3D(Double.parseDouble(s[2]),Double.parseDouble(s[3]),Double.parseDouble(s[4]));
+			p01 = new Point3D(Double.parseDouble(s[5]),Double.parseDouble(s[6]),Double.parseDouble(s[7]));
+			p00 = new Point3D(p01.x(),p10.y(),0);
+			p11 = new Point3D(p10.x(),p01.y(),0);
+			map = new Map("./img/Background.png", p00, p01, p10, p11, 900,500); 
+			// NOTE: 2 Points p10,p01 is Enough! but we did for 4 points.
+			// ******** Game ******** ///
+			game = new Game(path);
+
+			// ******** Game Panel ******** ///
+			panel = new GamePanel(game, map, play);
+			panel.setBorder(new LineBorder(Color.CYAN,3));
+			panel.setPreferredSize( new Dimension(900, 500) );
+
+		}
+		else {
+			panel = new GamePanel();
+			panel.setBorder(new LineBorder(Color.CYAN,3));
+			panel.setPreferredSize( new Dimension(900, 500) );
+		}
+
 		// ******** GUI ******** ///
 		box = Box.createHorizontalBox();
-		
-		menu = new Menu(panel);
+
+		menu = new Menu(panel , this);
 		menu.setPreferredSize( new Dimension(460, 100) );
 		menu.setMaximumSize( menu.getPreferredSize() );
 		menu.setLayout(null);
@@ -77,9 +89,11 @@ public class MyFrame extends JPanel
 		add(panel, BorderLayout.NORTH);
 		add(box, BorderLayout.CENTER);
 	}
+
+
 	public MyFrame() 
 	{
-		this("./data/Ex4_OOP_example8.csv");
+		startPanel(null);
 	}
 	/* * * * * * * * * * * * * * Create And Show GUI * * * * * * * * * * * * * * * */   
 	private static void createAndShowGUI()
@@ -92,20 +106,22 @@ public class MyFrame extends JPanel
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible( true );
-//		frame.setResizable(false);
+		//		frame.setResizable(false);
 
 
 		/* * * * * * * * * * * * * * Make Resize able - Panel * * * * * * * * * * * * * * * */   
 		frame.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
-				map.setHeight(panel.getSize().height);
-				map.setWidth(panel.getSize().width);
-				panel.Refresh();
+				if(map!=null) {
+					map.setHeight(panel.getSize().height);
+					map.setWidth(panel.getSize().width);
+					panel.Refresh();
+				}
 			}
 		});
 	}
-	
+
 	/* * * * * * * * * * * * * * Main * * * * * * * * * * * * * * * */   
 	public static void main(String[] args)
 	{

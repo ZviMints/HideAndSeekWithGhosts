@@ -7,7 +7,7 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry kind="lib" path="C:/Users/Tzvi Mints/Desktop/Ex4_OOP/Ex4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Tzvi Mints/Desktop/Ex4_OOP/mysql-connector-java-5.1.47.jar"/>
+	<classpathentry kind="lib" path="C:/Users/אור/Desktop/Ex4_OOP/Ex4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/אור/Desktop/Ex4_OOP/mysql-connector-java-5.1.47.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

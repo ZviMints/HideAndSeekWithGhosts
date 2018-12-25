@@ -30,14 +30,16 @@ public class Menu extends JPanel{
 	private JFrame frame;
 	private JTextArea ta;
 	private JScrollPane sp;
+	private MyFrame myFrame;
 	private static final long Tzvi_ID = 314977489;
 	private static final long Or_ID = 311226617;
 
 	/* * * * * * * * * * * * * * Setters and Getters * * * * * * * * * * * * * * * */
 
 	/* * * * * * * * * * * * * *  Constructor  * * * * * * * * * * * * * * * */
-	public Menu(GamePanel panel)
+	public Menu(GamePanel panel , MyFrame myFrame)
 	{
+		this.myFrame = myFrame;
 		this.panel = panel;
 		initialize();
 	}
@@ -75,7 +77,7 @@ public class Menu extends JPanel{
 				frame.add(sp);
 
 			}});
-		
+
 		// **** Start Mouse Listener ***** //
 		Start.addMouseListener(new MouseAdapter() { 
 			public void mouseClicked(MouseEvent e) {
@@ -100,12 +102,15 @@ public class Menu extends JPanel{
 					String _Filename = chooser.getSelectedFile().getAbsolutePath();
 					if(_Filename.contains(".csv")) 
 					{
-						//						MyFrame.game = new Game(_Filename);
-						//						MainFrame.mainSplittedPane.invalidate();
-						//						MainFrame.mainSplittedPane.setVisible(false);
-						//						MainFrame.mainSplittedPane.removeAll();
-						//						MainFrame.panel = new DotsAndLines(MyFrame.game,MainFrame.map);
-						//						MainFrame.StartPanel();
+						
+						myFrame.box.invalidate(); 
+						myFrame.box.setVisible(false); 
+						myFrame.box.removeAll();   // remove box
+						panel.invalidate();
+						panel.setVisible(false);
+						panel.removeAll(); // remove panel
+						myFrame.startPanel(_Filename); 
+//						panel.updateUI(); 
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "This File is not .CSV file");
@@ -119,5 +124,8 @@ public class Menu extends JPanel{
 		catch ( Exception e) {
 			e.printStackTrace();
 		} 
+	}
+	public void updaepanel(GamePanel panel) {
+		this.panel = panel;
 	}
 }

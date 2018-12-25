@@ -39,17 +39,22 @@ public class GamePanel extends JPanel implements MouseListener{
 	private double _ratio; // Ratio from scale the map (Paint Objects)
 	public Play play;
 	public volatile boolean started = false;
+	private boolean LoadedGame;
 	/* * * * * * * * * * * * * * * * * *   Setters and Getters * * * * * * * * * * * * * * * */
 	public List<Fruit> getFruitsList() { return FruitsList; }
 	public void Refresh() { this._ratio = (map.getWidth() + map.getHeight())/(double)(700 + 637);}
 
 	/* * * * * * * * * * * * * * * * * *   Constructor * * * * * * * * * * * * * * * */
+	public GamePanel() {
+		this.LoadedGame=false;
+	}
 	public GamePanel(Game game, Map map, Play play)
 	{	
 		this.game = game;
 		this.map = map;
 		this.play = play;
 		this._ratio = (map.getWidth() + map.getHeight())/(double)(700 + 637);
+		this.LoadedGame = true;
 		FruitsList = this.game.getFruitList();
 		PacmansList = this.game.getPacmanList();
 		GhostsList = this.game.getGhostList();
@@ -61,70 +66,72 @@ public class GamePanel extends JPanel implements MouseListener{
 	/* * * * * * * * * * * * * * * Main Paint Method! * * * * * * * * * * * * * * * */
 	public void paintComponent(Graphics g)
 	{        
-		super.paintComponent(g);
-		g.drawImage(this.map.getBgImage() , 0, 0, map.getWidth(),map.getHeight(), this); // Regular Map
+		if(LoadedGame) {
+			super.paintComponent(g);
+			g.drawImage(this.map.getBgImage() , 0, 0, map.getWidth(),map.getHeight(), this); // Regular Map
 
-		// ************ Print Player ************ //
-		g.setColor(Color.WHITE);
-		if(this.player != null)
-		{
-			Point3D p = player.getP();
-			Point3D p_pixels = map.getPixelFromCord(p);
-			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
-			g.drawImage(player.getPlayerImage(), x - (int)(_ratio*12.5), y - (int)(_ratio*12.5),(int)(25*_ratio), (int)(25*_ratio), this);
-		}
-		// ************ Print all Boxs ************ //
-		g.setColor(Color.BLACK);
-		
-		for(int i = 0; i<BoxsList.size() ; i++)
-		{
-			Box box = BoxsList.get(i);
-			Point3D p0 = box.getP0();
-			Point3D p1 = box.getP1();
-			
-			Point3D p0_pixels = map.getPixelFromCord(p0);
-			Point3D p1_pixels = map.getPixelFromCord(p1);
-			
-			int x0 = (int) p0_pixels.x(); int y0 = (int) p0_pixels.y();
-			int x1 = (int) p1_pixels.x(); int y1 = (int) p1_pixels.y();
-			
-			int width = (int) Math.abs(x0 - x1); 
-			int height = (int) Math.abs(y0 - y1);
-			
-			g.fillRect(x0 , y1, width , height);
+			// ************ Print Player ************ //
+			g.setColor(Color.WHITE);
+			if(this.player != null)
+			{
+				Point3D p = player.getP();
+				Point3D p_pixels = map.getPixelFromCord(p);
+				int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
+				g.drawImage(player.getPlayerImage(), x - (int)(_ratio*12.5), y - (int)(_ratio*12.5),(int)(25*_ratio), (int)(25*_ratio), this);
+			}
+			// ************ Print all Boxs ************ //
+			g.setColor(Color.BLACK);
 
-		}
-		// ************ Print all Fruits ************ //
-		g.setColor(Color.GREEN);
-		for(int i=0 ; i <FruitsList.size() ; i++)
-		{
-			Fruit fruit = FruitsList.get(i);
-			Point3D p = fruit.getP();
-			Point3D p_pixels = map.getPixelFromCord(p);
-			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
-			g.drawImage(fruit.getFruitImage(), x - (int)(_ratio*10), y - (int)(_ratio*10),(int)(20*_ratio), (int)(20*_ratio), this);
-		}
+			for(int i = 0; i<BoxsList.size() ; i++)
+			{
+				Box box = BoxsList.get(i);
+				Point3D p0 = box.getP0();
+				Point3D p1 = box.getP1();
 
-		// ************ Print all Pacmans ************ //
-		g.setColor(Color.YELLOW);
-		for(int i=0; i<PacmansList.size() ;i++)
-		{
-			Pacman pacman = PacmansList.get(i);
-			Point3D p = pacman.getP();
-			Point3D p_pixels = map.getPixelFromCord(p);
-			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
-			g.drawImage(pacman.getPacmanImage(), x - (int)(_ratio*12.5), y - (int)(_ratio*12.5),(int)(25*_ratio), (int)(25*_ratio), this);
-		}
+				Point3D p0_pixels = map.getPixelFromCord(p0);
+				Point3D p1_pixels = map.getPixelFromCord(p1);
 
-		// ************ Print all Ghosts ************ //
-		g.setColor(Color.RED);
-		for(int i=0; i<GhostsList.size() ;i++)
-		{
-			Ghost ghost = GhostsList.get(i);
-			Point3D p = ghost.getP();
-			Point3D p_pixels = map.getPixelFromCord(p);
-			int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
-			g.drawImage(ghost.getGhostImage(), x - (int)(_ratio*12.5), y - (int)(_ratio*12.5),(int)(25*_ratio), (int)(25*_ratio), this);
+				int x0 = (int) p0_pixels.x(); int y0 = (int) p0_pixels.y();
+				int x1 = (int) p1_pixels.x(); int y1 = (int) p1_pixels.y();
+
+				int width = (int) Math.abs(x0 - x1); 
+				int height = (int) Math.abs(y0 - y1);
+
+				g.fillRect(x0 , y1, width , height);
+
+			}
+			// ************ Print all Fruits ************ //
+			g.setColor(Color.GREEN);
+			for(int i=0 ; i <FruitsList.size() ; i++)
+			{
+				Fruit fruit = FruitsList.get(i);
+				Point3D p = fruit.getP();
+				Point3D p_pixels = map.getPixelFromCord(p);
+				int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
+				g.drawImage(fruit.getFruitImage(), x - (int)(_ratio*10), y - (int)(_ratio*10),(int)(20*_ratio), (int)(20*_ratio), this);
+			}
+
+			// ************ Print all Pacmans ************ //
+			g.setColor(Color.YELLOW);
+			for(int i=0; i<PacmansList.size() ;i++)
+			{
+				Pacman pacman = PacmansList.get(i);
+				Point3D p = pacman.getP();
+				Point3D p_pixels = map.getPixelFromCord(p);
+				int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
+				g.drawImage(pacman.getPacmanImage(), x - (int)(_ratio*12.5), y - (int)(_ratio*12.5),(int)(25*_ratio), (int)(25*_ratio), this);
+			}
+
+			// ************ Print all Ghosts ************ //
+			g.setColor(Color.RED);
+			for(int i=0; i<GhostsList.size() ;i++)
+			{
+				Ghost ghost = GhostsList.get(i);
+				Point3D p = ghost.getP();
+				Point3D p_pixels = map.getPixelFromCord(p);
+				int x = (int) p_pixels.x(); int y = (int) p_pixels.y();
+				g.drawImage(ghost.getGhostImage(), x - (int)(_ratio*12.5), y - (int)(_ratio*12.5),(int)(25*_ratio), (int)(25*_ratio), this);
+			}
 		}
 	}
 
@@ -160,16 +167,16 @@ public class GamePanel extends JPanel implements MouseListener{
 			Animate _thread = new Animate(this);
 			_thread.start();
 			Thread timer = new Thread(){
-			    public void run(){
-			    	try {
-			    		sleep((long) Play.MAX_TIME);
+				public void run(){
+					try {
+						sleep((long) Play.MAX_TIME);
 						_thread.stop();
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-			    }
-			  };
-			  timer.start();
+				}
+			};
+			timer.start();
 		}
 	}
 	/* * * * * * * * * * * * * * * * * *  update * * * * * * * * * * * * * * * */
