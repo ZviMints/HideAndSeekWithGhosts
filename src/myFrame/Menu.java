@@ -9,10 +9,12 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 
 
@@ -23,6 +25,9 @@ public class Menu extends JPanel{
 	private  JButton Load; // Load button
 	private  JButton Statistics; // Statistics button
 	private GamePanel panel;
+	private JFrame frame;
+	private JTextArea ta;
+	private JScrollPane sp;
 	private static final long Tzvi_ID = 314977489;
 	private static final long Or_ID = 311226617;
 
@@ -51,12 +56,19 @@ public class Menu extends JPanel{
 
 		Statistics.addMouseListener(new MouseAdapter() { 		
 			public void mouseClicked(MouseEvent e)  {
+				frame = new JFrame();
+				frame.setLayout(null);
+				frame.setVisible(true);
+				frame.setResizable(false);
+				frame.setSize(500,500);
 				Statistics stat = new Statistics();
-				JTextArea ta = new JTextArea();
+				ta = new JTextArea();
+				ta.setBounds(5,5,100,200);
 				ta.setText(stat.toString());
-				ta.setEditable(false);
-				JScrollPane sp=new JScrollPane(ta,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-				JOptionPane.showMessageDialog(null, sp);
+				sp= new JScrollPane(ta,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+				sp.setBounds(0,0,488,465);
+				frame.add(sp);
+
 			}});
 		
 		// **** Start Mouse Listener ***** //
