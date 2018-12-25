@@ -147,7 +147,7 @@ public class GamePanel extends JPanel implements MouseListener{
 			Thread timer = new Thread(){
 			    public void run(){
 			    	try {
-						sleep(30769);
+			    		sleep(2000);
 						_thread.stop();
 					} catch (InterruptedException e) {
 						e.printStackTrace();
@@ -167,7 +167,6 @@ public class GamePanel extends JPanel implements MouseListener{
 		for(int a=0 ; a<board_data.size(); a++) {
 			UpdateGame(board_data.get(a));
 		}
-		System.out.println("HERE");
 		play.rotate(player.ang);
 		repaint();
 		Score.updateScore(play.getStatistics());
