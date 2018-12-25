@@ -3,6 +3,9 @@
  * @author Tzvi Mints and Or Abuhazira
  */
 package Objects;
+import java.awt.Image;
+import java.awt.Toolkit;
+
 import Geom.Point3D;
 
 public class Pacman {
@@ -11,6 +14,8 @@ public class Pacman {
 	private String _id;
 	private double _speed;
 	private double _radius;
+	private Image PacmanImage = Toolkit.getDefaultToolkit().getImage("./img/Pacman.png"); // Pacman image
+
 	/* * * * * * * * * * * * * *  Constructor * * * * * * * * * * * * * * * */
 	public Pacman(Point3D p, String id, double speed, double radius)
 	{
@@ -50,5 +55,11 @@ public class Pacman {
 	}
 	public void set_radius(double _radius) {
 		this._radius = _radius;
+	}
+	public Image getPacmanImage() {
+		return PacmanImage;
+	}
+	public void setPacmanImage(Image pacmanImage) {
+		PacmanImage = pacmanImage;
 	}	
 }

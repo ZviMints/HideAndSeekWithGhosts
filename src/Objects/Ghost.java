@@ -3,6 +3,9 @@
  * @author Tzvi Mints and Or Abuhazira
  */
 package Objects;
+import java.awt.Image;
+import java.awt.Toolkit;
+
 import Geom.Point3D;
 
 public class Ghost {
@@ -11,6 +14,8 @@ public class Ghost {
 	private String _id;
 	private double _speed;
 	private double _radius;
+	private Image GhostImage = Toolkit.getDefaultToolkit().getImage("./img/Ghost.png"); //  Ghost image
+
 	/* * * * * * * * * * * * * *  Constructor * * * * * * * * * * * * * * * */
 	public Ghost(Point3D p, String id, double speed, double radius)
 	{
@@ -50,5 +55,11 @@ public class Ghost {
 	}
 	public void set_radius(double _radius) {
 		this._radius = _radius;
+	}
+	public Image getGhostImage() {
+		return GhostImage;
+	}
+	public void setGhostImage(Image ghostImage) {
+		GhostImage = ghostImage;
 	}	
 }

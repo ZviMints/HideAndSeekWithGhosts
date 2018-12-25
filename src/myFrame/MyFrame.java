@@ -55,7 +55,7 @@ public class MyFrame extends JPanel
 		
 		// ******** Game Panel ******** ///
 		panel = new GamePanel(game, map, play);
-		panel.setBorder(new LineBorder(Color.RED,3));
+		panel.setBorder(new LineBorder(Color.CYAN,3));
 		panel.setPreferredSize( new Dimension(900, 500) );
 		
 		// ******** GUI ******** ///
@@ -80,7 +80,7 @@ public class MyFrame extends JPanel
 	}
 	public MyFrame() 
 	{
-		this("./data/Ex4_OOP_example1.csv");
+		this("./data/Ex4_OOP_example8.csv");
 	}
 	/* * * * * * * * * * * * * * Create And Show GUI * * * * * * * * * * * * * * * */   
 	private static void createAndShowGUI()
@@ -93,7 +93,7 @@ public class MyFrame extends JPanel
 		frame.pack();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible( true );
-		frame.setResizable(false);
+//		frame.setResizable(false);
 
 
 		/* * * * * * * * * * * * * * Make Resize able - Panel * * * * * * * * * * * * * * * */   

@@ -3,9 +3,14 @@
  * @author Tzvi Mints and Or Abuhazira
  */
 package Objects;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.util.Random;
+
 import Geom.Point3D;
 
 public class Fruit {
+	private Image FruitImage = Toolkit.getDefaultToolkit().getImage("./img/Fruit.png"); // Fruit image
 	/* * * * * * * * * * * * * *  Initialization Variables * * * * * * * * * * * * * * * */
 	private Point3D _p; // In [Lat,Lon,Alt]
 	private String _id;
@@ -15,6 +20,7 @@ public class Fruit {
 		this._id = id;
 		this._p = p;
 	}
+	
 	/* * * * * * * * * * * * * *  toString * * * * * * * * * * * * * * * */
 	public String toString()
 	{
@@ -36,7 +42,10 @@ public class Fruit {
 	public void set_id(String _id) {
 		this._id = _id;
 	}
-
-
-
+	public Image getFruitImage() {
+		return FruitImage;
+	}
+	public void setFruitImage(Image fruitImage) {
+		FruitImage = fruitImage;
+	}
 }
