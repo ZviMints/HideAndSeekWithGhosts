@@ -76,9 +76,24 @@ public class GamePanel extends JPanel implements MouseListener{
 			g.drawImage(player.getPlayerImage(), x, y,(int)(25*_ratio), (int)(25*_ratio), this);
 		}
 		// ************ Print all Boxs ************ //
-		for(Box box : BoxsList)
+		g.setColor(Color.BLACK);
+		
+		for(int i = 0; i<BoxsList.size() ; i++)
 		{
-
+			Box box = BoxsList.get(i);
+			Point3D p0 = box.getP0();
+			Point3D p1 = box.getP1();
+			
+			Point3D p0_pixels = map.getPixelFromCord(p0);
+			Point3D p1_pixels = map.getPixelFromCord(p1);
+			
+			int x0 = (int) p0_pixels.x(); int y0 = (int) p0_pixels.y();
+			int x1 = (int) p1_pixels.x(); int y1 = (int) p1_pixels.y();
+			
+			int width = (int) Math.abs(x0 - x1); // get width to print
+			int height = (int) Math.abs(y0 - y1); // get height to print
+			
+			g.fillRect(x0, y1, width, height);
 		}
 		// ************ Print all Fruits ************ //
 		g.setColor(Color.GREEN);

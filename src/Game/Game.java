@@ -86,12 +86,11 @@ public class Game{
 		Point3D p0 = new Point3D(Double.parseDouble(cr.get(2)) // Latitude
 				,Double.parseDouble(cr.get(3)) // Longitude
 				,Double.parseDouble(cr.get(4))); // Altitude
-		Point3D p1 = new Point3D(Double.parseDouble(cr.get(5)) // Latitude
+		Point3D p1 =new Point3D(Double.parseDouble(cr.get(5)) // Latitude
 				,Double.parseDouble(cr.get(6)) // Longitude
 				,Double.parseDouble(cr.get(7))); // Altitude
-		int width = (int) (p1.x() - p0.x());
-		int height = (int) (p0.y() - p1.y());
-		return new Box(id,(int)p0.x(),(int)p1.y(),width,height);
+	
+		return new Box(id, p0 , p1);
 	}
 	/* * * * * * * * * * * * * * * * * * MakeGhost * * * * * * * * * * * * * * * */
 	public Ghost MakeGhost(ArrayList<String> cr) {
