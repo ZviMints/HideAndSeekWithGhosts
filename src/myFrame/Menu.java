@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -57,6 +58,8 @@ public class Menu extends JPanel{
 		Start = new JButton("Start Game",start);
 		Start.setVisible(true);
 		Start.setBounds(10, 25, 100, 50);
+		Start.setBorder(BorderFactory.createEmptyBorder(0,0,0,0)); // Especially important
+
 		this.add(Start);
 
 		// **** Statistics JButton ***** //
@@ -64,6 +67,8 @@ public class Menu extends JPanel{
 		Statistics = new JButton("Statistics",statstics);
 		Statistics.setVisible(true);
 		Statistics.setBounds(130, 25, 100, 50);
+		Statistics.setBorder(BorderFactory.createEmptyBorder(0,0,0,0)); // Especially important
+
 		this.add(Statistics);
 
 		Statistics.addMouseListener(new MouseAdapter() { 		
@@ -105,7 +110,9 @@ public class Menu extends JPanel{
 		Load = new JButton("Load",load);
 		Load.setVisible(true);
 		Load.setBounds(240,25, 100, 50);
+		Load.setBorder(BorderFactory.createEmptyBorder(0,0,0,0)); // Especially important
 		this.add(Load);
+		
 
 		// **** Load Mouse Listener ***** //
 		Load.addMouseListener(new MouseAdapter() { 		
@@ -146,6 +153,8 @@ public class Menu extends JPanel{
 				Algo = new JButton("Algo",algo);
 				Algo.setVisible(true);
 				Algo.setBounds(350,25, 100, 50);
+				Algo.setBorder(BorderFactory.createEmptyBorder(0,0,0,0)); // Especially important
+
 				this.add(Algo);
 
 				// **** Algo Mouse Listener ***** //

@@ -38,6 +38,10 @@ public class Score extends JPanel {
 		score.setFont(new Font("Ariel",Font.BOLD, 12));
 
 		
+				
+		
+		
+		
 		add(date);
 		add(totaltime);
 		add(score);
