@@ -18,7 +18,7 @@ public class Player {
 	private Point3D _p; // In [Lat,Lon,Alt]
 	private String _id;
 	private Image PlayerImage = Toolkit.getDefaultToolkit().getImage("./img/Player.png"); // Player image
-	public double ang = 30;
+	public double ang = 361;
 	public boolean InDanger = false;
 	/* * * * * * * * * * * * * *  Constructor * * * * * * * * * * * * * * * */
 	public Player(Point3D p, String id)

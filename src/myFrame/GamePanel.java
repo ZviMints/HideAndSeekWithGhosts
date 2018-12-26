@@ -195,21 +195,21 @@ public class GamePanel extends JPanel implements MouseListener{
 			play.setInitLocation(player.getP().x(),player.getP().y());
 			GameMode = true;
 			play.start();
-			_thread = new Animate(this);
+			_thread = new Animate(this,player);
 			_thread.start();
 			Thread _timer = new Thread(){
 				public void run(){
 					while(true)
 					{
+						try {
+							sleep(2);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 						int start_index = play.getStatistics().indexOf(" Time left") + 11;
 						int end_index = play.getStatistics().indexOf(" kill") - 1;
 						double time = Double.parseDouble(play.getStatistics().substring(start_index, end_index));
 						if(time == 0.0 ) break;
-						try {
-							sleep(1);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
 					}
 					if(GameMode == true)
 					{
@@ -250,6 +250,8 @@ public class GamePanel extends JPanel implements MouseListener{
 		else 
 		{
 			player.InDanger = true;
+			play.rotate(0);
+			play.rotate(180);
 		}
 		repaint();
 		Score.updateScore(play.getStatistics());
