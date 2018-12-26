@@ -44,7 +44,7 @@ public class Menu extends JPanel{
 	private static boolean PleaseLoadNewGame = false;
 	private static final long Tzvi_ID = 314977489;
 	private static final long Or_ID = 311226617;
-	private JButton Mat;
+	private static JButton Mat;
 
 	/* * * * * * * * * * * * * * Setters and Getters * * * * * * * * * * * * * * * */
 
@@ -107,6 +107,7 @@ public class Menu extends JPanel{
 						panel.StartGame();
 						Start.setVisible(false);
 						Algo.setVisible(false);
+						Mat.setVisible(true);
 					}
 					else
 					{
@@ -180,6 +181,7 @@ public class Menu extends JPanel{
 					{
 						panel.play.setIDs(Tzvi_ID,Or_ID);
 						panel.StartAlgo();
+						Mat.setVisible(true);
 						Start.setVisible(false);
 						Algo.setVisible(false);
 					}
@@ -195,7 +197,7 @@ public class Menu extends JPanel{
 		// **** Matrix JButton ***** //
 				ImageIcon mat = new ImageIcon("./img/Mat.png"); // Set Icon to Button
 				Mat = new JButton("Mat",mat);
-				Mat.setVisible(true);
+				Mat.setVisible(false);
 				Mat.setBounds(455,25, 100, 50);
 				Mat.setBorder(BorderFactory.createEmptyBorder(0,0,0,0)); // Especially important
 
@@ -216,6 +218,7 @@ public class Menu extends JPanel{
 	public static void SetVisableTrue() {
 		Start.setVisible(true);
 		Algo.setVisible(true);
+		Mat.setVisible(false);
 		PleaseLoadNewGame = true;
 	}
 }
