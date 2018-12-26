@@ -44,11 +44,11 @@ public class GamePanel extends JPanel implements MouseListener{
 	private boolean LoadedGame;
 	private Image StartImage = Toolkit.getDefaultToolkit().getImage("./img/StartImage.png");
 	private static boolean AlgoMode = false;
-	
+
 	public volatile boolean GameMode = false;
 	public Animate _thread;
 	public Thread _timer;
-	
+
 
 	/* * * * * * * * * * * * * * * * * *   Setters and Getters * * * * * * * * * * * * * * * */
 	public List<Fruit> getFruitsList() { return FruitsList; }
@@ -110,12 +110,12 @@ public class GamePanel extends JPanel implements MouseListener{
 
 				int width = (int) Math.abs(x0 - x1); 
 				int height = (int) Math.abs(y0 - y1);
-				
+
 				g.drawImage(box.getBoxImage() ,x0-2, y1, 2, height, this);
 				g.drawImage(box.getBoxImage() ,x0+width, y1, 2, height, this);
 				g.drawImage(box.getBoxImage() ,x0, y1 - 2, width,2,this);
 				g.drawImage(box.getBoxImage() ,x0, y1 +  height, width, 2, this);
-	
+
 				g.fillRect(x0 , y1, width , height);
 
 			}
@@ -235,23 +235,39 @@ public class GamePanel extends JPanel implements MouseListener{
 		for(int a=0 ; a<board_data.size(); a++) {
 			UpdateGame(board_data.get(a));
 		}
-
-
 		if(p.x() >= 17.5 && p.x() <= map.getWidth() - 18.5 && p.y() >= 17.5 && p.y() <= map.getHeight() - 17.5)  // Good Place
 		{
-			if(player.intersectGhost(GhostsList,map) || player.intersectBox(BoxsList,map))
+			if(player.intersectGhost(GhostsList,map) || player.intersectBox(BoxsList,map)) // If Player Intersects one of the enemeys
 				player.InDanger = true;
-
 			else
 				player.InDanger = false;
 
 			play.rotate(player.ang);
+
 		}
-		else 
+		else  // The player intersects one of the Game Corners
 		{
 			player.InDanger = true;
-			play.rotate(0);
-			play.rotate(180);
+			if(p.x() < 17.5) // Left Corner
+			{
+				if(player.ang >= 0 && player.ang <=180) 
+					play.rotate(player.ang);
+			}
+			else if(p.x() > map.getWidth() - 18.5) // Right Corner
+			{
+				if(player.ang >= 180 && player.ang <= 360) 
+					play.rotate(player.ang);
+			}
+			else if(p.y() < 17.5 ) // TOP Corner
+			{
+				if(player.ang >= 90 && player.ang <= 260)
+					play.rotate(player.ang);
+			}
+			else if( p.y() > map.getHeight() - 17.5) // Bottom Corner
+			{
+				if((player.ang >= 260 && player.ang <= 360) || player.ang >= 0 && player.ang <=90)
+					play.rotate(player.ang);
+			}
 		}
 		repaint();
 		Score.updateScore(play.getStatistics());
