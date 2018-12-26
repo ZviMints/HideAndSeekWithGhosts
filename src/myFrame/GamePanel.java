@@ -95,7 +95,6 @@ public class GamePanel extends JPanel implements MouseListener{
 			}
 			// ************ Print all Boxs ************ //
 			g.setColor(Color.BLACK);
-
 			for(int i = 0; i<BoxsList.size() ; i++)
 			{
 				Box box = BoxsList.get(i);
@@ -110,8 +109,15 @@ public class GamePanel extends JPanel implements MouseListener{
 
 				int width = (int) Math.abs(x0 - x1); 
 				int height = (int) Math.abs(y0 - y1);
-
+				
+				g.drawImage(box.getBoxImage() ,x0-2, y1, 2, height, this);
+				g.drawImage(box.getBoxImage() ,x0+width, y1, 2, height, this);
+				g.drawImage(box.getBoxImage() ,x0, y1 - 2, width,2,this);
+				g.drawImage(box.getBoxImage() ,x0, y1 +  height, width, 2, this);
+	
 				g.fillRect(x0 , y1, width , height);
+
+
 
 			}
 			// ************ Print all Fruits ************ //

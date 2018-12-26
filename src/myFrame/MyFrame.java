@@ -117,6 +117,7 @@ public class MyFrame extends JPanel
 				if(map!=null) {
 					map.setHeight(panel.getSize().height);
 					map.setWidth(panel.getSize().width);
+					System.out.println("("+map.getHeight()+","+map.getWidth()+")");
 					panel.Refresh();
 				}
 			}
