@@ -1,5 +1,6 @@
 package Player;
 import myFrame.GamePanel;
+import myFrame.Menu;
 
 public class Animate extends Thread {
 	private GamePanel g;
@@ -16,7 +17,8 @@ public class Animate extends Thread {
 			g.update();
 				
 		}
-		g.InGame = false;
+		g.GameMode = false;
 		g.play.stop();
+		Menu.SetVisableTrue();
 	}
 }

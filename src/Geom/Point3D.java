@@ -240,4 +240,20 @@ public class Point3D implements Serializable
 			return true;
 		return false;
 	}
+
+	public double getX() {
+		return _x;
+	}
+
+	public void setX(double _x) {
+		this._x = _x;
+	}
+
+	public double getY() {
+		return _y;
+	}
+
+	public void setY(double _y) {
+		this._y = _y;
+	}
 }

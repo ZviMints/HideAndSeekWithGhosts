@@ -25,19 +25,23 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 
+import Geom.Point3D;
+import ShortestPathAlgo.Algo;
+
 
 public class Menu extends JPanel{
 	private static final long serialVersionUID = 1L;
 	/* * * * * * * * * * * * * *  Initialization Variables * * * * * * * * * * * * * * * */
-	private  JButton Start; // Start button
-	private  JButton Load; // Load button
-	private  JButton Statistics; // Statistics button
-	private GamePanel panel;
-	private JFrame frame;
-	private JTextArea ta;
-	private JScrollPane sp;
-	private MyFrame myFrame;
-	private JButton Algo;
+	private static  JButton Start; // Start button
+	private static JButton Load; // Load button
+	private static JButton Statistics; // Statistics button
+	private static GamePanel panel;
+	private static JFrame frame;
+	private static JTextArea ta;
+	private static JScrollPane sp;
+	private static MyFrame myFrame;
+	private static JButton Algo;
+	private static boolean PleaseLoadNewGame = false;
 	private static final long Tzvi_ID = 314977489;
 	private static final long Or_ID = 311226617;
 
@@ -96,9 +100,17 @@ public class Menu extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				if(panel.HasPlayer())
 				{
-				panel.play.setIDs(Tzvi_ID,Or_ID);
-				panel.StartGame();
-				Start.setVisible(false);
+					if(!PleaseLoadNewGame)
+					{
+						panel.play.setIDs(Tzvi_ID,Or_ID);
+						panel.StartGame();
+						Start.setVisible(false);
+						Algo.setVisible(false);
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Load new Game Please!");
+					}
 				}
 				else
 					JOptionPane.showMessageDialog(null, "Tap on the Map to Put Player First");
@@ -112,7 +124,7 @@ public class Menu extends JPanel{
 		Load.setBounds(240,25, 100, 50);
 		Load.setBorder(BorderFactory.createEmptyBorder(0,0,0,0)); // Especially important
 		this.add(Load);
-		
+
 
 		// **** Load Mouse Listener ***** //
 		Load.addMouseListener(new MouseAdapter() { 		
@@ -123,8 +135,9 @@ public class Menu extends JPanel{
 					String _Filename = chooser.getSelectedFile().getAbsolutePath();
 					if(_Filename.contains(".csv")) 
 					{
-						if(panel.InGame == false)
+						if(panel.GameMode == false)
 						{
+							PleaseLoadNewGame = false;
 							MyFrame.box.invalidate(); 
 							MyFrame.box.setVisible(false); 
 							MyFrame.box.removeAll();   // remove box
@@ -149,21 +162,43 @@ public class Menu extends JPanel{
 			e.printStackTrace();
 		} 
 		// **** Algo JButton ***** //
-				ImageIcon algo = new ImageIcon("./img/Algo.png"); // Set Icon to Button
-				Algo = new JButton("Algo",algo);
-				Algo.setVisible(true);
-				Algo.setBounds(350,25, 100, 50);
-				Algo.setBorder(BorderFactory.createEmptyBorder(0,0,0,0)); // Especially important
+		ImageIcon algo = new ImageIcon("./img/Algo.png"); // Set Icon to Button
+		Algo = new JButton("Algo",algo);
+		Algo.setVisible(true);
+		Algo.setBounds(350,25, 100, 50);
+		Algo.setBorder(BorderFactory.createEmptyBorder(0,0,0,0)); // Especially important
 
-				this.add(Algo);
+		this.add(Algo);
 
-				// **** Algo Mouse Listener ***** //
-				Algo.addMouseListener(new MouseAdapter() { 
-					
-				});	
-		
+		// **** Algo Mouse Listener ***** //
+		Algo.addMouseListener(new MouseAdapter() { 
+			public void mouseClicked(MouseEvent e) {
+				if(panel.HasPlayer())
+				{
+					if(!PleaseLoadNewGame)
+					{
+						panel.play.setIDs(Tzvi_ID,Or_ID);
+						panel.StartAlgo();
+						Start.setVisible(false);
+						Algo.setVisible(false);
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Load new Game Please!");
+					}
+				}
+				else
+					JOptionPane.showMessageDialog(null, "Tap on the Map to Put Player First");
+			}
+		});	
+
 	}
-	public void updaepanel(GamePanel panel) {
+	public void UpdatePanel(GamePanel panel) {
 		this.panel = panel;
+	}
+	public static void SetVisableTrue() {
+		Start.setVisible(true);
+		Algo.setVisible(true);
+		PleaseLoadNewGame = true;
 	}
 }

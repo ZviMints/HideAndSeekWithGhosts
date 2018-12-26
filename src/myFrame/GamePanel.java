@@ -38,16 +38,17 @@ public class GamePanel extends JPanel implements MouseListener{
 	private List<Ghost> GhostsList;	 // All the Ghosts
 	private Player player; // Player
 	private Game game; // This Game Database
-	private Algo algo; // Algorithm of the current game
 	private Map map; // Map of current game 
 	private double _ratio; // Ratio from scale the map (Paint Objects)
 	public Play play;
 	private boolean LoadedGame;
 	private Image StartImage = Toolkit.getDefaultToolkit().getImage("./img/StartImage.png");
-
-	public volatile boolean InGame = false;
+	private static boolean AlgoMode = false;
+	
+	public volatile boolean GameMode = false;
 	public Animate _thread;
 	public Thread _timer;
+	
 
 	/* * * * * * * * * * * * * * * * * *   Setters and Getters * * * * * * * * * * * * * * * */
 	public List<Fruit> getFruitsList() { return FruitsList; }
@@ -75,7 +76,7 @@ public class GamePanel extends JPanel implements MouseListener{
 	}
 	/* * * * * * * * * * * * * * * Main Paint Method! * * * * * * * * * * * * * * * */
 	public void paintComponent(Graphics g)
-	{        
+	{    
 		if(LoadedGame) {
 			super.paintComponent(g);
 			g.drawImage(this.map.getMapImage() , 0, 0, map.getWidth(),map.getHeight(), this); // Regular Map
@@ -116,8 +117,6 @@ public class GamePanel extends JPanel implements MouseListener{
 				g.drawImage(box.getBoxImage() ,x0, y1 +  height, width, 2, this);
 	
 				g.fillRect(x0 , y1, width , height);
-
-
 
 			}
 			// ************ Print all Fruits ************ //
@@ -175,7 +174,7 @@ public class GamePanel extends JPanel implements MouseListener{
 				repaint();
 			}
 		}
-		if(InGame)
+		if(GameMode)
 		{
 			MyCoords coords = new MyCoords();
 			Point3D clicked = map.getCordFromPixel(new Point3D(e.getX(),e.getY(),0));
@@ -194,7 +193,7 @@ public class GamePanel extends JPanel implements MouseListener{
 		if(player != null)
 		{
 			play.setInitLocation(player.getP().x(),player.getP().y());
-			InGame = true;
+			GameMode = true;
 			play.start();
 			_thread = new Animate(this);
 			_thread.start();
@@ -207,17 +206,18 @@ public class GamePanel extends JPanel implements MouseListener{
 						double time = Double.parseDouble(play.getStatistics().substring(start_index, end_index));
 						if(time == 0.0 ) break;
 						try {
-							sleep(10);
+							sleep(1);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
 					}
-					if(InGame == true)
+					if(GameMode == true)
 					{
 						update();
 						_thread.stop();
-						InGame = false;
+						GameMode = false;
 						JOptionPane.showMessageDialog(null, "Game Over \nReason: 0.0 Time left");
+						Menu.SetVisableTrue();
 					}
 				}
 			};
@@ -283,5 +283,14 @@ public class GamePanel extends JPanel implements MouseListener{
 			double z = Double.parseDouble(array.get(4));
 			player.setP(new Point3D(x,y,z));
 		}
+	}
+	public void StartAlgo() {
+		AlgoMode = true;
+		GameToMatrix mat = new GameToMatrix(player,FruitsList,BoxsList,GhostsList,PacmansList,map);
+		Algo algo = new Algo(mat);
+		int[] steps = algo.getNextStep();
+		Point3D next_step_pixels = new Point3D(steps[1],steps[0]);
+		Point3D next_step_coords = map.getCordFromPixel(next_step_pixels);
+		player.setP(next_step_coords);		
 	}
 }

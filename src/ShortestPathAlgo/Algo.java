@@ -4,8 +4,11 @@
  * @author Tzvi Mints and Or Abuhazira
  */
 package ShortestPathAlgo;
-import Game.Game;
+
+import myFrame.GameToMatrix;
+
 public class Algo {
+	char[][] mat;
 	/* * * * * * * * * * * * * *  Initialization Variables * * * * * * * * * * * * * * * */
 	
 
@@ -13,8 +16,13 @@ public class Algo {
 
 
 	/* * * * * * * * * * * * * *  Constructors * * * * * * * * * * * * * * * */
-	public Algo(Game game) // For the First time
+	public Algo(GameToMatrix matrix) // For the First time
 	{
-		
+		this.mat = matrix.getMat();
+	}
+	public int[] getNextStep()
+	{
+		int[] ans = new int[2];
+		return ans;
 	}
 }
