@@ -1,6 +1,7 @@
 package myFrame;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -27,12 +28,14 @@ public class Score extends JPanel {
 		box = new JLabel("Out of Box" + ": " + "0");
 
 		
-		date.setBounds(10,5, 500, 15);
-		totaltime.setBounds(10,20, 500, 15);
-		score.setBounds(10,35, 500, 15);
-		Timeleft.setBounds(10,50,500, 15);
-		killed.setBounds(10,65, 500, 15);
-		box.setBounds(10,80, 500, 15);
+		date.setBounds(15,20, 400, 15);
+		totaltime.setBounds(15,40, 400, 15);
+		score.setBounds(15,60, 400, 15);
+		Timeleft.setBounds(300,20,400, 15);
+		killed.setBounds(300,40, 400, 15);
+		box.setBounds(300,60, 400, 15);
+		Timeleft.setFont(new Font("Ariel",Font.BOLD, 12));
+		score.setFont(new Font("Ariel",Font.BOLD, 12));
 
 		
 		add(date);
