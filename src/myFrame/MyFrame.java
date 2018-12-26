@@ -75,13 +75,13 @@ public class MyFrame extends JPanel
 		box = Box.createHorizontalBox();
 
 		menu = new Menu(panel , this);
-		menu.setPreferredSize( new Dimension(460, 100) );
+		menu.setPreferredSize( new Dimension(560, 100) );
 		menu.setMaximumSize( menu.getPreferredSize() );
 		menu.setLayout(null);
 		box.add( menu );
 
 		Score score = new Score();
-		score.setPreferredSize( new Dimension(440, 100) );
+		score.setPreferredSize( new Dimension(340, 100) );
 		score.setMinimumSize( score.getPreferredSize() );
 		score.setLayout(null);
 

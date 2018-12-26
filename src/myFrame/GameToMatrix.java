@@ -87,6 +87,14 @@ public class GameToMatrix {
 			JScrollPane sp = new JScrollPane(ta);
 			sp.setBounds(0,0,mat[0].length,mat.length);
 			frame.add(sp);
+			frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			frame.addWindowListener(new java.awt.event.WindowAdapter() {
+			    @Override
+			    public void windowClosing(java.awt.event.WindowEvent e) {
+			        frame = null;
+			        e.getWindow().dispose();
+			    }
+			});
 		}
 		else
 		{

@@ -295,4 +295,7 @@ public class GamePanel extends JPanel implements MouseListener{
 		Point3D next_step_coords = map.getCordFromPixel(next_step_pixels);
 		player.setP(next_step_coords);		
 	}
+	public void ShowMatrix() {
+		GameToMatrix mat = new GameToMatrix(player,FruitsList,BoxsList,GhostsList,PacmansList,map);
+	}
 }

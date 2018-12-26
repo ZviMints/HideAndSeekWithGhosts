@@ -28,12 +28,12 @@ public class Score extends JPanel {
 		box = new JLabel("Out of Box" + ": " + "0");
 
 		
-		date.setBounds(15,20, 400, 15);
-		totaltime.setBounds(15,40, 400, 15);
-		score.setBounds(15,60, 400, 15);
-		Timeleft.setBounds(300,20,400, 15);
-		killed.setBounds(300,40, 400, 15);
-		box.setBounds(300,60, 400, 15);
+		date.setBounds(15,20, 200, 15);
+		totaltime.setBounds(15,40, 200, 15);
+		score.setBounds(15,60, 200, 15);
+		Timeleft.setBounds(212,20,200, 15);
+		killed.setBounds(212,40, 200, 15);
+		box.setBounds(212,60, 200, 15);
 		Timeleft.setFont(new Font("Ariel",Font.BOLD, 12));
 		score.setFont(new Font("Ariel",Font.BOLD, 12));
 

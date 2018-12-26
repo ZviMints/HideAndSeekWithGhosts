@@ -44,6 +44,7 @@ public class Menu extends JPanel{
 	private static boolean PleaseLoadNewGame = false;
 	private static final long Tzvi_ID = 314977489;
 	private static final long Or_ID = 311226617;
+	private JButton Mat;
 
 	/* * * * * * * * * * * * * * Setters and Getters * * * * * * * * * * * * * * * */
 
@@ -61,7 +62,7 @@ public class Menu extends JPanel{
 		ImageIcon start = new ImageIcon("./img/Start.png"); // Set Icon to Button
 		Start = new JButton("Start Game",start);
 		Start.setVisible(true);
-		Start.setBounds(10, 25, 100, 50);
+		Start.setBounds(5, 25, 100, 50);
 		Start.setBorder(BorderFactory.createEmptyBorder(0,0,0,0)); // Especially important
 
 		this.add(Start);
@@ -70,7 +71,7 @@ public class Menu extends JPanel{
 		ImageIcon statstics = new ImageIcon("./img/Stat.png"); // Set Icon to Button
 		Statistics = new JButton("Statistics",statstics);
 		Statistics.setVisible(true);
-		Statistics.setBounds(130, 25, 100, 50);
+		Statistics.setBounds(125, 25, 100, 50);
 		Statistics.setBorder(BorderFactory.createEmptyBorder(0,0,0,0)); // Especially important
 
 		this.add(Statistics);
@@ -121,7 +122,7 @@ public class Menu extends JPanel{
 		ImageIcon load = new ImageIcon("./img/Load.png"); // Set Icon to Button
 		Load = new JButton("Load",load);
 		Load.setVisible(true);
-		Load.setBounds(240,25, 100, 50);
+		Load.setBounds(235,25, 100, 50);
 		Load.setBorder(BorderFactory.createEmptyBorder(0,0,0,0)); // Especially important
 		this.add(Load);
 
@@ -165,7 +166,7 @@ public class Menu extends JPanel{
 		ImageIcon algo = new ImageIcon("./img/Algo.png"); // Set Icon to Button
 		Algo = new JButton("Algo",algo);
 		Algo.setVisible(true);
-		Algo.setBounds(350,25, 100, 50);
+		Algo.setBounds(345,25, 100, 50);
 		Algo.setBorder(BorderFactory.createEmptyBorder(0,0,0,0)); // Especially important
 
 		this.add(Algo);
@@ -191,6 +192,22 @@ public class Menu extends JPanel{
 					JOptionPane.showMessageDialog(null, "Tap on the Map to Put Player First");
 			}
 		});	
+		// **** Matrix JButton ***** //
+				ImageIcon mat = new ImageIcon("./img/Mat.png"); // Set Icon to Button
+				Mat = new JButton("Mat",mat);
+				Mat.setVisible(true);
+				Mat.setBounds(455,25, 100, 50);
+				Mat.setBorder(BorderFactory.createEmptyBorder(0,0,0,0)); // Especially important
+
+				this.add(Mat);
+
+				// **** Mat Mouse Listener ***** //
+				Mat.addMouseListener(new MouseAdapter() { 
+					public void mouseClicked(MouseEvent e) {
+						if(panel.HasPlayer())
+						panel.ShowMatrix();
+					}
+				});	
 
 	}
 	public void UpdatePanel(GamePanel panel) {
