@@ -115,9 +115,11 @@ public class MyFrame extends JPanel
 			@Override
 			public void componentResized(ComponentEvent e) {
 				if(map!=null) {
-					map.setHeight(panel.getSize().height);
 					map.setWidth(panel.getSize().width);
-					System.out.println("("+map.getHeight()+","+map.getWidth()+")");
+					if(frame.getHeight() <= 487)
+						map.setHeight(frame.getHeight() - 37);
+					else
+						map.setHeight(450);
 					panel.Refresh();
 				}
 			}

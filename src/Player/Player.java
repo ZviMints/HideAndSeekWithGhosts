@@ -11,7 +11,9 @@ import Coords.MyCoords;
 import Geom.Point3D;
 import Map.Map;
 import Objects.Box;
+import Objects.Fruit;
 import Objects.Ghost;
+import Objects.Pacman;
 
 public class Player {
 	/* * * * * * * * * * * * * *  Initialization Variables * * * * * * * * * * * * * * * */
@@ -20,6 +22,7 @@ public class Player {
 	private Image PlayerImage = Toolkit.getDefaultToolkit().getImage("./img/Player.png"); // Player image
 	public double ang = 361;
 	public boolean InDanger = false;
+	public boolean EAT = false;
 	/* * * * * * * * * * * * * *  Constructor * * * * * * * * * * * * * * * */
 	public Player(Point3D p, String id)
 	{

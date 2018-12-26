@@ -1,5 +1,6 @@
 package myFrame;
 
+import java.awt.Font;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class GameToMatrix {
 	char[][] mat;
 	static JFrame frame;
 	static JTextArea ta;
+	/* * * * * * * * * * * * * * * * * * Constructor * * * * * * * * * * * * * * * */
 	public GameToMatrix(Player player, List<Fruit> FruitsList, List<Box> BoxsList, List<Ghost> GhostsList, List<Pacman> PacmansList,Map map)
 	{
 		int w = map.getWidth();
@@ -70,12 +72,12 @@ public class GameToMatrix {
 			Point3D p = map.getPixelFromCord(fruit.getP());
 			mat[(int)p.y()][(int)p.x()] = 'F';
 		}
-		Print();
 	}
-	private void Print() {
+	/* * * * * * * * * * * * * * * * * * POP UP * * * * * * * * * * * * * * * */
+	void POPUP() {
 		if(frame == null)
 		{
-			frame = new JFrame();
+			frame = new JFrame("State Matrix");
 			frame.setLayout(null);
 			frame.setVisible(true);
 			frame.setResizable(true);
@@ -84,6 +86,7 @@ public class GameToMatrix {
 			ta.setBounds(0,0,mat[0].length,mat.length);
 			ta.setText(GET_STRING());
 			ta.setEditable(false);
+			frame.setResizable(false);
 			JScrollPane sp = new JScrollPane(ta);
 			sp.setBounds(0,0,mat[0].length,mat.length);
 			frame.add(sp);
@@ -101,6 +104,7 @@ public class GameToMatrix {
 			ta.setText(GET_STRING());
 		}
 	}
+	/* * * * * * * * * * * * * * * * * * Get String * * * * * * * * * * * * * * * */
 	private String GET_STRING() {
 		String ans = "";
 		for (char[] row : mat){
@@ -108,6 +112,7 @@ public class GameToMatrix {
 		}
 		return ans;
 	}
+	/* * * * * * * * * * * * * * * * * * Get Matrix * * * * * * * * * * * * * * * */
 	public char[][] getMat() {
 		return mat;
 	}

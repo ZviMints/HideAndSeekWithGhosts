@@ -16,7 +16,8 @@ public class Map {
 	private int width;
 	private int height;
 	private Image MapBackground;
-	private Image MapBackgroundHover = Toolkit.getDefaultToolkit().getImage("./img/background_danger.png");
+	private Image danger_hover = Toolkit.getDefaultToolkit().getImage("./img/background_danger.png");
+	private Image eat_hover = Toolkit.getDefaultToolkit().getImage("./img/Plus.png");
 
 	// p00     p01 //
 	//     **      //
@@ -43,8 +44,9 @@ public class Map {
 	public void setWidth(int d) { this.width = d;}
 	public Image getMapImage() { return MapBackground; }
 	public void setMapImage(Image bgImage) { this.MapBackground = bgImage; }
-	public Image getMapImageHover() { return MapBackgroundHover; }
-
+	public Image GetDangerHover() { return danger_hover; }
+	public Image getEathover() { return eat_hover; }
+	public void setEathover(Image eat_hover) { this.eat_hover = eat_hover; }
 
 	/* * * * * * * * * * * * * * * * * * GetCord * * * * * * * * * * * * * * * */
 	/**

@@ -23,10 +23,9 @@ public class Score extends JPanel {
 		date = new JLabel("Date" + ": " + new Date().toString());
 		totaltime = new JLabel("Time" + ": " + "0");
 		score = new JLabel("Score" + ": " + "0");
-		Timeleft = new JLabel("Time Left" + ": " + "inf");
+		Timeleft = new JLabel("Time Left" + ": " + "INF");
 		killed = new JLabel("Killed" + ": " + "0");
-		box = new JLabel("Out of Box" + ": " + "0");
-
+		box = new JLabel("Touched Box" + ": " + "0");
 		
 		date.setBounds(15,20, 200, 15);
 		totaltime.setBounds(15,40, 200, 15);
@@ -36,11 +35,6 @@ public class Score extends JPanel {
 		box.setBounds(212,60, 200, 15);
 		Timeleft.setFont(new Font("Ariel",Font.BOLD, 12));
 		score.setFont(new Font("Ariel",Font.BOLD, 12));
-
-		
-				
-		
-		
 		
 		add(date);
 		add(totaltime);
@@ -69,7 +63,7 @@ public class Score extends JPanel {
 		score.setText("Score" + ": " + _score);
 		Timeleft.setText("Time Left" + ": " + _Timeleft);
 		killed.setText("Killed" + ": " + _killed);
-		box.setText("Out of Box" + ": " + _box);
+		box.setText("Touched Box" + ": " + _box);
 	}
 	/* * * * * * * * * * * * * * * * * * updateScore * * * * * * * * * * * * * * * */
 }

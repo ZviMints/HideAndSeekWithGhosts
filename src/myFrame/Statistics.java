@@ -29,8 +29,8 @@ public class Statistics {
 			
 			while(resultSet.next())
 			{
-				if(resultSet.getInt("FirstID") == 314977489 || resultSet.getInt("FirstID") == 311226617)
-				{
+//				if(resultSet.getInt("FirstID") == 314977489 || resultSet.getInt("FirstID") == 311226617)
+//				{
 				ans+= resultSet.getInt("FirstID")+"\t\t" +
 						resultSet.getInt("SecondID")+"\t\t" +
 						resultSet.getInt("ThirdID")+"\t\t" +
@@ -39,7 +39,7 @@ public class Statistics {
 						resultSet.getDouble("SomeDouble");
 				ans+= "\n";
 				}
-			}
+//			}
 			
 			resultSet.close();		
 			statement.close();		
