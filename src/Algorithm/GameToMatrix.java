@@ -50,7 +50,7 @@ public class GameToMatrix {
 			{
 				int j1 = (int)b_p1.y();
 				int j2 = (int)b_p0.y();
-				for(int j=0; j<4; j++)
+				for(int j=0; j<5; j++)
 				{
 				mat[j1++][i] = 'B';
 				mat[j2++][i] = 'B';
@@ -61,7 +61,7 @@ public class GameToMatrix {
 			{
 				int i1 = (int)b_p0.x();
 				int i2 = (int)b_p1.x();
-				for(int i=0; i<4; i++)
+				for(int i=0; i<5; i++)
 				{
 					mat[j][i1++] = 'B';
 					mat[j][i2++] = 'B';
