@@ -191,6 +191,65 @@ public class GamePanel extends JPanel implements MouseListener{
 			animate.start();
 		}
 	}
+	/* * * * * * * * * * * * * * * * * * Start Algo * * * * * * * * * * * * * * * */
+	public void StartAlgo() {
+			if(player == null)
+			this.player = GetStartPointToPlayer();	
+			
+			play.setInitLocation(player.getP().x(),player.getP().y());
+			play.start();
+			GameMode = true;
+			AlgoIsPlaying = true;
+			Thread animate = new Thread(){
+				public void run(){
+					while(play.isRuning())
+					{
+						GameToMatrix mat = new GameToMatrix(player,FruitsList,BoxsList,GhostsList,PacmansList,map);
+						Maze maze = new Maze(mat.getMat());
+						Algo algo = new Algo();
+						List<Coordinate> path = algo.SOLVE(maze);
+						if(path != null)
+						{
+						path.remove(path.size() -1 ); // Its Back-tracking
+						player.EAT = false;
+						}
+						while(!path.isEmpty())
+						{
+							try { Thread.sleep(_SleepTime/3);} // The animation wont run too fast				 
+							catch (InterruptedException e) {} 
+							Coordinate Next_Move_In_Pixels = path.remove(path.size()-1);
+							Point3D dist = map.getCordFromPixel(new Point3D(Next_Move_In_Pixels));
+							Point3D src = player.getP();
+							double ang = coords.azimuth(src.x(), src.y(), dist.x(), dist.y());
+							player.ang = ang;							
+//							System.out.println(map.getPixelFromCord(player.getP()));
+//							System.out.println(new Point3D(Next_Move_In_Pixels));
+//							System.out.println(ang);
+//							System.out.println();
+							update();	
+						}
+						player.EAT = true;
+						maze.reset();
+					}
+					player.EAT = false;
+					update();	
+					JOptionPane.showMessageDialog(null, "Algo Finished");
+					Menu.SetVisableTrue();
+					GameMode = false;
+					AlgoIsPlaying = false;
+				}
+			};
+			animate.start();
+	}
+	/* * * * * * * * * * * * * * * * * * GetStartPointToPlayer * * * * * * * * * * * * * * * */
+	private Player GetStartPointToPlayer() {
+		if(!PacmansList.isEmpty())
+			return new Player(new Point3D(PacmansList.get(0).getP().x(),PacmansList.get(0).getP().y(),0),"Robot");
+		else if(!FruitsList.isEmpty())
+			return new Player(new Point3D(FruitsList.get(0).getP().x(),FruitsList.get(0).getP().y(),0),"Robot");
+		else
+			return new Player(map.getP00(),"Robot");
+	}
 	/* * * * * * * * * * * * * * * * * *  update * * * * * * * * * * * * * * * */
 	public void update() {
 		Point3D p = map.getPixelFromCord(player.getP());
@@ -267,56 +326,6 @@ public class GamePanel extends JPanel implements MouseListener{
 			player.setP(new Point3D(x,y,z));
 		}
 	}
-	/* * * * * * * * * * * * * * * * * * Start Algo * * * * * * * * * * * * * * * */
-	public void StartAlgo() {
-		if(player != null)
-		{
-			play.setInitLocation(player.getP().x(),player.getP().y());
-			play.start();
-			GameMode = true;
-			AlgoIsPlaying = true;
-			Thread animate = new Thread(){
-				public void run(){
-					while(play.isRuning())
-					{
-						GameToMatrix mat = new GameToMatrix(player,FruitsList,BoxsList,GhostsList,PacmansList,map);
-						Maze maze = new Maze(mat.getMat());
-						Algo algo = new Algo();
-						List<Coordinate> path = algo.SOLVE(maze);
-						if(path != null)
-						{
-						path.remove(path.size() -1 ); // Its Back-tracking
-						player.EAT = false;
-						}
-						while(!path.isEmpty())
-						{
-							try { Thread.sleep(_SleepTime/3);} // The animation wont run too fast				 
-							catch (InterruptedException e) {} 
-							Coordinate Next_Move_In_Pixels = path.remove(path.size()-1);
-							Point3D dist = map.getCordFromPixel(new Point3D(Next_Move_In_Pixels));
-							Point3D src = player.getP();
-							double ang = coords.azimuth(src.x(), src.y(), dist.x(), dist.y());
-							player.ang = ang;							
-//							System.out.println(map.getPixelFromCord(player.getP()));
-//							System.out.println(new Point3D(Next_Move_In_Pixels));
-//							System.out.println(ang);
-//							System.out.println();
-							update();	
-						}
-						player.EAT = true;
-						maze.reset();
-					}
-					player.EAT = false;
-					update();	
-					JOptionPane.showMessageDialog(null, "Algo Finished");
-					Menu.SetVisableTrue();
-					GameMode = false;
-					AlgoIsPlaying = false;
-				}
-			};
-			animate.start();
-		}	
-	}
 	/* * * * * * * * * * * * * * * * * * Show Matrix * * * * * * * * * * * * * * * */
 	public void ShowMatrix() {
 		GameToMatrix mat = new GameToMatrix(player,FruitsList,BoxsList,GhostsList,PacmansList,map);
@@ -327,7 +336,7 @@ public class GamePanel extends JPanel implements MouseListener{
 	public void mousePressed(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON1) // Left Click
 		{
-			if(player == null)
+			if(player == null && !AlgoIsPlaying)
 			{
 				player = new Player(map.getCordFromPixel(new Point3D(e.getX(),e.getY(),0)),"Tzvi and Or Player");
 				if(player.intersectBox(BoxsList, map))

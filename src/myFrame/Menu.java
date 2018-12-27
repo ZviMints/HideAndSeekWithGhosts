@@ -176,19 +176,12 @@ public class Menu extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				if(LOADED)
 				{
-					if(panel.HasPlayer())
-					{
 						panel.play.setIDs(Tzvi_ID,Or_ID);
 						panel.StartAlgo();
 						Mat.setVisible(true);
 						Start.setVisible(false);
 						Algo.setVisible(false);
 						LOADED = false;
-					}
-					else
-					{
-						JOptionPane.showMessageDialog(null, "Tap on the Map to Put Player First");
-					}
 				}
 				else
 					JOptionPane.showMessageDialog(null, "Load new Game Please!");

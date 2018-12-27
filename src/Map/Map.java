@@ -47,6 +47,7 @@ public class Map {
 	public Image GetDangerHover() { return danger_hover; }
 	public Image getEathover() { return eat_hover; }
 	public void setEathover(Image eat_hover) { this.eat_hover = eat_hover; }
+	public Point3D getP00() { return p00; }
 
 	/* * * * * * * * * * * * * * * * * * GetCord * * * * * * * * * * * * * * * */
 	/**

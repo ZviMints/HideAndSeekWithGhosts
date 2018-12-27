@@ -30,13 +30,7 @@ public class GameToMatrix {
 		for(int i=0; i<mat.length;i++)
 			for(int j=0;j<mat[i].length;j++)
 				mat[i][j]=' ';
-
-		if(player != null)
-		{
-			Point3D p = map.getPixelFromCord(player.getP());
-			mat[(int)p.y()][(int)p.x()] = 'M';
-		}
-
+		
 		for(Ghost ghost : GhostsList)
 		{
 			Point3D p = map.getPixelFromCord(ghost.getP());
@@ -77,6 +71,11 @@ public class GameToMatrix {
 		{
 			Point3D p = map.getPixelFromCord(fruit.getP());
 			mat[(int)p.y()][(int)p.x()] = 'F';
+		}
+		if(player != null)
+		{
+			Point3D p = map.getPixelFromCord(player.getP());
+			mat[(int)p.y()][(int)p.x()] = 'M';
 		}
 	}
 	/* * * * * * * * * * * * * * * * * * POP UP * * * * * * * * * * * * * * * */
