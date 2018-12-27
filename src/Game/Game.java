@@ -115,8 +115,6 @@ public class Game{
 	public String toString()
 	{
 		String ans = "Game Data:" + "\n";
-		ans += " Player:" + "\n";
-		ans += player.toString();
 		ans += Pacman_List.size() + " Pacmans:" + "\n";
 		ans += Pacman_List.toString();
 		ans += Fruit_List.size() + " Fruits:" + "\n";

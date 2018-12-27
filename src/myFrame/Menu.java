@@ -24,9 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
-
 import Geom.Point3D;
-import ShortestPathAlgo.Algo;
 
 
 public class Menu extends JPanel{
@@ -41,7 +39,7 @@ public class Menu extends JPanel{
 	private static JScrollPane sp;
 	private static MyFrame myFrame;
 	private static JButton Algo;
-	private static boolean PleaseLoadNewGame = false;
+	private static boolean LOADED = false;
 	private static final long Tzvi_ID = 314977489;
 	private static final long Or_ID = 311226617;
 	private static JButton Mat;
@@ -99,23 +97,24 @@ public class Menu extends JPanel{
 		// **** Start Mouse Listener ***** //
 		Start.addMouseListener(new MouseAdapter() { 
 			public void mouseClicked(MouseEvent e) {
-				if(panel.HasPlayer())
+				if(LOADED)
 				{
-					if(!PleaseLoadNewGame)
+					if(panel.HasPlayer())
 					{
 						panel.play.setIDs(Tzvi_ID,Or_ID);
 						panel.StartGame();
+						Mat.setVisible(true);
 						Start.setVisible(false);
 						Algo.setVisible(false);
-						Mat.setVisible(true);
+						LOADED = false;
 					}
 					else
 					{
-						JOptionPane.showMessageDialog(null, "Load new Game Please!");
+						JOptionPane.showMessageDialog(null, "Tap on the Map to Put Player First");
 					}
 				}
 				else
-					JOptionPane.showMessageDialog(null, "Tap on the Map to Put Player First");
+					JOptionPane.showMessageDialog(null, "Load new Game Please!");
 			}
 		});
 
@@ -139,7 +138,7 @@ public class Menu extends JPanel{
 					{
 						if(panel.GameMode == false)
 						{
-							PleaseLoadNewGame = false;
+							LOADED = true;
 							MyFrame.box.invalidate(); 
 							MyFrame.box.setVisible(false); 
 							MyFrame.box.removeAll();   // remove box
@@ -175,23 +174,24 @@ public class Menu extends JPanel{
 		// **** Algo Mouse Listener ***** //
 		Algo.addMouseListener(new MouseAdapter() { 
 			public void mouseClicked(MouseEvent e) {
-				if(panel.HasPlayer())
+				if(LOADED)
 				{
-					if(!PleaseLoadNewGame)
+					if(panel.HasPlayer())
 					{
 						panel.play.setIDs(Tzvi_ID,Or_ID);
 						panel.StartAlgo();
 						Mat.setVisible(true);
 						Start.setVisible(false);
 						Algo.setVisible(false);
+						LOADED = false;
 					}
 					else
 					{
-						JOptionPane.showMessageDialog(null, "Load new Game Please!");
+						JOptionPane.showMessageDialog(null, "Tap on the Map to Put Player First");
 					}
 				}
 				else
-					JOptionPane.showMessageDialog(null, "Tap on the Map to Put Player First");
+					JOptionPane.showMessageDialog(null, "Load new Game Please!");
 			}
 		});	
 		// **** Matrix JButton ***** //
@@ -219,6 +219,5 @@ public class Menu extends JPanel{
 		Start.setVisible(true);
 		Algo.setVisible(true);
 		Mat.setVisible(false);
-		PleaseLoadNewGame = true;
 	}
 }

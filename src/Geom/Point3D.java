@@ -1,5 +1,7 @@
 package Geom;
 import java.io.Serializable;
+
+import Algorithm.Coordinate;
 public class Point3D implements Serializable 
 {
 	/**
@@ -36,6 +38,12 @@ public class Point3D implements Serializable
 	////////////////////////////       methods        /////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 
+
+	public Point3D(Coordinate c) {
+		this._y = c.getX();
+		this._x = c.getY();
+		this._z = 0;
+	}
 
 	public double x() {return _x;}
 	public double y() {return _y;}

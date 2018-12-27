@@ -1,4 +1,4 @@
-package myFrame;
+package Algorithm;
 
 import java.awt.Font;
 import java.util.Arrays;
@@ -30,7 +30,7 @@ public class GameToMatrix {
 		for(int i=0; i<mat.length;i++)
 			for(int j=0;j<mat[i].length;j++)
 				mat[i][j]=' ';
-		
+
 		if(player != null)
 		{
 			Point3D p = map.getPixelFromCord(player.getP());
@@ -50,16 +50,22 @@ public class GameToMatrix {
 			{
 				int j1 = (int)b_p1.y();
 				int j2 = (int)b_p0.y();
-				mat[j1][i] = 'B';
-				mat[j2][i] = 'B';
+				for(int j=0; j<4; j++)
+				{
+				mat[j1++][i] = 'B';
+				mat[j2++][i] = 'B';
+				}
 			}
 
 			for(int j = (int)b_p1.y() ; j < (int)b_p0.y(); j++)
 			{
 				int i1 = (int)b_p0.x();
 				int i2 = (int)b_p1.x();
-				mat[j][i1] = 'B';
-				mat[j][i2] = 'B';
+				for(int i=0; i<4; i++)
+				{
+					mat[j][i1++] = 'B';
+					mat[j][i2++] = 'B';
+				}
 			}
 		}
 		for(Pacman pacman : PacmansList)
@@ -74,7 +80,7 @@ public class GameToMatrix {
 		}
 	}
 	/* * * * * * * * * * * * * * * * * * POP UP * * * * * * * * * * * * * * * */
-	void POPUP() {
+	public void POPUP() {
 		if(frame == null)
 		{
 			frame = new JFrame("State Matrix");
@@ -84,28 +90,38 @@ public class GameToMatrix {
 			frame.setBounds(200,20,mat[0].length + 15,mat.length + 35);
 			ta = new JTextArea();
 			ta.setBounds(0,0,mat[0].length,mat.length);
-			ta.setText(GET_STRING());
 			ta.setEditable(false);
 			frame.setResizable(false);
 			JScrollPane sp = new JScrollPane(ta);
 			sp.setBounds(0,0,mat[0].length,mat.length);
 			frame.add(sp);
+
+
+			Maze maze = new Maze(mat);
+			Algo algo = new Algo();
+			List<Coordinate> path = algo.SOLVE(maze);
+			if(path.isEmpty()) 
+				ta.setText(toString());
+			else
+			{
+				ta.setText(maze.ReturnMatWithPath(path));
+			}
 			frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			frame.addWindowListener(new java.awt.event.WindowAdapter() {
-			    @Override
-			    public void windowClosing(java.awt.event.WindowEvent e) {
-			        frame = null;
-			        e.getWindow().dispose();
-			    }
+				@Override
+				public void windowClosing(java.awt.event.WindowEvent e) {
+					frame = null;
+					e.getWindow().dispose();
+				}
 			});
 		}
 		else
 		{
-			ta.setText(GET_STRING());
+			ta.setText(toString());
 		}
 	}
-	/* * * * * * * * * * * * * * * * * * Get String * * * * * * * * * * * * * * * */
-	private String GET_STRING() {
+	/* * * * * * * * * * * * * * * * * * toString * * * * * * * * * * * * * * * */
+	public String toString() {
 		String ans = "";
 		for (char[] row : mat){
 			ans += Arrays.toString(row) + "\n";
