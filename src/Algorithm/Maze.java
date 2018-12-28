@@ -64,10 +64,10 @@ public class Maze {
 	}
 	public boolean isValidLocation(int r, int c)
 	{
-		if(r < 0 ) return false;
-		else if(r >= getHeight()) return false;
-		else if(c < 0) return false;
-		else if (c >= getWidth()) return false;
+		if(r < 5 ) return false;
+		else if(r >= getHeight() - 5) return false;
+		else if(c < 5) return false;
+		else if (c >= getWidth() - 5) return false;
 		else return true;
 	}
 	public String ReturnMatWithPath(List<Coordinate> path)

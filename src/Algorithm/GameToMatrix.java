@@ -42,23 +42,31 @@ public class GameToMatrix {
 			Point3D b_p1 = map.getPixelFromCord(b.getP1());
 			for(int i = (int)b_p0.x() ; i< (int)b_p1.x(); i++)
 			{
-				int j1 = (int)b_p1.y();
-				int j2 = (int)b_p0.y();
+				int j1Plus = (int)b_p1.y();
+				int j2Plus = (int)b_p0.y();
+				int j1Minus = (int)b_p1.y();
+				int j2Minus = (int)b_p0.y();
 				for(int j=0; j<5; j++)
 				{
-				mat[j1++][i] = 'B';
-				mat[j2++][i] = 'B';
+				mat[j1Plus++][i] = 'B';
+				mat[j2Plus++][i] = 'B';
+				mat[j1Minus--][i] = 'B';
+				mat[j2Minus--][i] = 'B';
 				}
 			}
 
 			for(int j = (int)b_p1.y() ; j < (int)b_p0.y(); j++)
 			{
-				int i1 = (int)b_p0.x();
-				int i2 = (int)b_p1.x();
+				int i1Plus = (int)b_p0.x();
+				int i2Plus = (int)b_p1.x();
+				int i1Minus = (int)b_p0.x();
+				int i2Minus = (int)b_p1.x();
 				for(int i=0; i<5; i++)
 				{
-					mat[j][i1++] = 'B';
-					mat[j][i2++] = 'B';
+					mat[j][i1Plus++] = 'B';
+					mat[j][i1Minus--] = 'B';
+					mat[j][i2Plus++] = 'B';
+					mat[j][i2Minus--] = 'B';
 				}
 			}
 		}

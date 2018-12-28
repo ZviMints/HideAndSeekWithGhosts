@@ -208,7 +208,7 @@ public class GamePanel extends JPanel implements MouseListener{
 		for(int a=0 ; a<board_data.size(); a++) {
 			UpdateGame(board_data.get(a));
 		}
-		if(p.x() >= 17.5 && p.x() <= map.getWidth() - 18.5 && p.y() >= 17.5 && p.y() <= map.getHeight() - 17.5)  // Good Place
+		if(p.x() >= 17.5 && p.x() <= map.getWidth() - 18.5 && p.y() >= 17.5 && p.y() <= map.getHeight() - 17.5 || AlgoIsPlaying)  // Good Place
 		{
 			if(player.intersectGhost(GhostsList,map) || player.intersectBox(BoxsList,map)) // If Player Intersects one of the enemeys
 				player.InDanger = true;

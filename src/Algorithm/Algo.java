@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Algo {
-	private static final int[][] DIRECTIONS = { {-1,-1} , {0,-1} ,{1,-1} , {-1,0} , {-1,1} , {0,1} , {1,1} , {1,0} };
+	private static final int[][] DIRECTIONS = { {0,-1} ,{1,-1} , {-1,0} , {-1,1} , {0,1} , {1,1} , {1,0} };
 	/* * * * * * * * * * * * * * * * * * SOLVE * * * * * * * * * * * * * * * */
 	public List<Coordinate> SOLVE(Maze maze)
 	{
