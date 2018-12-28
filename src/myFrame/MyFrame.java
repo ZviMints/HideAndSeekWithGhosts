@@ -125,7 +125,11 @@ public class MyFrame extends JPanel
 			}
 		});
 	}
-
+	/* * * * * * * * * * * * * * setTitle * * * * * * * * * * * * * * * */   
+	public static void setTitle(String path)
+	{
+		frame.setTitle("T&O Exercise 4 : " + path);
+	}
 	/* * * * * * * * * * * * * * Main * * * * * * * * * * * * * * * */   
 	public static void main(String[] args)
 	{

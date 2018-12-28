@@ -4,15 +4,9 @@
  * @version 4.0
  */
 package myFrame;
-import java.awt.Image;
-import java.awt.Window;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -22,9 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
-import Geom.Point3D;
 
 
 public class Menu extends JPanel{
@@ -33,11 +25,11 @@ public class Menu extends JPanel{
 	private static  JButton Start; // Start button
 	private static JButton Load; // Load button
 	private static JButton Statistics; // Statistics button
-	private static GamePanel panel;
+	private GamePanel panel;
 	private static JFrame frame;
 	private static JTextArea ta;
 	private static JScrollPane sp;
-	private static MyFrame myFrame;
+	private MyFrame myFrame;
 	private static JButton Algo;
 	private static boolean LOADED = false;
 	private static final long Tzvi_ID = 314977489;
@@ -101,7 +93,7 @@ public class Menu extends JPanel{
 				{
 					if(panel.HasPlayer())
 					{
-						panel.play.setIDs(Tzvi_ID,Or_ID);
+						panel.getPlay().setIDs(Tzvi_ID,Or_ID);
 						panel.StartGame();
 						Mat.setVisible(true);
 						Start.setVisible(false);
@@ -136,12 +128,13 @@ public class Menu extends JPanel{
 					String _Filename = chooser.getSelectedFile().getAbsolutePath();
 					if(_Filename.contains(".csv")) 
 					{
-						if(panel.GameMode == false)
+						if(panel.getGameMode() == false)
 						{
 							LOADED = true;
 							MyFrame.box.invalidate(); 
 							MyFrame.box.setVisible(false); 
 							MyFrame.box.removeAll();   // remove box
+							MyFrame.setTitle(_Filename);
 							panel.invalidate();
 							panel.setVisible(false);
 							panel.removeAll(); // remove panel
@@ -176,7 +169,7 @@ public class Menu extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				if(LOADED)
 				{
-						panel.play.setIDs(Tzvi_ID,Or_ID);
+						panel.getPlay().setIDs(Tzvi_ID,Or_ID);
 						panel.StartAlgo();
 						Mat.setVisible(true);
 						Start.setVisible(false);

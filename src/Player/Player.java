@@ -22,7 +22,6 @@ public class Player {
 	private Image PlayerImage = Toolkit.getDefaultToolkit().getImage("./img/Player.png"); // Player image
 	public double ang = 361;
 	public boolean InDanger = false;
-	public boolean EAT = false;
 	/* * * * * * * * * * * * * *  Constructor * * * * * * * * * * * * * * * */
 	public Player(Point3D p, String id)
 	{

@@ -17,12 +17,8 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import Algorithm.Algo;
-import Algorithm.Coordinate;
 import Algorithm.GameToMatrix;
-import Algorithm.Maze;
 import Coords.MyCoords;
-import GIS.Path;
 import Game.Game;
 import Geom.Point3D;
 import Map.Map;
@@ -44,19 +40,28 @@ public class GamePanel extends JPanel implements MouseListener{
 	private Game game; // This Game Database
 	private Map map; // Map of current game 
 	private double _ratio; // Ratio from scale the map (Paint Objects)
-	public Play play;
 	private boolean LoadedGame = false;
 	private boolean AlgoIsPlaying = false;
-
-	public static boolean GameMode = false;
+	private Play play;
+	private  boolean GameMode = false;
 	private static final long _SleepTime = 50;
 	private static final Image StartImage = Toolkit.getDefaultToolkit().getImage("./img/StartImage.png");
-	private static final MyCoords coords = new MyCoords();
 
 	/* * * * * * * * * * * * * * * * * *   Setters and Getters * * * * * * * * * * * * * * * */
 	public List<Fruit> getFruitsList() { return FruitsList; }
+	public List<Ghost> getGhostsList() { return GhostsList; }
+	public List<Pacman> getPacmansList() { return PacmansList; }
+	public List<Box> getBoxsList() { return BoxsList; }
+
 	public void Refresh() { this._ratio = (map.getWidth() + map.getHeight())/(double)(700 + 637);}
 	public boolean HasPlayer() { return player != null; }
+	public Player getPlayer() { return player; }
+	public void setPlayer(Player p) { this.player = p; }
+	public Play getPlay() { return this.play; }
+	public boolean getGameMode() { return this.GameMode; }
+	public void setGameMode(boolean status) { this.GameMode = status; }
+	public void setAlgoMode(boolean status) { this.AlgoIsPlaying = status; }
+	public Map getMap() { return this.map; }
 
 	/* * * * * * * * * * * * * * * * * *   Constructor * * * * * * * * * * * * * * * */
 	public GamePanel(Game game, Map map, Play play)
@@ -96,10 +101,6 @@ public class GamePanel extends JPanel implements MouseListener{
 				{
 					if(!AlgoIsPlaying)
 					g.drawImage(this.map.GetDangerHover() , 0, 0, map.getWidth(),map.getHeight(), this); // DANGER 
-				}
-				if(AlgoIsPlaying && player.EAT)
-				{
-					g.drawImage(this.map.getEathover() , 0, 0, map.getWidth(),map.getHeight(), this); // EAT  
 				}
 			}
 			// ************ Print all Boxs ************ //
@@ -193,62 +194,8 @@ public class GamePanel extends JPanel implements MouseListener{
 	}
 	/* * * * * * * * * * * * * * * * * * Start Algo * * * * * * * * * * * * * * * */
 	public void StartAlgo() {
-			if(player == null)
-			this.player = GetStartPointToPlayer();	
-			
-			play.setInitLocation(player.getP().x(),player.getP().y());
-			play.start();
-			GameMode = true;
-			AlgoIsPlaying = true;
-			Thread animate = new Thread(){
-				public void run(){
-					while(play.isRuning())
-					{
-						GameToMatrix mat = new GameToMatrix(player,FruitsList,BoxsList,GhostsList,PacmansList,map);
-						Maze maze = new Maze(mat.getMat());
-						Algo algo = new Algo();
-						List<Coordinate> path = algo.SOLVE(maze);
-						if(path != null)
-						{
-						path.remove(path.size() -1 ); // Its Back-tracking
-						player.EAT = false;
-						}
-						while(!path.isEmpty())
-						{
-							try { Thread.sleep(_SleepTime/3);} // The animation wont run too fast				 
-							catch (InterruptedException e) {} 
-							Coordinate Next_Move_In_Pixels = path.remove(path.size()-1);
-							Point3D dist = map.getCordFromPixel(new Point3D(Next_Move_In_Pixels));
-							Point3D src = player.getP();
-							double ang = coords.azimuth(src.x(), src.y(), dist.x(), dist.y());
-							player.ang = ang;							
-//							System.out.println(map.getPixelFromCord(player.getP()));
-//							System.out.println(new Point3D(Next_Move_In_Pixels));
-//							System.out.println(ang);
-//							System.out.println();
-							update();	
-						}
-						player.EAT = true;
-						maze.reset();
-					}
-					player.EAT = false;
-					update();	
-					JOptionPane.showMessageDialog(null, "Algo Finished");
-					Menu.SetVisableTrue();
-					GameMode = false;
-					AlgoIsPlaying = false;
-				}
-			};
-			animate.start();
-	}
-	/* * * * * * * * * * * * * * * * * * GetStartPointToPlayer * * * * * * * * * * * * * * * */
-	private Player GetStartPointToPlayer() {
-		if(!PacmansList.isEmpty())
-			return new Player(new Point3D(PacmansList.get(0).getP().x(),PacmansList.get(0).getP().y(),0),"Robot");
-		else if(!FruitsList.isEmpty())
-			return new Player(new Point3D(FruitsList.get(0).getP().x(),FruitsList.get(0).getP().y(),0),"Robot");
-		else
-			return new Player(map.getP00(),"Robot");
+		AlgoThread AlgoThread = new AlgoThread(this);
+		AlgoThread.start();
 	}
 	/* * * * * * * * * * * * * * * * * *  update * * * * * * * * * * * * * * * */
 	public void update() {
