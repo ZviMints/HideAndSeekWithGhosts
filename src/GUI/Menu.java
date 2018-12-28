@@ -3,7 +3,7 @@
  * @author Tzvi Mints and Or Abuhazira
  * @version 4.0
  */
-package myFrame;
+package GUI;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -20,6 +20,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
+
+import myFrame.GamePanel;
+import myFrame.MyFrame;
 
 
 public class Menu extends JPanel{
@@ -69,7 +72,7 @@ public class Menu extends JPanel{
 
 		Statistics.addMouseListener(new MouseAdapter() { 		
 			public void mouseClicked(MouseEvent e)  {
-				statisticFrame stat = new statisticFrame();
+				StatisticFrame stat = new StatisticFrame();
 				stat.startFrame();
 			}});
 
@@ -156,7 +159,7 @@ public class Menu extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				if(LOADED)
 				{
-						panel.getPlay().setIDs(-Tzvi_ID,Or_ID);
+						panel.getPlay().setIDs(-Tzvi_ID,Or_ID); // Algo 
 						panel.StartAlgo();
 						Mat.setVisible(true);
 						Start.setVisible(false);

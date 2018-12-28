@@ -8,6 +8,7 @@ import Algorithm.Coordinate;
 import Algorithm.GameToMatrix;
 import Algorithm.Maze;
 import Coords.MyCoords;
+import GUI.Menu;
 import Geom.Point3D;
 import Player.Player;
 import Robot.Play;
@@ -66,6 +67,25 @@ public class AlgoThread extends Thread{
 		g.setGameMode(false);
 		g.setAlgoMode(false);
 	}
+//	/* * * * * * * * * * * * * * * * * * getAngle * * * * * * * * * * * * * * * */
+//	private double getAngle(double dx, double dy) {
+//		if( dx == 0 && dy == 1) // {0,1}
+//			return 180;
+//		else if( dx == 1 && dy == 1) // {1,1}
+//			return  135;
+//		else if( dx == 1 && dy == 0) // {1,0}
+//			return 90;
+//		else if(dx == 1 && dy == -1 ) // {1,-1}
+//			return 45;
+//		else if(dx == 0 && dy == -1 ) //  {0,-1}
+//			return 360;
+//		else if( dx == -1 && dy == -1) // {-1,-1}
+//			return 315;
+//		else if( dx == -1 && dy == 0) // {-1,0}	
+//			return 270;
+//		else // {-1,1}
+//			return 225;
+//	}
 	/* * * * * * * * * * * * * * * * * * GetStartPointToPlayer * * * * * * * * * * * * * * * */
 	private Player GetStartPointToPlayer() 
 	{
@@ -77,3 +97,4 @@ public class AlgoThread extends Thread{
 			return new Player(g.getMap().getP00(),"Robot");
 	}
 }
+

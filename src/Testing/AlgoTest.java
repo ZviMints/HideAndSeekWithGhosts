@@ -17,8 +17,8 @@ class AlgoTest {
 
 	@Test
 	void test() throws InterruptedException {
-		char[][] arr = {{'M',    'B',    ' ',    ' ',    ' ', ' '},
-				       {' ',     ' ',   'B',    ' ',    'B', 'P'},
+		char[][] arr = {{'M',    ' ',    ' ',    ' ',    ' ', ' '},
+				       {' ',     ' ',   'B',    ' ',    'B', 'F'},
 				       {' ',     ' ',    ' ',   ' ',    'B', ' '}};
 
 

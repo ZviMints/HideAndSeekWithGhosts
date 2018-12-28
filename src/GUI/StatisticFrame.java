@@ -1,4 +1,4 @@
-package myFrame;
+package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -11,7 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 
-public class statisticFrame {
+public class StatisticFrame {
 	private static String[] ColumnHeader;
 	private static Object[][] data;
 	private static JLabel Icon;
@@ -21,43 +21,44 @@ public class statisticFrame {
 	private static JTextArea ta;
 	private static JTable table;
 	private static JScrollPane sp;
-	
-	public statisticFrame() {
-		
-	}	
-	
+
 	public void startFrame() {
+		load = new JFrame("Loading");
+		ImageIcon loading = new ImageIcon("./img/load.gif");
+		load.add(new JLabel(loading, JLabel.CENTER));
+		load.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		load.setBounds(300,150,600, 400);
+		load.setVisible(true);
+		load.setResizable(false);
 		
-		Thread t1 = new Thread(new Runnable() {
+		Thread getInfo_FROM_DB = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				load = new JFrame("Loading");
-				ImageIcon loading = new ImageIcon("./img/load.gif");
-				load.add(new JLabel(loading, JLabel.CENTER));
-				load.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				load.setBounds(400,200,600, 400);
-				load.setVisible(true);
-				load.setResizable(false);
 				Setframe();
-				for (int i = 0; i < 3; i++) {
-					try {
-						Thread.sleep(430);
-					}
-					catch (Exception e) {
-					}
-				}
-				frame.setVisible(true);
-				load.setVisible(false);
 			}
 		});
-			t1.start();
+		getInfo_FROM_DB.start();
+		
+		Thread Loading = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(3500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				load.setVisible(false);
+				frame.setVisible(true);
+			}
+		});
+		Loading.start();
 	}
 	/**
-	 * This method produces items of statistics including a table ane info from Database
+	 * This method produces items of statistics including a table and info from Database
 	 */
 	public void Setframe() {
-		// **** statistic frame ***** //
-		
+		// **** Statistic frame ***** //
+
 		frame = new JFrame("Statistics");
 		frame.setLayout(null);
 		frame.setVisible(false);
@@ -65,40 +66,38 @@ public class statisticFrame {
 		frame.setLayout(new BorderLayout());
 		frame.setBounds(200,20,1000,500);
 
-		// **** statistic text ***** //
-		
+		// **** Statistic text ***** //
+
 		Statistics stat = new Statistics(); 
 		ta = new JTextArea();
 		ta.setBounds(0,0,100,200);
 		ta.setFont(new Font("Helvetica Neue", Font.PLAIN, 12));
 		ta.setText(stat.toString()); 
 		ta.setEditable(false);
-        Color c = Color.decode("#CCE5FF"); 
+		Color c = Color.decode("#CCE5FF"); 
 		ta.setBackground(c);
 		sp = new JScrollPane(ta,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		sp.setBounds(0,173,515,294);
 		frame.add(sp);
 
-		// **** statistic Icon ***** //
-		
+		// **** Statistic Icon ***** //
+
 		ImageIcon statistic = new ImageIcon("./img/statistic.gif"); // Set Icon to Button
 		Icon = new JLabel(statistic);
 		Icon.setBounds(500, 173, 500, 300);
 		frame.add(Icon);
 
-		// **** statistic table ***** //
-		
+		// **** Statistic table ***** //
+
 		dataFromDB(stat);
-		ColumnHeader = new String[] {"File name", "Bast result", "Average","Algo"};
+		ColumnHeader = new String[] {"File name", "Player Best Result", "OOP COURSE Average - {OUR STATS}","Algo Best Result"};
 		table = new JTable(data , ColumnHeader);
 		table.setEnabled(false);
-		 Color d = Color.decode("#FFCC99"); 
+		Color d = Color.decode("#FFCC99"); 
 		table.setBackground(d);
 		table.setFont(new Font("Helvetica Neue", Font.PLAIN, 12));
 		sp1 = new JScrollPane(table);
 		frame.add(new JScrollPane(sp1));
-
-
 	}
 	/**
 	 * This method generates a table that includes statistics for each game
@@ -113,7 +112,4 @@ public class statisticFrame {
 		}
 
 	}
-	
-	
-
 }

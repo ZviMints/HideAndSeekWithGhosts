@@ -6,41 +6,59 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Algo {
-	private static final int[][] DIRECTIONS = { {-1,-1} , {1,1}, {0,-1} ,{1,-1} , {-1,0} , {-1,1} , {0,1}  , {1,0} };
+	private static final int[][] DIRECTIONS = { 
+			{0,-1}, // 0°
+			{1,-1}, // 45°
+			{1,0}, // 90°
+			{1,1}, // 135°
+			{0,1}, //180°
+			{-1,1}, //225°
+			{-1,0}, //270°
+			{-1,-1}, //315°
+	};
+	private Maze maze;
+
 	/* * * * * * * * * * * * * * * * * * SOLVE * * * * * * * * * * * * * * * */
 	public List<Coordinate> SOLVE(Maze maze)
 	{
+		this.maze = maze;
+		Coordinate START = maze.getStartPoint(); // Define Start Point
+		return FindShortestPath(START);
+	}
+	/* * * * * * * * * * * * * * * * * * FindShortestPath * * * * * * * * * * * * * * * */
+	private List<Coordinate> FindShortestPath(Coordinate START) {
 		LinkedList<Coordinate> Next2Visit = new LinkedList<Coordinate>();
-		Coordinate START = maze.getStartPoint();
 		Next2Visit.add(START);
 
 		while(!Next2Visit.isEmpty())
-		{
+		{	
 			Coordinate temp = Next2Visit.remove();
-			if(!maze.isValidLocation(temp.getX(), temp.getY())
-					|| maze.isExplored(temp.getX(), temp.getY()))
+			int x = temp.getX();
+			int y = temp.getY();
+			// Base case : Check if its in MAP
+			if(!maze.isValidLocation(x, y) || maze.isExplored(x, y))
 				continue;
-
-			if(maze.isBox(temp.getX(), temp.getY()))
+			// Check if its a valid point
+			if(maze.isBox(x, y))
 			{
-				maze.setVistied(temp.getX(), temp.getY(), true);
+				maze.setVistied(x, y, true);
 				continue;
 			}
-
-			if(maze.isFinalPoint(temp.getX(), temp.getY()))
+			// Base case : check if we finished
+			if(maze.isFinalPoint(x, y))
 			{
 				return BackTracking(temp);
 			}
-
-			for(int[] dir : DIRECTIONS)
+			// Must be on a path
+			maze.setVistied(x, y, true);
+			for(int i=0; i<DIRECTIONS.length; i++)
 			{
-				Coordinate cur = new Coordinate(temp.getX() + dir[0], temp.getY() + dir[1],temp);
+				int[] dir = DIRECTIONS[i];
+				Coordinate cur = new Coordinate(x + dir[0], y + dir[1],temp);
 				Next2Visit.add(cur);
-				maze.setVistied(temp.getX(), temp.getY(), true);
 			}
 		}
-		return Collections.emptyList();
-
+		return Collections.emptyList(); // Return empty list
 	}
 	/* * * * * * * * * * * * * * * * * * Back Trancking * * * * * * * * * * * * * * * */
 	private List<Coordinate> BackTracking(Coordinate temp) {

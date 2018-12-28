@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 
 import Algorithm.GameToMatrix;
 import Coords.MyCoords;
+import GUI.Menu;
+import GUI.Score;
 import Game.Game;
 import Geom.Point3D;
 import Map.Map;

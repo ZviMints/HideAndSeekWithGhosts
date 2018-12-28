@@ -1,4 +1,4 @@
-package myFrame;
+package GUI;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,12 +11,17 @@ import com.mysql.fabric.xmlrpc.base.Array;
 
 public class Statistics {
 	private static String ans = "";
-	public static double[][] bestGameAlgo = new double[9][2];
-	public static double[][] bestGame = new double[9][2]; // מערך עבור שמירת הניקוד הגבוה עבור כל משחק 
-	public static double[][] average = new double[9][2]; // מערך עבור חישוב הממוצע עבור כל משחק
+	// for each of the next Arrays : [ ] [ ]
+	public static double[][] BestGameAlgo; // אלגוריתם - מערך עבור שמירת הניקוד הגבוה עבור כל משחק 
+	public static double[][] BestGame; // מערך עבור שמירת הניקוד הגבוה עבור כל משחק - שחקן
+	public static double[][] Average; // מערך עבור חישוב הממוצע עבור כל משחק
 
 	public Statistics()
 	{
+		BestGameAlgo = new double[9][2];
+		BestGame = new double[9][2];
+		Average = new double[9][2];
+		
 		String jdbcUrl="jdbc:mysql://ariel-oop.xyz:3306/oop"; //oop?useUnicode=yes&characterEncoding=UTF-8&useSSL=false";
 		String jdbcUser="student";
 		String jdbcPassword="student";
@@ -32,8 +37,6 @@ public class Statistics {
 			String allCustomersQuery = "SELECT * FROM logs;";
 
 			ResultSet resultSet = statement.executeQuery(allCustomersQuery);
-			ans+= "FirstID\tSecondID\t"+"      "+"LogTime\t\tPoint\tMapID";
-			ans+= "\n\n";
 
 			while(resultSet.next())
 			{
@@ -80,6 +83,7 @@ public class Statistics {
 
 				}
 			}
+			ans = "FirstID\tSecondID\t"+"      "+"LogTime\t\tPoint\tMapID" + "\n" + ans;
 			aveCalculation(); // Average calculation for all games
 			resultSet.close();		
 			statement.close();		
@@ -102,33 +106,33 @@ public class Statistics {
 	public void updateInfo(ResultSet resultSet , int index) throws SQLException {
 
 		if(resultSet.getInt("FirstID") == 314977489 ) { // Check if we played the game
-			if(bestGame[index][1] != 0) { // If we've already played the game
-				if(resultSet.getDouble("Point") > bestGame[index][0]) // If the score is higher than the last high point
-					bestGame[index][0]=resultSet.getInt("Point"); // new best game
+			if(BestGame[index][1] != 0) { // If we've already played the game
+				if(resultSet.getDouble("Point") > BestGame[index][0]) // If the score is higher than the last high point
+					BestGame[index][0]=resultSet.getInt("Point"); // new best game
 			}
 			else  {
-				bestGame[index][0]=resultSet.getInt("Point"); // If this is the first game we played
-				bestGame[index][1] = 1; // Mark we played
+				BestGame[index][0]=resultSet.getInt("Point"); // If this is the first game we played
+				BestGame[index][1] = 1; // Mark we played
 			}
 		}
 		else if(resultSet.getInt("FirstID") == -314977489 ) { // Check if we played the game
-			if(bestGameAlgo[index][1] != 0) { // If we've already played the game
-				if(resultSet.getDouble("Point") > bestGameAlgo[index][0]) // If the score is higher than the last high point
-					bestGameAlgo[index][0]=resultSet.getInt("Point"); // new best game
+			if(BestGameAlgo[index][1] != 0) { // If we've already played the game
+				if(resultSet.getDouble("Point") > BestGameAlgo[index][0]) // If the score is higher than the last high point
+					BestGameAlgo[index][0]=resultSet.getInt("Point"); // new best game
 			}
 			else  {
-				bestGameAlgo[index][0]=resultSet.getInt("Point"); // If this is the first game we played
-				bestGameAlgo[index][1] = 1; // Mark we played
+				BestGameAlgo[index][0]=resultSet.getInt("Point"); // If this is the first game we played
+				BestGameAlgo[index][1] = 1; // Mark we played
 			}
 		}
 		
 		else {
-			average[index][0]+=resultSet.getDouble("Point"); // Add game scores to other players' games
-			average[index][1]++; // Count games for the average calculation
+			Average[index][0]+=resultSet.getDouble("Point"); // Add game scores to other players' games
+			Average[index][1]++; // Count games for the average calculation
 		}
 	}
 	public static double[][] getBestGameAlgo() {
-		return bestGameAlgo;
+		return BestGameAlgo;
 	}
 
 
@@ -138,12 +142,11 @@ public class Statistics {
 	 * @throws SQLException
 	 */
 	public void allInfo(ResultSet resultSet) throws SQLException {
-		ans += resultSet.getInt("FirstID")+"\t" +
+		ans = resultSet.getInt("FirstID")+"\t" +
 				resultSet.getInt("SecondID")+"\t" +
 				resultSet.getTimestamp("LogTime") +"\t" +
 				resultSet.getDouble("Point") +"\t" +
-				resultSet.getString("SomeDouble");
-		ans += "\n";
+				resultSet.getString("SomeDouble") + "\n" + ans;
 	}
 
 	/* * * * * * * * * * * * * * * * * * average calculation * * * * * * * * * * * * * * * */
@@ -152,16 +155,16 @@ public class Statistics {
 	 */
 	public void aveCalculation() 
 	{
-		for (int i = 0; i < average.length; i++)
+		for (int i = 0; i < Average.length; i++)
 		{
-			average[i][0] /= average[i][1]; 
+			Average[i][0] /= Average[i][1]; 
 		}
 	}
 	/* * * * * * * * * * * * * * * * * * Getter and setter * * * * * * * * * * * * * * * */
 
-	public static double[][] getbestGame() { return bestGame; }
-	public static double[][] getAverage() { return average; }
-	public static double[][] getbestGameAlgo() { return bestGameAlgo; }
+	public static double[][] getbestGame() { return BestGame; }
+	public static double[][] getAverage() { return Average; }
+	public static double[][] getbestGameAlgo() { return BestGameAlgo; }
 
 	/* * * * * * * * * * * * * * * * * * toString * * * * * * * * * * * * * * * */
 

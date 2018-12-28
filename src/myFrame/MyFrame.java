@@ -12,6 +12,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+
+import GUI.Menu;
+import GUI.Score;
 import Game.Game;
 import Geom.Point3D;
 import Map.Map;
