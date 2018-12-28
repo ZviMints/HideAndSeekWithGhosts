@@ -60,13 +60,14 @@ public class Algo {
 		}
 		return Collections.emptyList(); // Return empty list
 	}
-	/* * * * * * * * * * * * * * * * * * Back Trancking * * * * * * * * * * * * * * * */
+	/* * * * * * * * * * * * * * * * * * Tracking * * * * * * * * * * * * * * * */
+	// Can use ArrayList for BackTracking
 	private List<Coordinate> BackTracking(Coordinate temp) {
-		List<Coordinate> path = new ArrayList<>();
+		LinkedList<Coordinate> path = new LinkedList<>();
 		Coordinate cur = temp;
 		while(cur != null)
 		{
-			path.add(cur);
+			path.addFirst(cur);
 			cur = cur.getPred();
 		}
 		return path;

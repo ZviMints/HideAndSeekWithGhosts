@@ -62,8 +62,8 @@ public class Score extends JPanel {
 		totaltime.setText("Time" + ": " + _totaltime);
 		score.setText("Score" + ": " + _score);
 		Timeleft.setText("Time Left" + ": " + _Timeleft);
-		killed.setText("Killed" + ": " + _killed);
-		box.setText("Touched Box" + ": " + _box);
+		killed.setText("Ghost Damage" + ": " + _killed);
+		box.setText("Box Hit" + ": " + _box);
 	}
 	/* * * * * * * * * * * * * * * * * * updateScore * * * * * * * * * * * * * * * */
 }

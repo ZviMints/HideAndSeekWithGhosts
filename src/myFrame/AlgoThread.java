@@ -43,12 +43,12 @@ public class AlgoThread extends Thread{
 			Algo algo = new Algo();
 			List<Coordinate> path = algo.SOLVE(maze);
 			if(path != null)
-				path.remove(path.size() -1 ); // Its Back-tracking
+				path.remove(0);  // Current Location
 			while(!path.isEmpty())
 			{
 				try { Thread.sleep(20);} // The animation wont run too fast				 
 				catch (InterruptedException e) {} 
-				Coordinate Next_Move_In_Pixels = path.remove(path.size()-1);
+				Coordinate Next_Move_In_Pixels = path.remove(0);
 				Point3D dist = g.getMap().getCordFromPixel(new Point3D(Next_Move_In_Pixels));
 				Point3D src = player.getP();
 				double ang = coords.azimuth(src.x(), src.y(), dist.x(), dist.y());
