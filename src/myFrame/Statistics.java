@@ -138,12 +138,12 @@ public class Statistics {
 	 * @throws SQLException
 	 */
 	public void allInfo(ResultSet resultSet) throws SQLException {
-		ans+= resultSet.getInt("FirstID")+"\t" +
+		ans += resultSet.getInt("FirstID")+"\t" +
 				resultSet.getInt("SecondID")+"\t" +
 				resultSet.getTimestamp("LogTime") +"\t" +
 				resultSet.getDouble("Point") +"\t" +
 				resultSet.getString("SomeDouble");
-		ans+= "\n";
+		ans += "\n";
 	}
 
 	/* * * * * * * * * * * * * * * * * * average calculation * * * * * * * * * * * * * * * */
