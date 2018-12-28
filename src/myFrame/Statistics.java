@@ -7,12 +7,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Vector;
-
 import com.mysql.fabric.xmlrpc.base.Array;
 
 public class Statistics {
 	private static String ans = "";
-
+	public static double[][] bestGameAlgo = new double[9][2];
 	public static double[][] bestGame = new double[9][2]; // מערך עבור שמירת הניקוד הגבוה עבור כל משחק 
 	public static double[][] average = new double[9][2]; // מערך עבור חישוב הממוצע עבור כל משחק
 
@@ -33,7 +32,7 @@ public class Statistics {
 			String allCustomersQuery = "SELECT * FROM logs;";
 
 			ResultSet resultSet = statement.executeQuery(allCustomersQuery);
-			ans+= "FirstID\tSecondID\tThirdID\tLogTime\t\tPoint\tSomeDouble";
+			ans+= "FirstID\tSecondID\t"+"      "+"LogTime\t\tPoint\tMapID";
 			ans+= "\n\n";
 
 			while(resultSet.next())
@@ -71,7 +70,7 @@ public class Statistics {
 					updateInfo(resultSet, 6);
 					break;
 
-				case "-895765157": // example 8
+				case "306711633": // example 8
 					updateInfo(resultSet, 7);
 					break;
 
@@ -79,8 +78,6 @@ public class Statistics {
 					updateInfo(resultSet, 8);
 					break;
 
-				default:	
-					break;
 				}
 			}
 			aveCalculation(); // Average calculation for all games
@@ -109,18 +106,32 @@ public class Statistics {
 				if(resultSet.getDouble("Point") > bestGame[index][0]) // If the score is higher than the last high point
 					bestGame[index][0]=resultSet.getInt("Point"); // new best game
 			}
-			else 
-			{
+			else  {
 				bestGame[index][0]=resultSet.getInt("Point"); // If this is the first game we played
 				bestGame[index][1] = 1; // Mark we played
 			}
 		}
-		else
-		{
+		else if(resultSet.getInt("FirstID") == -314977489 ) { // Check if we played the game
+			if(bestGameAlgo[index][1] != 0) { // If we've already played the game
+				if(resultSet.getDouble("Point") > bestGameAlgo[index][0]) // If the score is higher than the last high point
+					bestGameAlgo[index][0]=resultSet.getInt("Point"); // new best game
+			}
+			else  {
+				bestGameAlgo[index][0]=resultSet.getInt("Point"); // If this is the first game we played
+				bestGameAlgo[index][1] = 1; // Mark we played
+			}
+		}
+		
+		else {
 			average[index][0]+=resultSet.getDouble("Point"); // Add game scores to other players' games
 			average[index][1]++; // Count games for the average calculation
 		}
 	}
+	public static double[][] getBestGameAlgo() {
+		return bestGameAlgo;
+	}
+
+
 	/**
 	 * A method that records all the existing games in a database as a string
 	 * @param resultSet
@@ -129,7 +140,6 @@ public class Statistics {
 	public void allInfo(ResultSet resultSet) throws SQLException {
 		ans+= resultSet.getInt("FirstID")+"\t" +
 				resultSet.getInt("SecondID")+"\t" +
-				resultSet.getInt("ThirdID")+"\t" +
 				resultSet.getTimestamp("LogTime") +"\t" +
 				resultSet.getDouble("Point") +"\t" +
 				resultSet.getString("SomeDouble");
@@ -149,8 +159,9 @@ public class Statistics {
 	}
 	/* * * * * * * * * * * * * * * * * * Getter and setter * * * * * * * * * * * * * * * */
 
-	public static double[][] getBestGame() { return bestGame; }
+	public static double[][] getbestGame() { return bestGame; }
 	public static double[][] getAverage() { return average; }
+	public static double[][] getbestGameAlgo() { return bestGameAlgo; }
 
 	/* * * * * * * * * * * * * * * * * * toString * * * * * * * * * * * * * * * */
 
