@@ -146,8 +146,52 @@ public class Statistics {
 				resultSet.getInt("SecondID")+"\t" +
 				resultSet.getTimestamp("LogTime") +"\t" +
 				resultSet.getDouble("Point") +"\t" +
-				resultSet.getString("SomeDouble") + "\n" + ans;
+				getMapID(resultSet.getString("SomeDouble")) + " : " + resultSet.getString("SomeDouble") + "\n" + ans;
 	}
+	/* * * * * * * * * * * * * * * * * * getMapID * * * * * * * * * * * * * * * */
+
+	private String getMapID(String s) {
+		switch (s) // Select by file name
+		{
+
+		case "2128259830": // example 1
+			return "Example 1";
+
+		case "1149748017": // example 2
+			return "Example 2";
+
+
+		case "-683317070": // example 3
+			return "Example  3";
+
+
+		case "1193961129": // example 4
+			return "Example  4";
+
+
+		case "1577914705": // example 5
+			return "Example  5";
+
+
+		case "-1315066918": // example 6
+			return "Example  6";
+
+
+		case "-1377331871": // example 7
+			return "Example  7";
+
+
+		case "306711633": // example 8
+			return "Example  8";
+
+
+		case "919248096": // example 9
+			return "Example  9";
+
+		}
+		return "Unknown map ID";
+	}
+
 
 	/* * * * * * * * * * * * * * * * * * average calculation * * * * * * * * * * * * * * * */
 	/**
