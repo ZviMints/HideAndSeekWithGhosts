@@ -57,6 +57,7 @@ public class AlgoThread extends Thread{
 				//						System.out.println(new Point3D(Next_Move_In_Pixels));
 				//						System.out.println(ang);
 				//						System.out.println();
+				player.setP(new Point3D(Next_Move_In_Pixels));
 				g.update();	
 			}
 			maze.reset();

@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Algo {
 	private static final int[][] DIRECTIONS = { 
 			{0,-1}, // 0°
-			{1,-1}, // 45°
 			{1,0}, // 90°
-			{1,1}, // 135°
 			{0,1}, //180°
-			{-1,1}, //225°
 			{-1,0}, //270°
 			{-1,-1}, //315°
+			{1,-1}, // 45°
+			{-1,1}, //225°
+			{1,1}, // 135°
 	};
 	private Maze maze;
 
@@ -27,12 +28,12 @@ public class Algo {
 	}
 	/* * * * * * * * * * * * * * * * * * FindShortestPath * * * * * * * * * * * * * * * */
 	private List<Coordinate> FindShortestPath(Coordinate START) {
-		LinkedList<Coordinate> Next2Visit = new LinkedList<Coordinate>();
-		Next2Visit.add(START);
+        Queue<Coordinate> Q = new LinkedList<>();
+		Q.add(START);
 
-		while(!Next2Visit.isEmpty())
+		while(!Q.isEmpty())
 		{	
-			Coordinate temp = Next2Visit.remove();
+			Coordinate temp = Q.remove();
 			int x = temp.getX();
 			int y = temp.getY();
 			// Base case : Check if its in MAP
@@ -55,7 +56,7 @@ public class Algo {
 			{
 				int[] dir = DIRECTIONS[i];
 				Coordinate cur = new Coordinate(x + dir[0], y + dir[1],temp);
-				Next2Visit.add(cur);
+				Q.add(cur);
 			}
 		}
 		return Collections.emptyList(); // Return empty list

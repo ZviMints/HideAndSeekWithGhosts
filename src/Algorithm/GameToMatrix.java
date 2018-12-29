@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -102,8 +101,6 @@ public class GameToMatrix {
 			JScrollPane sp = new JScrollPane(ta);
 			sp.setBounds(0,0,mat[0].length,mat.length);
 			frame.add(sp);
-
-
 			Maze maze = new Maze(mat);
 			Algo algo = new Algo();
 			List<Coordinate> path = algo.SOLVE(maze);
