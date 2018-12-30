@@ -72,10 +72,12 @@ public class AlgoThread extends Thread{
 			double dx = dist.getY() - src.getY();
 			double dy = dist.getX() - src.getX();
 			player.ang = getAngle(dx,dy);
-			
+
 			// Update the GUI
 			g.update();	
 		}
+		g.update();	
+
 		JOptionPane.showMessageDialog(null, "Algo Finished");
 		Menu.SetVisableTrue();
 		g.setGameMode(false);
@@ -100,14 +102,14 @@ public class AlgoThread extends Thread{
 		else // {-1,1}
 			return 225;
 	}
-	
+
 	/* * * * * * * * * * * * * * * * * * GetStartPointToPlayer * * * * * * * * * * * * * * * */
 	private Player GetStartPointToPlayer() 
 	{
-		if(!g.getPacmansList().isEmpty() || !g.getFruitsList().isEmpty())
+		if(!g.getPacmansList().isEmpty() )
 			return new Player(new Point3D(g.getFruitsList().get(0).getP().x(),g.getFruitsList().get(0).getP().y(),0),"Robot");
 		else
-			return new Player(g.getMap().getP00(),"Algo");
+			return new Player(new Point3D(g.getPacmansList().get(0).getP().x(),g.getPacmansList().get(0).getP().y(),0),"Robot");
 	}
 }
 

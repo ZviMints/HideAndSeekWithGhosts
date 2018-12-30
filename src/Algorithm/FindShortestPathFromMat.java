@@ -28,7 +28,7 @@ public class FindShortestPathFromMat {
 	}
 	/* * * * * * * * * * * * * * * * * * FindShortestPath * * * * * * * * * * * * * * * */
 	private List<Coordinate> FindShortestPath(Coordinate START) {
-        Queue<Coordinate> Q = new LinkedList<>();
+		Queue<Coordinate> Q = new LinkedList<>();
 		Q.add(START);
 
 		while(!Q.isEmpty())
@@ -55,7 +55,9 @@ public class FindShortestPathFromMat {
 			for(int i=0; i<DIRECTIONS.length; i++)
 			{
 				int[] dir = DIRECTIONS[i];
-				Coordinate cur = new Coordinate(x + dir[0], y + dir[1],temp);
+				int NextX = x + dir[0];
+				int NextY = y + dir[1];
+				Coordinate cur = new Coordinate(NextX, NextY,temp);
 				Q.add(cur);
 			}
 		}

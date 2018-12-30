@@ -58,7 +58,7 @@ public class GameToMatrix {
 		{
 			Point3D b_p0 = map.getPixelFromCord(b.getP0());
 			Point3D b_p1 = map.getPixelFromCord(b.getP1());
-			for(int i = (int)b_p0.x() ; i< (int)b_p1.x() + 2; i++)
+			for(int i = (int)b_p0.x() - 3 ; i< (int)b_p1.x() + 3; i++)
 			{
 				int j2 = (int)b_p1.y();
 				int j1 = (int)b_p0.y();
@@ -66,7 +66,7 @@ public class GameToMatrix {
 				mat[j2][i] = 'B';
 			}
 
-			for(int j = (int)b_p1.y() ; j < (int)b_p0.y() + 2; j++)
+			for(int j = (int)b_p1.y() - 3 ; j < (int)b_p0.y() + 3; j++)
 			{
 				int i2 = (int)b_p1.x();
 				int i1 = (int)b_p0.x();

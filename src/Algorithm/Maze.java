@@ -39,8 +39,7 @@ public class Maze {
 			{
 				if(mat[i][j] == 'M') 
 					_START = new Coordinate(i, j);
-//    else if(maze[i][j] == 'P' || maze[i][j] == 'P') _END.add(new Coordinate(i, j));
-				else if(mat[i][j] == 'F') _END.add(new Coordinate(i, j));
+				else if(mat[i][j] == 'P' || mat[i][j] == 'F') _END.add(new Coordinate(i, j));
 			}
 	}
 
@@ -71,6 +70,11 @@ public class Maze {
 	public boolean isExplored(int r, int c)
 	{
 		return visited[r][c];
+	}
+	public boolean isGhost(int r, int c)
+	{
+		if(MATRIX[r][c] == 'G') return true;
+		return false;
 	}
 	public boolean isBox(int r, int c)
 	{
