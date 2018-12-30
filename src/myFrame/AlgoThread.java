@@ -17,8 +17,7 @@ public class AlgoThread extends Thread{
 	private GamePanel g;
 	private Play play;
 	private Player player;
-	private static final MyCoords coords = new MyCoords();
-
+	
 	public AlgoThread(GamePanel g)
 	{
 		this.g = g;
@@ -61,7 +60,7 @@ public class AlgoThread extends Thread{
 			if(!path.isEmpty()) path.remove(0); // FIRST ONE
 
 			// SLEEP
-			try { Thread.sleep(20);} // The animation wont run too fast				 
+			try { Thread.sleep(50);} // The animation wont run too fast				 
 			catch (InterruptedException e) {} 
 
 			// Find the current Angle that the player need to move
