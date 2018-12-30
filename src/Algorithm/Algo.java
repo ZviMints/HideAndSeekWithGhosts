@@ -1,6 +1,5 @@
 package Algorithm;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,12 +37,12 @@ public class Algo {
 			int y = temp.getY();
 			// Base case : Check if its in MAP
 			if(!maze.isValidLocation(x, y) || maze.isExplored(x, y))
-				continue;
+				continue; // To The Next Step
 			// Check if its a valid point
 			if(maze.isBox(x, y))
 			{
 				maze.setVistied(x, y, true);
-				continue;
+				continue; // To The Next Step
 			}
 			// Base case : check if we finished
 			if(maze.isFinalPoint(x, y))

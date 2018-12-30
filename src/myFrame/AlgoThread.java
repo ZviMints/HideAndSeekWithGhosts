@@ -44,22 +44,14 @@ public class AlgoThread extends Thread{
 			List<Coordinate> path = algo.SOLVE(maze);
 			if(path != null)
 				path.remove(0);  // Current Location
-			while(!path.isEmpty())
-			{
-				try { Thread.sleep(20);} // The animation wont run too fast				 
-				catch (InterruptedException e) {} 
-				Coordinate Next_Move_In_Pixels = path.remove(0);
-				Point3D dist = g.getMap().getCordFromPixel(new Point3D(Next_Move_In_Pixels));
-				Point3D src = player.getP();
-				double ang = coords.azimuth(src.x(), src.y(), dist.x(), dist.y());
-				player.ang = ang;							
-				//						System.out.println(map.getPixelFromCord(player.getP()));
-				//						System.out.println(new Point3D(Next_Move_In_Pixels));
-				//						System.out.println(ang);
-				//						System.out.println();
-				player.setP(new Point3D(Next_Move_In_Pixels));
-				g.update();	
-			}
+			try { Thread.sleep(20);} // The animation wont run too fast				 
+			catch (InterruptedException e) {} 
+			Coordinate dist = path.remove(0);
+			Coordinate src = dist.getPred();
+			double dx = dist.getY() - src.getY();
+			double dy = dist.getX() - src.getX();
+			player.ang = getAngle(dx,dy);
+			g.update();	
 			maze.reset();
 		}
 		g.update();	
@@ -68,25 +60,25 @@ public class AlgoThread extends Thread{
 		g.setGameMode(false);
 		g.setAlgoMode(false);
 	}
-//	/* * * * * * * * * * * * * * * * * * getAngle * * * * * * * * * * * * * * * */
-//	private double getAngle(double dx, double dy) {
-//		if( dx == 0 && dy == 1) // {0,1}
-//			return 180;
-//		else if( dx == 1 && dy == 1) // {1,1}
-//			return  135;
-//		else if( dx == 1 && dy == 0) // {1,0}
-//			return 90;
-//		else if(dx == 1 && dy == -1 ) // {1,-1}
-//			return 45;
-//		else if(dx == 0 && dy == -1 ) //  {0,-1}
-//			return 360;
-//		else if( dx == -1 && dy == -1) // {-1,-1}
-//			return 315;
-//		else if( dx == -1 && dy == 0) // {-1,0}	
-//			return 270;
-//		else // {-1,1}
-//			return 225;
-//	}
+	/* * * * * * * * * * * * * * * * * * getAngle * * * * * * * * * * * * * * * */
+	private double getAngle(double dx, double dy) {
+		if( dx == 0 && dy == 1) // {0,1}
+			return 180;
+		else if( dx == 1 && dy == 1) // {1,1}
+			return  135;
+		else if( dx == 1 && dy == 0) // {1,0}
+			return 90;
+		else if(dx == 1 && dy == -1 ) // {1,-1}
+			return 45;
+		else if(dx == 0 && dy == -1 ) //  {0,-1}
+			return 360;
+		else if( dx == -1 && dy == -1) // {-1,-1}
+			return 315;
+		else if( dx == -1 && dy == 0) // {-1,0}	
+			return 270;
+		else // {-1,1}
+			return 225;
+	}
 	/* * * * * * * * * * * * * * * * * * GetStartPointToPlayer * * * * * * * * * * * * * * * */
 	private Player GetStartPointToPlayer() 
 	{
