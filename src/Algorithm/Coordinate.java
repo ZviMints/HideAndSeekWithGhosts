@@ -29,6 +29,11 @@ public class Coordinate {
 	{
 		return this._pred;
 	}
+	/* * * * * * * * * * * * * * * * * * equals * * * * * * * * * * * * * * * */
+	public boolean equals(Coordinate other)
+	{
+		return (this._x == other._x) && (this._y == other._y);
+	}
 	/* * * * * * * * * * * * * * * * * * toString * * * * * * * * * * * * * * * */
 	public String toString()
 	{

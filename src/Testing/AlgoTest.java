@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import Algorithm.Algo;
+import Algorithm.FindShortestPathFromMat;
 import Algorithm.Coordinate;
 import Algorithm.GameToMatrix;
 import Algorithm.Maze;
@@ -33,8 +33,8 @@ class AlgoTest {
 //		mat.POPUP();
 //		Thread.sleep(100000);
 		Maze maze = new Maze(arr);
-		Algo algo = new Algo();
-		List<Coordinate> path = algo.SOLVE(maze);
+		FindShortestPathFromMat findShortestPathFromMat = new FindShortestPathFromMat();
+		List<Coordinate> path = findShortestPathFromMat.SOLVE(maze);
 		System.out.println(path.toString());
 		if(path.isEmpty()) 
 			System.out.println("null");

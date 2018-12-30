@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class Algo {
+public class FindShortestPathFromMat {
 	private static final int[][] DIRECTIONS = { 
 			{0,-1}, // 0°
 			{1,0}, // 90°
@@ -23,7 +23,8 @@ public class Algo {
 	{
 		this.maze = maze;
 		Coordinate START = maze.getStartPoint(); // Define Start Point
-		return FindShortestPath(START);
+		List<Coordinate> ans =  FindShortestPath(START);
+		return ans;
 	}
 	/* * * * * * * * * * * * * * * * * * FindShortestPath * * * * * * * * * * * * * * * */
 	private List<Coordinate> FindShortestPath(Coordinate START) {

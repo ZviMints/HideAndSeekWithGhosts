@@ -5,35 +5,53 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Maze {
-	private char[][] maze; // Original Matrix
+	private char[][] MATRIX; // Original Matrix
 	private boolean[][] visited; // visted Matrix
 	private Coordinate _START;
 	private List<Coordinate> _END;
+	private static Maze maze;
+
+	/* * * * * * * * * * * * * * * * * * Singleton * * * * * * * * * * * * * * * */
+	public static Maze Singleton(char[][] mat) {
+		// To Ensure Only One Instance Is Created 
+		if (maze == null) 
+		{ 
+			maze = new Maze(mat); 
+			return maze;
+		}
+		else
+			maze.Update(mat); 
+		return maze;
+	}
 	/* * * * * * * * * * * * * * * * * * Constructor * * * * * * * * * * * * * * * */
-	public Maze(char[][] maze)
+	public Maze(char[][] mat)
+	{
+		this.Update(mat);
+	}
+	/* * * * * * * * * * * * * * * * * * Update * * * * * * * * * * * * * * * */
+	private void Update(char[][] mat)
 	{
 		_END = new ArrayList<Coordinate>();
-		this.maze = maze;
-        visited = new boolean[maze.length][maze[0].length];
-
-		for(int i=0; i<maze.length; i++)
-			for(int j=0; j<maze[0].length; j++)
+		MATRIX = mat;
+		visited = new boolean[mat.length][mat[0].length];
+		for(int i=0; i<mat.length; i++)
+			for(int j=0; j<mat[0].length; j++)
 			{
-				if(maze[i][j] == 'M') 
+				if(mat[i][j] == 'M') 
 					_START = new Coordinate(i, j);
-//				else if(maze[i][j] == 'P' || maze[i][j] == 'P') _END.add(new Coordinate(i, j));
-				else if(maze[i][j] == 'F') _END.add(new Coordinate(i, j));
-
+//    else if(maze[i][j] == 'P' || maze[i][j] == 'P') _END.add(new Coordinate(i, j));
+				else if(mat[i][j] == 'F') _END.add(new Coordinate(i, j));
 			}
 	}
+
 	/* * * * * * * * * * * * * * * * * * Getters and Setters * * * * * * * * * * * * * * * */
 	public int getHeight()
 	{
-		return maze.length;
+		return MATRIX.length;
 	}
 	public int getWidth()
 	{
-		return maze[0].length;
+		return MATRIX[0].length;
 	}
 	public Coordinate getStartPoint()
 	{
@@ -56,7 +74,7 @@ public class Maze {
 	}
 	public boolean isBox(int r, int c)
 	{
-		return maze[r][c] == 'B';
+		return MATRIX[r][c] == 'B';
 	}
 	public void setVistied(int r, int c, boolean val)
 	{
@@ -72,7 +90,7 @@ public class Maze {
 	}
 	public String ReturnMatWithPath(List<Coordinate> path)
 	{
-		char[][] temp = Arrays.stream(maze)
+		char[][] temp = Arrays.stream(MATRIX)
 				.map(char[]::clone)
 				.toArray(char[][]::new);
 		for (Coordinate coordinate : path) {
@@ -85,26 +103,26 @@ public class Maze {
 	}
 	/* * * * * * * * * * * * * * * * * * toString * * * * * * * * * * * * * * * */
 	public String toString(char[][] maze) {
-		  StringBuilder result = new StringBuilder(getWidth() * (getHeight() + 1));
-	        for (int row = 0; row < getHeight(); row++) {
-	            for (int col = 0; col < getWidth(); col++) {
-	                if (maze[row][col] == ' ') {
-	                    result.append(' ');
-	                } else if (maze[row][col] == 'B') {
-	                    result.append('B');
-	                } else if (maze[row][col] == 'M') {
-	                    result.append('M');
-	                } else if (maze[row][col] == 'P') {
-	                    result.append('P');
-	                } else if (maze[row][col] == 'F') {
-	                    result.append('F');
-	                } else {
-	                    result.append('*');
-	                }
-	            }
-	            result.append('\n');
-	        }
-	        return result.toString();
+		StringBuilder result = new StringBuilder(getWidth() * (getHeight() + 1));
+		for (int row = 0; row < getHeight(); row++) {
+			for (int col = 0; col < getWidth(); col++) {
+				if (maze[row][col] == ' ') {
+					result.append(' ');
+				} else if (maze[row][col] == 'B') {
+					result.append('B');
+				} else if (maze[row][col] == 'M') {
+					result.append('M');
+				} else if (maze[row][col] == 'P') {
+					result.append('P');
+				} else if (maze[row][col] == 'F') {
+					result.append('F');
+				} else {
+					result.append('*');
+				}
+			}
+			result.append('\n');
+		}
+		return result.toString();
 	}
 	/* * * * * * * * * * * * * * * * * * reset * * * * * * * * * * * * * * * */
 	public void reset()

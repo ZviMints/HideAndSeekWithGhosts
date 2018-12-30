@@ -1,13 +1,9 @@
 package Algorithm;
-
-import java.awt.Font;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-
 import Geom.Point3D;
 import Map.Map;
 import Objects.Box;
@@ -17,19 +13,42 @@ import Objects.Pacman;
 import Player.Player;
 
 public class GameToMatrix {
-	char[][] mat;
+	private static GameToMatrix matrix;
+	static char[][] mat;
 	static JFrame frame;
 	static JTextArea ta;
+	/* * * * * * * * * * * * * * * * * * Singleton * * * * * * * * * * * * * * * */
+	public static GameToMatrix Singleton(Player player, List<Fruit> FruitsList, List<Box> BoxsList, List<Ghost> GhostsList, List<Pacman> PacmansList, Map map) 
+	{ 
+		// To Ensure Only One Instance Is Created 
+		if (mat == null) 
+		{ 
+			matrix = new GameToMatrix(player,FruitsList,BoxsList,GhostsList,PacmansList,map); 
+			return matrix;
+		}
+		else
+		{
+			matrix.Update(player,FruitsList,BoxsList,GhostsList,PacmansList,map); 
+		} 
+		return matrix;
+	} 
 	/* * * * * * * * * * * * * * * * * * Constructor * * * * * * * * * * * * * * * */
-	public GameToMatrix(Player player, List<Fruit> FruitsList, List<Box> BoxsList, List<Ghost> GhostsList, List<Pacman> PacmansList,Map map)
+	public GameToMatrix(Player player, List<Fruit> FruitsList, List<Box> BoxsList, List<Ghost> GhostsList, List<Pacman> PacmansList, Map map)
 	{
+		this.Update(player, FruitsList, BoxsList, GhostsList, PacmansList, map);
+	}
+	/* * * * * * * * * * * * * * * * * * Update * * * * * * * * * * * * * * * */
+	private void Update(Player player, List<Fruit> FruitsList, List<Box> BoxsList, List<Ghost> GhostsList, List<Pacman> PacmansList, Map map) {
 		int w = map.getWidth();
 		int h = map.getHeight();
-		mat = new char[h][w];
+		if(mat == null || h != mat.length || w != mat[0].length )
+		{
+			mat = new char[h][w];
+		}
 		for(int i=0; i<mat.length;i++)
 			for(int j=0;j<mat[i].length;j++)
 				mat[i][j]=' ';
-		
+
 		for(Ghost ghost : GhostsList)
 		{
 			Point3D p = map.getPixelFromCord(ghost.getP());
@@ -39,34 +58,20 @@ public class GameToMatrix {
 		{
 			Point3D b_p0 = map.getPixelFromCord(b.getP0());
 			Point3D b_p1 = map.getPixelFromCord(b.getP1());
-			for(int i = (int)b_p0.x() ; i< (int)b_p1.x(); i++)
+			for(int i = (int)b_p0.x() ; i< (int)b_p1.x() + 2; i++)
 			{
-				int j1Plus = (int)b_p1.y();
-				int j2Plus = (int)b_p0.y();
-				int j1Minus = (int)b_p1.y();
-				int j2Minus = (int)b_p0.y();
-				for(int j=0; j<5; j++)
-				{
-				mat[j1Plus++][i] = 'B';
-				mat[j2Plus++][i] = 'B';
-				mat[j1Minus--][i] = 'B';
-				mat[j2Minus--][i] = 'B';
-				}
+				int j2 = (int)b_p1.y();
+				int j1 = (int)b_p0.y();
+				mat[j1][i] = 'B';
+				mat[j2][i] = 'B';
 			}
 
-			for(int j = (int)b_p1.y() ; j < (int)b_p0.y(); j++)
+			for(int j = (int)b_p1.y() ; j < (int)b_p0.y() + 2; j++)
 			{
-				int i1Plus = (int)b_p0.x();
-				int i2Plus = (int)b_p1.x();
-				int i1Minus = (int)b_p0.x();
-				int i2Minus = (int)b_p1.x();
-				for(int i=0; i<5; i++)
-				{
-					mat[j][i1Plus++] = 'B';
-					mat[j][i1Minus--] = 'B';
-					mat[j][i2Plus++] = 'B';
-					mat[j][i2Minus--] = 'B';
-				}
+				int i2 = (int)b_p1.x();
+				int i1 = (int)b_p0.x();
+				mat[j][i1] = 'B';
+				mat[j][i2++] = 'B';
 			}
 		}
 		for(Pacman pacman : PacmansList)
@@ -102,8 +107,8 @@ public class GameToMatrix {
 			sp.setBounds(0,0,mat[0].length,mat.length);
 			frame.add(sp);
 			Maze maze = new Maze(mat);
-			Algo algo = new Algo();
-			List<Coordinate> path = algo.SOLVE(maze);
+			FindShortestPathFromMat findShortestPathFromMat = new FindShortestPathFromMat();
+			List<Coordinate> path = findShortestPathFromMat.SOLVE(maze);
 			if(path.isEmpty()) 
 				ta.setText(toString());
 			else

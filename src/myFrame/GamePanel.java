@@ -216,6 +216,7 @@ public class GamePanel extends JPanel implements MouseListener{
 				player.InDanger = true;
 			else
 				player.InDanger = false;
+			
 			play.rotate(player.ang);
 		}
 		else  // The player intersects one of the Game Corners

@@ -3,7 +3,7 @@ package myFrame;
 import java.util.List;
 
 import javax.swing.JOptionPane;
-import Algorithm.Algo;
+import Algorithm.FindShortestPathFromMat;
 import Algorithm.Coordinate;
 import Algorithm.GameToMatrix;
 import Algorithm.Maze;
@@ -27,34 +27,55 @@ public class AlgoThread extends Thread{
 	}
 	public void run()
 	{
+		// If user did not INITIALIZE player by click
 		if(player == null)
 		{
 			player = GetStartPointToPlayer();
 			g.setPlayer(player);
 		}
+		// Set Player
 		play.setInitLocation(player.getP().x(),player.getP().y());
+
+		// Start game
 		play.start();
+
+		// Set Game Mode's to true
 		g.setGameMode(true);
 		g.setAlgoMode(true);
+
+		// While game is running
 		while(play.isRuning())
 		{
-			GameToMatrix mat = new GameToMatrix(player,g.getFruitsList(),g.getBoxsList(),g.getGhostsList(),g.getPacmansList(),g.getMap());
-			Maze maze = new Maze(mat.getMat());
-			Algo algo = new Algo();
-			List<Coordinate> path = algo.SOLVE(maze);
-			if(path != null)
-				path.remove(0);  // Current Location
+			// An object GameToMatrix was designed to represent the current game
+			// that appears in the GUI for an matrix that is the size of pixels of the screen
+			GameToMatrix mat = GameToMatrix.Singleton(player,g.getFruitsList(),g.getBoxsList(),g.getGhostsList(),g.getPacmansList(),g.getMap());
+
+			// Converts a 2D matrix into an object that is capable of performing operations 
+			// and checking the locations of objects in the matrix
+			Maze maze = Maze.Singleton(mat.getMat());  
+
+			// Get Shortest Path from current MAZE
+			FindShortestPathFromMat findShortestPathFromMat = new FindShortestPathFromMat();
+			List<Coordinate> path = findShortestPathFromMat.SOLVE(maze);
+
+			if(!path.isEmpty()) path.remove(0); // FIRST ONE
+
+			// SLEEP
 			try { Thread.sleep(20);} // The animation wont run too fast				 
 			catch (InterruptedException e) {} 
-			Coordinate dist = path.remove(0);
+
+			// Find the current Angle that the player need to move
+			Coordinate dist = path.get(1);
+			path.remove(0);
+
 			Coordinate src = dist.getPred();
 			double dx = dist.getY() - src.getY();
 			double dy = dist.getX() - src.getX();
 			player.ang = getAngle(dx,dy);
+			
+			// Update the GUI
 			g.update();	
-			maze.reset();
 		}
-		g.update();	
 		JOptionPane.showMessageDialog(null, "Algo Finished");
 		Menu.SetVisableTrue();
 		g.setGameMode(false);
@@ -79,15 +100,14 @@ public class AlgoThread extends Thread{
 		else // {-1,1}
 			return 225;
 	}
+	
 	/* * * * * * * * * * * * * * * * * * GetStartPointToPlayer * * * * * * * * * * * * * * * */
 	private Player GetStartPointToPlayer() 
 	{
-		if(!g.getPacmansList().isEmpty())
-			return new Player(new Point3D(g.getPacmansList().get(0).getP().x(),g.getPacmansList().get(0).getP().y(),0),"Robot");
-		else if(!g.getFruitsList().isEmpty())
+		if(!g.getPacmansList().isEmpty() || !g.getFruitsList().isEmpty())
 			return new Player(new Point3D(g.getFruitsList().get(0).getP().x(),g.getFruitsList().get(0).getP().y(),0),"Robot");
 		else
-			return new Player(g.getMap().getP00(),"Robot");
+			return new Player(g.getMap().getP00(),"Algo");
 	}
 }
 
