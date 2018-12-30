@@ -1,29 +1,43 @@
+/**
+ * This Class is responsible for the "Client" algorithm side, this is thread that make all the choices 
+ * for each step in the game
+ * @version 4.0
+ * @author Tzvi Mints and Or Abuhazira
+ */
 package myFrame;
-
 import java.util.List;
-
 import javax.swing.JOptionPane;
 import Algorithm.FindShortestPathFromMat;
 import Algorithm.Coordinate;
 import Algorithm.GameToMatrix;
 import Algorithm.Maze;
-import Coords.MyCoords;
 import GUI.Menu;
 import Geom.Point3D;
 import Player.Player;
 import Robot.Play;
 
 public class AlgoThread extends Thread{
-	private GamePanel g;
-	private Play play;
-	private Player player;
-	
+	/* * * * * * * * * * * * * * * * * * Private CONSTANTS * * * * * * * * * * * * * * * */	
+	private GamePanel g; // The Panel of the Game
+	private Play play; // The Server Side Player
+	private Player player; // My Player
+
+	/* * * * * * * * * * * * * * * * * * Constructors * * * * * * * * * * * * * * * */	
+	/**
+	 * This is the Main Constructor of the AlgoThread,
+	 * @param g is the Panel, from which we initialize player & play
+	 */
 	public AlgoThread(GamePanel g)
 	{
-		this.g = g;
-		this.play = g.getPlay();
-		this.player = g.getPlayer();
+		this.g = g; // The Panel of the Game
+		this.play = g.getPlay(); // The Server Side Player
+		this.player = g.getPlayer(); // My Player
 	}
+	/* * * * * * * * * * * * * * * * * * @Override - Run * * * * * * * * * * * * * * * */
+	/**
+	 * This is the main thread run function, in which we control the Panel of the game and move
+	 * our player
+	 */
 	public void run()
 	{
 		// If user did not INITIALIZE player by click
@@ -83,6 +97,13 @@ public class AlgoThread extends Thread{
 		g.setAlgoMode(false);
 	}
 	/* * * * * * * * * * * * * * * * * * getAngle * * * * * * * * * * * * * * * */
+	//NOTE: We could use Enumum's or Final Consts but we prefered the follow type of form
+	/**
+	 * This Function is responsible to convert from DIRECTIONS such that (-1,0) and etc.. to Degrees
+	 * @param dx is the x in the vector (x,y)
+	 * @param dy is the y in the vector (x,y)
+	 * @return Degrees (°) 
+	 */
 	private double getAngle(double dx, double dy) {
 		if( dx == 0 && dy == 1) // {0,1}
 			return 180;
@@ -101,13 +122,16 @@ public class AlgoThread extends Thread{
 		else // {-1,1}
 			return 225;
 	}
-
 	/* * * * * * * * * * * * * * * * * * GetStartPointToPlayer * * * * * * * * * * * * * * * */
+	/**
+	 * This method is responsible to Return the Algo Choice for the start Point of the Play 
+	 * @return Player with START Location
+	 */
 	private Player GetStartPointToPlayer() 
 	{
-		if(!g.getPacmansList().isEmpty() )
+		if(!g.getPacmansList().isEmpty() )  // Put in first Fruit Place
 			return new Player(new Point3D(g.getFruitsList().get(0).getP().x(),g.getFruitsList().get(0).getP().y(),0),"Robot");
-		else
+		else // Puts in first Pacman Place
 			return new Player(new Point3D(g.getPacmansList().get(0).getP().x(),g.getPacmansList().get(0).getP().y(),0),"Robot");
 	}
 }

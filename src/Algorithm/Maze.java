@@ -44,18 +44,9 @@ public class Maze {
 	}
 
 	/* * * * * * * * * * * * * * * * * * Getters and Setters * * * * * * * * * * * * * * * */
-	public int getHeight()
-	{
-		return MATRIX.length;
-	}
-	public int getWidth()
-	{
-		return MATRIX[0].length;
-	}
-	public Coordinate getStartPoint()
-	{
-		return this._START;
-	}
+	public int getHeight() { return MATRIX.length; }
+	public int getWidth() { return MATRIX[0].length; }
+	public Coordinate getStartPoint() { return this._START; }
 	public boolean isFinalPoint(int x,int y)
 	{
 		for(Coordinate cur : _END)
@@ -63,27 +54,15 @@ public class Maze {
 				return true;
 		return false;
 	}
-	public boolean isStartPoint(int x,int y)
-	{
-		return x == _START.getX() && y == _START.getY();
-	}
-	public boolean isExplored(int r, int c)
-	{
-		return visited[r][c];
-	}
+	public boolean isStartPoint(int x,int y) { return x == _START.getX() && y == _START.getY(); }
+	public boolean isExplored(int r, int c) { return visited[r][c]; }
 	public boolean isGhost(int r, int c)
 	{
 		if(MATRIX[r][c] == 'G') return true;
 		return false;
 	}
-	public boolean isBox(int r, int c)
-	{
-		return MATRIX[r][c] == 'B';
-	}
-	public void setVistied(int r, int c, boolean val)
-	{
-		visited[r][c] = val;
-	}
+	public boolean isBox(int r, int c){ return MATRIX[r][c] == 'B'; }
+	public void setVistied(int r, int c, boolean val) { visited[r][c] = val; }
 	public boolean isValidLocation(int r, int c)
 	{
 		if(r < 5 ) return false;
@@ -94,9 +73,7 @@ public class Maze {
 	}
 	public String ReturnMatWithPath(List<Coordinate> path)
 	{
-		char[][] temp = Arrays.stream(MATRIX)
-				.map(char[]::clone)
-				.toArray(char[][]::new);
+		char[][] temp = Arrays.stream(MATRIX).map(char[]::clone).toArray(char[][]::new);
 		for (Coordinate coordinate : path) {
 			if (isStartPoint(coordinate.getX(), coordinate.getY()) || isFinalPoint(coordinate.getX(), coordinate.getY())) {
 				continue;
