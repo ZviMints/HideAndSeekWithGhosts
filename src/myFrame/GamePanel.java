@@ -112,7 +112,6 @@ public class GamePanel extends JPanel implements MouseListener{
 				g.drawImage(player.getPlayerImage(), x - (int)(_ratio*12.5), y - (int)(_ratio*12.5),(int)(25*_ratio), (int)(25*_ratio), this);
 				if(player.InDanger) // if player is in Danger == Near Box || Near border || Hïit Ghost
 				{
-					if(!AlgoIsPlaying) // if Algo is playing there no need to print Danger 
 					g.drawImage(this.map.GetDangerHover() , 0, 0, map.getWidth(),map.getHeight(), this); // DANGER 
 				}
 			}

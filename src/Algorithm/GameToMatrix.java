@@ -48,11 +48,16 @@ public class GameToMatrix {
 		for(int i=0; i<mat.length;i++)
 			for(int j=0;j<mat[i].length;j++)
 				mat[i][j]=' ';
-
-		for(Ghost ghost : GhostsList)
+		
+		for(Pacman pacman : PacmansList)
 		{
-			Point3D p = map.getPixelFromCord(ghost.getP());
-			mat[(int)p.y()][(int)p.x()] = 'G';
+			Point3D p = map.getPixelFromCord(pacman.getP());
+			mat[(int)p.y()][(int)p.x()] = 'P';
+		}
+		for(Fruit fruit : FruitsList)
+		{
+			Point3D p = map.getPixelFromCord(fruit.getP());
+			mat[(int)p.y()][(int)p.x()] = 'F';
 		}
 		for(Box b : BoxsList)
 		{
@@ -74,15 +79,10 @@ public class GameToMatrix {
 				mat[j][i2++] = 'B';
 			}
 		}
-		for(Pacman pacman : PacmansList)
+		for(Ghost ghost : GhostsList)
 		{
-			Point3D p = map.getPixelFromCord(pacman.getP());
-			mat[(int)p.y()][(int)p.x()] = 'P';
-		}
-		for(Fruit fruit : FruitsList)
-		{
-			Point3D p = map.getPixelFromCord(fruit.getP());
-			mat[(int)p.y()][(int)p.x()] = 'F';
+			Point3D p = map.getPixelFromCord(ghost.getP());
+			mat[(int)p.y()][(int)p.x()] = 'G';
 		}
 		if(player != null)
 		{

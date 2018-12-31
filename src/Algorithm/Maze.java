@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import Coords.MyCoords;
+
 public class Maze {
 	private char[][] MATRIX; // Original Matrix
 	private boolean[][] visited; // visted Matrix
@@ -56,12 +58,8 @@ public class Maze {
 	}
 	public boolean isStartPoint(int x,int y) { return x == _START.getX() && y == _START.getY(); }
 	public boolean isExplored(int r, int c) { return visited[r][c]; }
-	public boolean isGhost(int r, int c)
-	{
-		if(MATRIX[r][c] == 'G') return true;
-		return false;
-	}
 	public boolean isBox(int r, int c){ return MATRIX[r][c] == 'B'; }
+	public boolean isGhost(int r, int c){ return MATRIX[r][c] == 'G'; }
 	public void setVistied(int r, int c, boolean val) { visited[r][c] = val; }
 	public boolean isValidLocation(int r, int c)
 	{
@@ -97,6 +95,8 @@ public class Maze {
 					result.append('P');
 				} else if (maze[row][col] == 'F') {
 					result.append('F');
+				} else if (maze[row][col] == 'G') {
+					result.append('G');
 				} else {
 					result.append('*');
 				}

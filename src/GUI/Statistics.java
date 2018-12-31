@@ -17,7 +17,6 @@ public class Statistics {
 	private static final String MAP8 = "306711633"; 
 	private static final String MAP9 = "919248096"; 
 	private static final double TZVI_ID = 314977489;
-	private static final double OR_ID = 311226617;
 
 
 	private static String ans = "";

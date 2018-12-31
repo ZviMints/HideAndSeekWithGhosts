@@ -30,7 +30,7 @@ public class FindShortestPathFromMat {
 		return ans; // Return the BackTracking Path
 	}
 	/* * * * * * * * * * * * * * * * * * FindShortestPath * * * * * * * * * * * * * * * */
-	private List<Coordinate> FindShortestPath(Coordinate START) {
+	private synchronized List<Coordinate> FindShortestPath(Coordinate START) {
 		Queue<Coordinate> Q = new LinkedList<>(); // Initalize new Queue
 		Q.add(START); // Add Start Pixel to the Queue
 
@@ -54,7 +54,7 @@ public class FindShortestPathFromMat {
 				return BackTracking(temp); // BackTrack by pred->pred->...->pred->null for find the path
 			}
 			// Must be on a path
-			maze.setVistied(x, y, true); // Set current Coordinate as visited
+			maze.setVistied(x, y, true); // Set current Coordinate as visited	
 			for(int i=0; i<DIRECTIONS.length; i++) // For all dir in DIRECTIONS
 			{
 				int[] dir = DIRECTIONS[i];
