@@ -15,7 +15,6 @@ import GUI.Menu;
 import Geom.Point3D;
 import Player.Player;
 import Robot.Play;
-
 public class AlgoThread extends Thread{
 	/* * * * * * * * * * * * * * * * * * Private CONSTANTS * * * * * * * * * * * * * * * */	
 	private GamePanel g; // The Panel of the Game
@@ -76,10 +75,12 @@ public class AlgoThread extends Thread{
 			// Find the current Angle that the player need to move
 			if(!path.isEmpty())
 			{
+				player.InDanger = false;
+				
 				// SLEEP
 				try { Thread.sleep(30);} // The animation wont run too fast				 
 				catch (InterruptedException e) {} 	
-				
+
 				Coordinate dist = path.remove(0);
 				if(!path.isEmpty()) dist = path.remove(0);
 
@@ -87,73 +88,73 @@ public class AlgoThread extends Thread{
 				double dx = dist.getY() - src.getY();
 				double dy = dist.getX() - src.getX();
 				player.ang = getAngle(dx,dy);
-				
-			// Update the GUI
-			g.update();	
-		}
-	}
-	g.update();	
 
-	JOptionPane.showMessageDialog(null, "Algo Finished");
-	Menu.SetVisableTrue();
-	g.setGameMode(false);
-	g.setAlgoMode(false);
-}
-/* * * * * * * * * * * * * * * * * * getOutOfDanger * * * * * * * * * * * * * * * */
-/**
- * This method is responsible to get danger of incoming ghosts
- * @param Degree of a Ghost
- */
-private void getOutOfDanger(double dangerAng) {
-	player.ang = dangerAng - 45;
-	play.rotate(player.ang);
-	// SLEEP
-	try { Thread.sleep(50);} // The animation wont run too fast				 
-	catch (InterruptedException e) {} 
-	play.rotate(player.ang);;
-	// SLEEP
-	try { Thread.sleep(50);} // The animation wont run too fast				 
-	catch (InterruptedException e) {} 
-	player.ang = dangerAng + 45;
-	play.rotate(player.ang);
-}
-/* * * * * * * * * * * * * * * * * * getAngle * * * * * * * * * * * * * * * */
-//NOTE: We could use Enumum's or Final Consts but we prefered the follow type of form
-/**
- * This Function is responsible to convert from DIRECTIONS such that (-1,0) and etc.. to Degrees
- * @param dx is the x in the vector (x,y)
- * @param dy is the y in the vector (x,y)
- * @return Degrees (°) 
- */
-private double getAngle(double dx, double dy) {
-	if( dx == 0 && dy == 1) // {0,1}
-		return 180;
-	else if( dx == 1 && dy == 1) // {1,1}
-		return  135;
-	else if( dx == 1 && dy == 0) // {1,0}
-		return 90;
-	else if(dx == 1 && dy == -1 ) // {1,-1}
-		return 45;
-	else if(dx == 0 && dy == -1 ) //  {0,-1}
-		return 360;
-	else if( dx == -1 && dy == -1) // {-1,-1}
-		return 315;
-	else if( dx == -1 && dy == 0) // {-1,0}	
-		return 270;
-	else // {-1,1}
-		return 225;
-}
-/* * * * * * * * * * * * * * * * * * GetStartPointToPlayer * * * * * * * * * * * * * * * */
-/**
- * This method is responsible to Return the Algo Choice for the start Point of the Play 
- * @return Player with START Location
- */
-private Player GetStartPointToPlayer() 
-{
-	if(!g.getPacmansList().isEmpty() )  // Put in first Fruit Place
-		return new Player(new Point3D(g.getFruitsList().get(0).getP().x(),g.getFruitsList().get(0).getP().y(),0),"Robot");
-	else // Puts in first Pacman Place
-		return new Player(new Point3D(g.getFruitsList().get(0).getP().x(),g.getFruitsList().get(0).getP().y(),0),"Robot");
-}
+				//Update Game
+				g.update();	
+			}
+			else
+				getOutOfDanger();
+		}
+		g.update();	
+
+		JOptionPane.showMessageDialog(null, "Algo Finished");
+		Menu.SetVisableTrue();
+		g.setGameMode(false);
+		g.setAlgoMode(false);
+	}
+	/* * * * * * * * * * * * * * * * * * getOutOfDanger * * * * * * * * * * * * * * * */
+	/**
+	 * This method is responsible to get danger of incoming ghosts
+	 * @param maze 
+	 * @param Player_P_Coords 
+	 * @param maze 
+	 */
+	private void getOutOfDanger() {
+		player.InDanger = true;
+		// SLEEP
+		try { Thread.sleep(30);} // The animation wont run too fast				 
+		catch (InterruptedException e) {}
+		//Update Game
+		g.update();	
+
+	}
+	/* * * * * * * * * * * * * * * * * * getAngle * * * * * * * * * * * * * * * */
+	//NOTE: We could use Enumum's or Final Consts but we prefered the follow type of form
+	/**
+	 * This Function is responsible to convert from DIRECTIONS such that (-1,0) and etc.. to Degrees
+	 * @param dx is the x in the vector (x,y)
+	 * @param dy is the y in the vector (x,y)
+	 * @return Degrees (°) 
+	 */
+	private double getAngle(double dx, double dy) {
+		if( dx == 0 && dy == 1) // {0,1}
+			return 180;
+		else if( dx == 1 && dy == 1) // {1,1}
+			return  135;
+		else if( dx == 1 && dy == 0) // {1,0}
+			return 90;
+		else if(dx == 1 && dy == -1 ) // {1,-1}
+			return 45;
+		else if(dx == 0 && dy == -1 ) //  {0,-1}
+			return 360;
+		else if( dx == -1 && dy == -1) // {-1,-1}
+			return 315;
+		else if( dx == -1 && dy == 0) // {-1,0}	
+			return 270;
+		else // {-1,1}
+			return 225;
+	}
+	/* * * * * * * * * * * * * * * * * * GetStartPointToPlayer * * * * * * * * * * * * * * * */
+	/**
+	 * This method is responsible to Return the Algo Choice for the start Point of the Play 
+	 * @return Player with START Location
+	 */
+	private Player GetStartPointToPlayer() 
+	{
+		if(!g.getPacmansList().isEmpty() )  // Put in first Fruit Place
+			return new Player(new Point3D(g.getFruitsList().get(0).getP().x(),g.getFruitsList().get(0).getP().y(),0),"Robot");
+		else // Puts in first Pacman Place
+			return new Player(new Point3D(g.getFruitsList().get(0).getP().x(),g.getFruitsList().get(0).getP().y(),0),"Robot");
+	}
 }
 

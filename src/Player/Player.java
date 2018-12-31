@@ -45,8 +45,10 @@ public class Player {
 	public Point3D getP() {
 		return _p;
 	}
-	public void setP(Point3D _p) {
-		this._p = _p;
+	public void setP(double x, double y, double z) {
+		this._p.setX(x);
+		this._p.setY(y);
+		this._p.setZ(z);
 	}
 	public Image getPlayerImage() {
 		return PlayerImage;

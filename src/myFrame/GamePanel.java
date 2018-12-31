@@ -13,10 +13,8 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
 import Algorithm.GameToMatrix;
 import Coords.MyCoords;
 import GUI.Menu;
@@ -140,12 +138,13 @@ public class GamePanel extends JPanel implements MouseListener{
 				g.fillRect(x0 , y1, width , height); // Draw Rectangle 
 
 			}
-			
+
 			// ************ Print all Fruits ************ //
 			g.setColor(Color.GREEN);  // Set the Color of the Fruit
 			for(int i=0 ; i <FruitsList.size() ; i++)  // For all Fruit at FruitsList
 			{
 				Fruit fruit = FruitsList.get(i); // Get The i's Fruit of the FruitsList
+				if(!fruit.isAlive()) continue;
 				Point3D p = fruit.getP(); // Get the current Fruit Point in Geom Element
 				Point3D p_pixels = map.getPixelFromCord(p); // Convert the current Point to Pixels
 				int x = (int) p_pixels.x(); int y = (int) p_pixels.y(); // Set x,y in pixels
@@ -157,6 +156,7 @@ public class GamePanel extends JPanel implements MouseListener{
 			for(int i=0; i<PacmansList.size() ;i++) // For all Pacman at PacmansList 
 			{
 				Pacman pacman = PacmansList.get(i); // Get The i's Pacman of the PacmansList
+				if(!pacman.isAlive()) continue;
 				Point3D p = pacman.getP(); // Get the current Pacman Point in Geom Element
 				Point3D p_pixels = map.getPixelFromCord(p); // Convert the current Point to Pixels
 				int x = (int) p_pixels.x(); int y = (int) p_pixels.y(); // Set x,y in pixels
@@ -217,20 +217,23 @@ public class GamePanel extends JPanel implements MouseListener{
 	}
 	/* * * * * * * * * * * * * * * * * *  update * * * * * * * * * * * * * * * */
 	/**
-	 * This method is reponsible for update the game.
+	 * This method is responsible for update the game.
 	 * we will get the String from the Server and init new Objects and show them in the GUI
 	 */
 	public void update() {
 		Point3D p = map.getPixelFromCord(player.getP()); // Get the player point in pixels
-		PacmansList.clear(); // clear the List from the objects because there could be changes from the Server
-		GhostsList.clear();  // clear the List from the objects because there could be changes from the Server
-		FruitsList.clear(); // clear the List from the objects because there could be changes from the Server
-		BoxsList.clear(); // clear the List from the objects because there could be changes from the Server
-		ArrayList<String> board_data = play.getBoard(); // run on all game board
-		for(int a=0 ; a<board_data.size(); a++) { // run on all game board
-			UpdateGame(board_data.get(a)); // update the game 
+
+		for(Fruit f : FruitsList)
+			f.setAlive(false); // Set False All FruitsList
+
+		for(Pacman pacman : PacmansList)
+			pacman.setAlive(false); // Set False All Pacmans
+
+		ArrayList<String> BoardData = play.getBoard(); // run on all game board
+		for(int a=0 ; a<BoardData.size(); a++) { // run on all game board
+			UpdateObjects(BoardData.get(a)); // update the game 
 		}
-		// If algo is playing or the player is in border 
+		// If Algorithm is playing or the player is in border 
 		if(p.x() >= 17.5 &&
 				p.x() <= map.getWidth() - 18.5 && 
 				p.y() >= 17.5 &&
@@ -241,7 +244,7 @@ public class GamePanel extends JPanel implements MouseListener{
 				player.InDanger = true; // the player is in danger 
 			else
 				player.InDanger = false; // the player is not in danger
-			
+
 			play.rotate(player.ang); // rotate the player
 		}
 		else  // The player intersects one of the Game Corners
@@ -273,37 +276,76 @@ public class GamePanel extends JPanel implements MouseListener{
 	}
 	/* * * * * * * * * * * * * * * * * *  Update Game * * * * * * * * * * * * * * * */
 	/**
-	 * This method is Reponsible for getting string as an input and make Objects from it
-	 * @param input
+	 * This method is responsible for getting string as an input and make Objects from it
+	 * @param input is the input ID
 	 */
-	private void UpdateGame(String input) {
+	private void UpdateObjects(String input) {
 		ArrayList<String> array = new ArrayList<>(); // make new array list 
 		String[] splitted = input.split(","); // Split by ','
 		Collections.addAll(array, splitted); // add all to array
+		double x;
+		double y;
+		double z;
 		switch(splitted[0])
 		{
 		case "B": // Its BOX!
-			Box box = game.MakeBox(array); // Make Box
-			BoxsList.add(box); // Add box to the List
-			break; // Get out of the switch
+			break; // No Changes.
 		case "F": // Its FRUIT!
-			Fruit fruit = game.MakeFruit(array); // Make Fruit
-			FruitsList.add(fruit); // Add fruit to the List
+			Fruit f = (Fruit) GetByID("Fruit",array.get(1)); // Get the current FRUIT
+			x = Double.parseDouble(array.get(2)); // get Lat location
+			y = Double.parseDouble(array.get(3)); // get Lon location
+			z = Double.parseDouble(array.get(4)); // get Alt location
+			f.setP(x,y,z); // Set new Point3D
+			f.setAlive(true); // Set Fruit to be Alive
 			break; // Get out of the switch
 		case "P": // Its PACMAN!
-			Pacman pacman = game.MakePacman(array); // Make Pacman
-			PacmansList.add(pacman); // Add pacman to the List
+			Pacman pacman = (Pacman) GetByID("Pacman",array.get(1)); // Get the current Pacman
+			x = Double.parseDouble(array.get(2)); // get Lat location
+			y = Double.parseDouble(array.get(3)); // get Lon location
+			z = Double.parseDouble(array.get(4)); // get Alt location
+			pacman.setP(x,y,z); // Set new Point3D
+			pacman.setAlive(true); // Set Pacman to be Alive
 			break; // Get out of the switch
 		case "G": // Its Ghost!
-			Ghost ghost = game.MakeGhost(array); // Make Ghost
-			GhostsList.add(ghost); // Add ghost to the List
+			Ghost g = (Ghost) GetByID("Ghost",array.get(1)); // Get the current Pacman
+			x = Double.parseDouble(array.get(2)); // get Lat location
+			y = Double.parseDouble(array.get(3)); // get Lon location
+			z = Double.parseDouble(array.get(4)); // get Alt location
+			g.setP(x,y,z); // Set new Point3D
 			break; // Get out of the switch
 		case "M": // Its Player!
-			double x = Double.parseDouble(array.get(2)); // get Lat location
-			double y = Double.parseDouble(array.get(3)); // get Lon location
-			double z = Double.parseDouble(array.get(4)); // get Alt location
-			player.setP(new Point3D(x,y,z)); // Set the player to the new Point
+			x = Double.parseDouble(array.get(2)); // get Lat location
+			y = Double.parseDouble(array.get(3)); // get Lon location
+			z = Double.parseDouble(array.get(4)); // get Alt location
+			player.setP(x,y,z); // Set the player to the new Point
+			break;
 		}
+	}
+	/**
+	 * This Method is responsible to get Object such that Fruit,Ghost or Pacman by ID
+	 * @param Type is the Type of the Object
+	 * @param ID is the id of the object
+	 * @return Object such that Ghost,Pacman or Fruit
+	 */
+	private Object GetByID(String Type, String ID) {
+
+		if(Type.equals("Fruit")) 
+		{
+			for(Fruit f : FruitsList)
+				if(f.get_id().equals(ID)) return f;
+		}
+		else if(Type.equals("Pacman")) 
+		{
+			for(Pacman p : PacmansList)
+				if(p.get_id().equals(ID)) return p;
+		}
+		else if(Type.equals("Ghost")) 
+		{
+			for(Ghost g : GhostsList)
+				if(g.get_id().equals(ID)) return g;		 
+		}
+		System.exit(1); // Fatal Error!
+		return null;
 	}
 	/* * * * * * * * * * * * * * * * * * Show Matrix * * * * * * * * * * * * * * * */
 	/**

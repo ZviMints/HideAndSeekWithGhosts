@@ -48,6 +48,11 @@ public class FindShortestPathFromMat {
 				maze.setVistied(x, y, true);
 				continue; // To The Next Step
 			}
+			if(maze.NearGhost(x, y)) // if its Ghost
+			{
+				maze.setVistied(x, y, true);
+				continue; // To The Next Step
+			}
 			// Base case : check if we finished
 			if(maze.isFinalPoint(x, y))
 			{
@@ -55,6 +60,7 @@ public class FindShortestPathFromMat {
 			}
 			// Must be on a path
 			maze.setVistied(x, y, true); // Set current Coordinate as visited	
+			
 			for(int i=0; i<DIRECTIONS.length; i++) // For all dir in DIRECTIONS
 			{
 				int[] dir = DIRECTIONS[i];
@@ -77,5 +83,13 @@ public class FindShortestPathFromMat {
 			cur = cur.getPred(); // Get the the pred
 		}
 		return path;
+	}
+	/* * * * * * * * * * * * * * * * * * Getters and Setters * * * * * * * * * * * * * * * */
+	/**
+	 * This Method is Responsible to Return the Directions
+	 * @return int[][] of directions
+	 */
+	public static int[][] getDir() {
+		return DIRECTIONS;
 	}
 }

@@ -8,11 +8,12 @@ import java.awt.Toolkit;
 
 import Geom.Point3D;
 
-public class Fruit {
+public class Fruit implements Element{
 	private Image FruitImage = Toolkit.getDefaultToolkit().getImage("./img/Fruit.png"); // Fruit image
 	/* * * * * * * * * * * * * *  Initialization Variables * * * * * * * * * * * * * * * */
 	private Point3D _p; // In [Lat,Lon,Alt]
 	private String _id;
+	private boolean Alive = true;
 	/* * * * * * * * * * * * * *  Constructor * * * * * * * * * * * * * * * */
 	public Fruit(Point3D p, String id)
 	{
@@ -32,8 +33,10 @@ public class Fruit {
 	public Point3D getP() {
 		return _p;
 	}
-	public void setP(Point3D p) {
-		this._p = p;
+	public void setP(double x, double y, double z) {
+		this._p.setX(x);
+		this._p.setY(y);
+		this._p.setZ(z);
 	}
 	public String get_id() {
 		return _id;
@@ -46,5 +49,11 @@ public class Fruit {
 	}
 	public void setFruitImage(Image fruitImage) {
 		FruitImage = fruitImage;
+	}
+	public boolean isAlive() {
+		return Alive;
+	}
+	public void setAlive(boolean Alive) {
+		this.Alive = Alive;
 	}
 }

@@ -8,13 +8,14 @@ import java.awt.Toolkit;
 
 import Geom.Point3D;
 
-public class Pacman {
+public class Pacman implements Element {
 	/* * * * * * * * * * * * * *  Initialization Variables * * * * * * * * * * * * * * * */
 	private Point3D _p; // In [Lat,Lon,Alt]
 	private String _id;
 	private double _speed;
 	private double _radius;
 	private Image PacmanImage = Toolkit.getDefaultToolkit().getImage("./img/Pacman.png"); // Pacman image
+	private boolean Alive = true;
 
 	/* * * * * * * * * * * * * *  Constructor * * * * * * * * * * * * * * * */
 	public Pacman(Point3D p, String id, double speed, double radius)
@@ -35,8 +36,10 @@ public class Pacman {
 	public Point3D getP() {
 		return _p;
 	}
-	public void setP(Point3D _p) {
-		this._p = _p;
+	public void setP(double x, double y, double z) {
+		this._p.setX(x);
+		this._p.setY(y);
+		this._p.setZ(z);
 	}
 	public String get_id() {
 		return _id;
@@ -61,5 +64,11 @@ public class Pacman {
 	}
 	public void setPacmanImage(Image pacmanImage) {
 		PacmanImage = pacmanImage;
+	}
+	public boolean isAlive() {
+		return Alive;
+	}
+	public void setAlive(boolean Alive) {
+		this.Alive = Alive;
 	}	
 }

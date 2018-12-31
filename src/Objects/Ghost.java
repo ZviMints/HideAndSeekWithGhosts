@@ -8,7 +8,7 @@ import java.awt.Toolkit;
 
 import Geom.Point3D;
 
-public class Ghost {
+public class Ghost implements Element {
 	/* * * * * * * * * * * * * *  Initialization Variables * * * * * * * * * * * * * * * */
 	private Point3D _p; // In [Lat,Lon,Alt]
 	private String _id;
@@ -61,5 +61,10 @@ public class Ghost {
 	}
 	public void setGhostImage(Image ghostImage) {
 		GhostImage = ghostImage;
-	}	
+	}
+	public void setP(double x, double y, double z) {
+		this._p.setX(x);
+		this._p.setY(y);
+		this._p.setZ(z);
+	}
 }

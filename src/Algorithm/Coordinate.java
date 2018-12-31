@@ -18,7 +18,7 @@ public class Coordinate {
 	 */
 	public Coordinate(int x, int y)
 	{
-		this._x = x;
+		this._x = x; 
 		this._y = y;
 		this._pred = null;
 	}
