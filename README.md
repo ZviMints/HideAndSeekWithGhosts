@@ -64,10 +64,10 @@
 <h1>Object:</h1>
 <p><img src="./img/objectPack.png" width="200px" height="300x" alt="" /></p>
 <p><strong>Element - </strong> This is an interface that each one of Fruit,Ghost,Pacman need to implement.</strong></p>
-<p><strong>Box <img src="./img/Box.png" /> - </strong> This class represents the game score and time remaining for the game in real time.</strong></p>
-<p><strong>Fruit <img src="./img/Fruit.png" /> - </strong> This class represent the GUI Statistic of the Project.</strong></p>
-<p><strong>Ghost <img src="./img/Ghost.png" /> - </strong> This class represent the GUI Menu of the Project.</strong></p>
-<p><strong>Pacman <img src="./img/Pacman.png" /> - </strong> This class represents the game score and time remaining for the game in real time.</strong></p>
+<p><strong>Box <img src="./img/Box.png" /> - </strong> This Class represent Box. Every Box has BoxData which include relevant information about the Box such that ID and Geoms.</strong></p>
+<p><strong>Fruit <img src="./img/Fruit.png" /> - </strong> This Class represent Fruit. Every Fruit has FruitData which include relevant information about the Fruit such that ID and Geom.</strong></p>
+<p><strong>Ghost <img src="./img/Ghost.png" /> - </strong> This Class represent Ghost  . Every Ghost  has GhostData which include relevant information about the Ghost such that ID, Speed, Radius and Geom.</strong></p>
+<p><strong>Pacman <img src="./img/Pacman.png" /> - </strong> This Class represent Pacman  . Every Pacman has PacmanData which include relevant information about the Pacman such that ID, Speed, Radius and Geom.</strong></p>
 
 <h1>Player: <img src="./img/Player.png" /></h1>
 <p> </p>
