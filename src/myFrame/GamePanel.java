@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements MouseListener{
 	private boolean AlgoIsPlaying = false;
 	private Play play; // The Server side Player
 	private  boolean GameMode = false; // If We are In Game Mode 
-	private static final long _SleepTime = 50; // For How much time the thread will Sleep
+	private static final long _SleepTime = 100; // For How much time the thread will Sleep
 	private static final Image StartImage = Toolkit.getDefaultToolkit().getImage("./img/StartImage.png");
 
 	/* * * * * * * * * * * * * * * * * *   Setters and Getters * * * * * * * * * * * * * * * */
@@ -352,7 +352,7 @@ public class GamePanel extends JPanel implements MouseListener{
 	 * Show the Matrix (GRAPH)
 	 */
 	public void ShowMatrix() {
-		GameToMatrix mat = new GameToMatrix(player,FruitsList,BoxsList,GhostsList,PacmansList,map);
+		GameToMatrix mat =  GameToMatrix.getInstance(player,FruitsList,BoxsList,GhostsList,PacmansList,map);
 		mat.POPUP(); // Pop-up the Window with current Matrix that represent the Game
 	}
 	/* * * * * * * * * * * * * * * * * * Mouse Listener * * * * * * * * * * * * * * * */

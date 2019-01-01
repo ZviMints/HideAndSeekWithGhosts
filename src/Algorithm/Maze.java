@@ -24,7 +24,7 @@ public class Maze {
 	 * @param mat is the input Matrix
 	 * @return Maze Object
 	 */
-	public static Maze Singleton(char[][] mat) {
+	public static Maze getInstance(char[][] mat) {
 		// To Ensure Only One Instance Is Created 
 		if (maze == null) 
 		{ 
@@ -36,7 +36,7 @@ public class Maze {
 		return maze;
 	}
 	/* * * * * * * * * * * * * * * * * * Constructor * * * * * * * * * * * * * * * */
-	public Maze(char[][] mat)
+	private Maze(char[][] mat)
 	{
 		this.Update(mat);
 	}
@@ -56,7 +56,8 @@ public class Maze {
 			{
 				if(mat[i][j] == 'M') 
 					_START = new Coordinate(i, j);
-				else if(mat[i][j] == 'P' || mat[i][j] == 'F') _END.add(new Coordinate(i, j));
+				else if(mat[i][j] == 'P' || mat[i][j] == 'F') 
+					_END.add(new Coordinate(i, j));
 			}
 	}
 	/* * * * * * * * * * * * * * * * * * Getters and Setters * * * * * * * * * * * * * * * */

@@ -29,7 +29,7 @@ public class GameToMatrix {
 	static JFrame frame; // the PopUP frame for the Graph
 	static JTextArea ta; // The PopUP textarea for the Graph
 	/* * * * * * * * * * * * * * * * * * Singleton * * * * * * * * * * * * * * * */
-	public static GameToMatrix Singleton(Player player, List<Fruit> FruitsList, List<Box> BoxsList, List<Ghost> GhostsList, List<Pacman> PacmansList, Map map) 
+	public static GameToMatrix getInstance(Player player, List<Fruit> FruitsList, List<Box> BoxsList, List<Ghost> GhostsList, List<Pacman> PacmansList, Map map) 
 	{ 
 		// To Ensure Only One Instance Is Created 
 		if (mat == null) 
@@ -42,7 +42,7 @@ public class GameToMatrix {
 		return matrix; // Return GameToMatrix
 	} 
 	/* * * * * * * * * * * * * * * * * * Constructor * * * * * * * * * * * * * * * */
-	public GameToMatrix(Player player, List<Fruit> FruitsList, List<Box> BoxsList, List<Ghost> GhostsList, List<Pacman> PacmansList, Map map)
+	private GameToMatrix(Player player, List<Fruit> FruitsList, List<Box> BoxsList, List<Ghost> GhostsList, List<Pacman> PacmansList, Map map)
 	{
 		this.Update(player, FruitsList, BoxsList, GhostsList, PacmansList, map);
 	}
@@ -136,7 +136,7 @@ public class GameToMatrix {
 			JScrollPane sp = new JScrollPane(ta);
 			sp.setBounds(0,0,mat[0].length,mat.length);
 			frame.add(sp);
-			Maze maze = new Maze(mat);
+			Maze maze = Maze.getInstance(mat);
 			FindShortestPathFromMat findShortestPathFromMat = new FindShortestPathFromMat();
 			List<Coordinate> path = findShortestPathFromMat.SOLVE(maze);
 			if(path.isEmpty()) 

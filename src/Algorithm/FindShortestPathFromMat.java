@@ -50,7 +50,6 @@ public class FindShortestPathFromMat {
 			}
 			if(maze.NearGhost(x, y)) // if its Ghost
 			{
-				maze.setVistied(x, y, true);
 				continue; // To The Next Step
 			}
 			// Base case : check if we finished

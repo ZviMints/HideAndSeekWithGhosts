@@ -60,11 +60,11 @@ public class AlgoThread extends Thread{
 		{
 			// An object GameToMatrix was designed to represent the current game
 			// that appears in the GUI for an matrix that is the size of pixels of the screen
-			GameToMatrix mat = GameToMatrix.Singleton(player,g.getFruitsList(),g.getBoxsList(),g.getGhostsList(),g.getPacmansList(),g.getMap());
+			GameToMatrix mat = GameToMatrix.getInstance(player,g.getFruitsList(),g.getBoxsList(),g.getGhostsList(),g.getPacmansList(),g.getMap());
 
 			// Converts a 2D matrix into an object that is capable of performing operations 
 			// and checking the locations of objects in the matrix
-			Maze maze = Maze.Singleton(mat.getMat());  
+			Maze maze = Maze.getInstance(mat.getMat());  
 
 			// Get Shortest Path from current MAZE
 			FindShortestPathFromMat findShortestPathFromMat = new FindShortestPathFromMat();
@@ -78,7 +78,7 @@ public class AlgoThread extends Thread{
 				player.InDanger = false;
 				
 				// SLEEP
-				try { Thread.sleep(30);} // The animation wont run too fast				 
+				try { Thread.sleep(80);} // The animation wont run too fast				 
 				catch (InterruptedException e) {} 	
 
 				Coordinate dist = path.remove(0);
