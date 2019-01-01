@@ -1,5 +1,5 @@
 /**
- * The Method is the main Panel of the game
+ * The class is the main Panel of the game
  * @author Tzvi Mints and Or Abuhazira
  * @version 4.0
  */
