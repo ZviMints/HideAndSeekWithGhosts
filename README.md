@@ -28,6 +28,10 @@
 
 <h1>Algorithm:</h1>
 <p><img src="./img/algoPack.png" width="220px" height="230x" alt="" /></p>
+<p><strong>Coordinate - </strong> This is class that represent a Coordinate each Coordinate have x,y and pred.</strong></p>
+<p><strong>FindShortestPathFromMat - </strong> The class is responsible to find the Shorest Path From input matrix.</strong></p>
+<p><strong>GameToMatrix - </strong> This Class is responsible to convert from Game to Matrix used for taking steps in the Algorithm.</strong></p>
+<p><strong>Maze - </strong> This Class is Responsible to Represent a Maze, Maze is a char[][] matrix with Objects such that Pacman that can be noticed by 'P' in the matrix, moreover we can see Objects Such that Fruit == 'F' ,Ghosts and Players.</strong></p>
 
 <h1>Coords:</h1>
 <p>This Class is responsible for actions between Objects of the kind Point3D. The Class is used to Provide a solution for elementary actions between vectors and points in R^3 Vector space.</p>
