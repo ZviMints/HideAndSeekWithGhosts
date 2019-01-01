@@ -1,5 +1,5 @@
 /**
- * This Class represent Fruit 
+ * This Class represent Player 
  * @author Tzvi Mints and Or Abuhazira
  */
 package Player;

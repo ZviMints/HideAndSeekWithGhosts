@@ -1,3 +1,7 @@
+/**
+ * This Class represent Box 
+ * @author Tzvi Mints and Or Abuhazira
+ */
 package Objects;
 import java.awt.Image;
 import java.awt.Rectangle;
