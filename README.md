@@ -1,12 +1,7 @@
 <h1><span style="text-decoration: underline;"><span style="color: #000000; text-decoration: underline;">OOP Ex4</span></span></h1>
 <p>Created during a computer communication course during the second year at Ariel University in the Department of Computer Science, 2018 <br /> <strong>Project site:</strong>&nbsp;<a href="https://zvimints.github.io/OOP_3/.">https://zvimints.github.io/OOP_3/.</a><br /> <strong>Made by: </strong><a href="https://github.com/ZviMints">Zvi Mints</a> and <a href="https://github.com/orabu103">Or Abuhazira</a></p>
 <h1>About The Project:</h1>
-
-<tbody>
-<tr>
 <style="width: 290.667px;"><img src="./img/startGame.png" width="700px" height="410px"alt="" />
-</tr>
-</tbody>
 
 <p><strong>The Purpose of the game - </strong>Eat all the fruits and pacman on the board, and reach maximum score.</strong></p>
 <p><style="width: 290.667px;"><img src="./img/Load.png" alt="" /></p>
@@ -17,6 +12,9 @@
 <p><strong> By clicking on an algo we allow the algorithms to run.</strong></p>
 <p><style="width: 290.667px;"><img src="./img/Stat.png" alt="" /></p>
 <p><strong>When we click on statistics we will connect to a database which keeps all the data for our high score, the average of the other participants, and high score of the algorithm. </strong></p>
+
+<p><strong>Example:</strong></p>
+<style="width: 290.667px;"><img src="./img/statistic.png" width="700px" height="410px"alt="" />
 
 <h1>Project Diagram:</h1>
 <p><img src="./ClassDiagram.jpg" /></p>
@@ -40,9 +38,6 @@
 <h1>Game:</h1>
 <p>This class represent Game which include Fruits List and Pacmans List,
  this class can init Pacmans and Fruits from Matrix.</p>
- 
-<h1>Geom:</h1>
-<p> </p>
 
 <h1>GUI:</h1>
 <p><img src="./img/guiPack.png" width="200px" height="200x" alt="" /></p>
