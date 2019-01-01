@@ -17,14 +17,12 @@ import Player.Player;
 public class Game{
 
 	/* * * * * * * * * * * * * *  Initialization Variables * * * * * * * * * * * * * * * */
-	private List<Pacman> Pacman_List;
-	private List<Fruit> Fruit_List;
-	private List<Ghost> Ghost_List;
-	private List<Box> Box_List;
-	private Player player;
-	private String path;
-	
-
+	private List<Pacman> Pacman_List; // List for Pacman
+	private List<Fruit> Fruit_List; // List for Fruit
+	private List<Ghost> Ghost_List; // List for Ghost
+	private List<Box> Box_List; // List for Box
+	private Player player; // Player
+	private String path; // Name of path
 	/* * * * * * * * * * * * * * * * * * Setters and Getters * * * * * * * * * * * * * * * */
 	public List<Pacman> getPacmanList() { return Pacman_List; }
 	public List<Fruit> getFruitList() { return Fruit_List; }
@@ -33,17 +31,20 @@ public class Game{
 	public Player getPlayer() { return this.player; }
 	public String getPath() { return path; }
 	public void setPath(String path) { this.path = path; }
-
 	/* * * * * * * * * * * * * * * * * * Constructor * * * * * * * * * * * * * * * */
+	/**
+	 * This method accepts a CSV file name and a player initializes the list of
+	 * Pacman, Fruit, Ghost, and Box
+	 * @param path
+	 */
 	public Game(String path) {
 		// ************ initialize Set ************ //
-		Pacman_List = new ArrayList<Pacman>();
-		Fruit_List = new ArrayList<Fruit>();
-		Ghost_List = new ArrayList<Ghost>();
-		Box_List = new ArrayList<Box>();
-		this.player = null;
-		this.path = path;
-
+		Pacman_List = new ArrayList<Pacman>(); //Initializes the list of the Pacmam 
+		Fruit_List = new ArrayList<Fruit>(); //Initializes the list of the Fruit
+		Ghost_List = new ArrayList<Ghost>(); //Initializes the list of the Ghost
+		Box_List = new ArrayList<Box>(); //Initializes the list of the Box
+		this.player = null; // Initializing the player to null
+		this.path = path; // Name of Path
 		// ************ initialize Sets ************ //
 		CSVToMatrix cr = new CSVToMatrix(path);
 		for(int i=1; i < cr.getRowsSize(); i++)
@@ -71,41 +72,64 @@ public class Game{
 		}
 	}
 	/* * * * * * * * * * * * * * * * * * MakePacman * * * * * * * * * * * * * * * */
+	/**
+	 * This method accepts a list with data on Pacman 
+	 * and returns Pacman with id,speed,radius and coords
+	 * @param cr
+	 * @return Pacman
+	 */
 	public Pacman MakePacman(ArrayList<String> cr) {
-		String id = cr.get(1);
-		double speed = Double.parseDouble(cr.get(5));
-		double radius = Double.parseDouble(cr.get(6));
+		String id = cr.get(1); // id of pacman
+		double speed = Double.parseDouble(cr.get(5)); // Speed of pacmen
+		double radius = Double.parseDouble(cr.get(6)); // Radius of pacmen
 		Point3D p = new Point3D(Double.parseDouble(cr.get(2)) // Latitude
 				,Double.parseDouble(cr.get(3)) // Longitude
 				,Double.parseDouble(cr.get(4))); // Altitude
 		return new Pacman(p,id,speed,radius);
 	}
 	/* * * * * * * * * * * * * * * * * * MakeBox * * * * * * * * * * * * * * * */
+	/**
+	 * This method accepts a list with data on the Box 
+	 * and returns a box with id , and two coords
+	 * @param cr
+	 * @return Box
+	 */
 	public Box MakeBox(ArrayList<String> cr) {
-		String id = cr.get(1);
+		String id = cr.get(1); // id of Box
 		Point3D p0 = new Point3D(Double.parseDouble(cr.get(2)) // Latitude
 				,Double.parseDouble(cr.get(3)) // Longitude
 				,Double.parseDouble(cr.get(4))); // Altitude
 		Point3D p1 =new Point3D(Double.parseDouble(cr.get(5)) // Latitude
 				,Double.parseDouble(cr.get(6)) // Longitude
 				,Double.parseDouble(cr.get(7))); // Altitude
-	
+
 		return new Box(id, p0 , p1);
 	}
 	/* * * * * * * * * * * * * * * * * * MakeGhost * * * * * * * * * * * * * * * */
+	/**
+	 * This method accepts a list with data on Ghost 
+	 * and returns Ghost with id,speed,radius and points
+	 * @param cr
+	 * @return Ghost
+	 */
 	public Ghost MakeGhost(ArrayList<String> cr) {
-
-		String id = cr.get(1);
-		double speed = Double.parseDouble(cr.get(5));
-		double radius = Double.parseDouble(cr.get(6));
+		String id = cr.get(1); // id of Ghost
+		double speed = Double.parseDouble(cr.get(5)); // Speed of Ghost
+		double radius = Double.parseDouble(cr.get(6)); // Radius of Ghost
 		Point3D g = new Point3D(Double.parseDouble(cr.get(2)) // Latitude
 				,Double.parseDouble(cr.get(3)) // Longitude
 				,Double.parseDouble(cr.get(4))); // Altitude
 		return new Ghost(g,id,speed, radius);
 	}
 	/* * * * * * * * * * * * * * * * * * MakeFruit * * * * * * * * * * * * * * * */
+	/**
+	 * This method accepts a list with data on Fruit 
+	 * and returns a fruit with a id and a coords
+	 * @param cr
+	 * @return Fruit
+	 */
 	public Fruit MakeFruit(ArrayList<String> cr) {
-		String id = cr.get(1);
+		String id = cr.get(1); // id of Fruit
 		Point3D p = new Point3D(Double.parseDouble(cr.get(2)) // Latitude
 				,Double.parseDouble(cr.get(3)) // Longitude
 				,Double.parseDouble(cr.get(4))); // Altitude

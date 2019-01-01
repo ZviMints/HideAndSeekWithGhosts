@@ -4,9 +4,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-
 public class Statistics {
+	// **** Enum for id Map ***** //
 	private static final String MAP1 = "2128259830"; 
 	private static final String MAP2 = "1149748017"; 
 	private static final String MAP3 = "-683317070"; 
@@ -17,19 +16,24 @@ public class Statistics {
 	private static final String MAP8 = "306711633"; 
 	private static final String MAP9 = "919248096"; 
 	private static final double TZVI_ID = 314977489;
-
-
-	private static String ans = "";
-	public static double[][] BestGameAlgo; // אלגוריתם - מערך עבור שמירת הניקוד הגבוה עבור כל משחק 
-	public static double[][] BestGame; // מערך עבור שמירת הניקוד הגבוה עבור כל משחק - שחקן
-	public static double[][] Average; // מערך עבור חישוב הממוצע עבור כל משחק
-
+	private static final double OR_ID = 311226617;
+	private static String ans = ""; // String for saving data from DB
+	public static double[][] BestGameAlgo; // Array for keeping the game high score Algorithm
+	public static double[][] BestGame; // Array for keeping the game high score
+	public static double[][] Average; // Array for average calculation
+	/* * * * * * * * * * * * * *  Constructor  * * * * * * * * * * * * * * * */
+	/**
+	 * This method is responsible for connecting to the DB 
+	 * and extracting information regarding statistics
+	 */
 	public Statistics()
 	{
+		// **** Arrays initialization ***** //
 		BestGameAlgo = new double[9][2];
 		BestGame = new double[9][2];
 		Average = new double[9][2];
 		
+		// **** Login to DB ***** //
 		String jdbcUrl="jdbc:mysql://ariel-oop.xyz:3306/oop"; //oop?useUnicode=yes&characterEncoding=UTF-8&useSSL=false";
 		String jdbcUser="student";
 		String jdbcPassword="student";
@@ -78,11 +82,18 @@ public class Statistics {
 			e.printStackTrace();
 		}
 	}
-
 	/* * * * * * * * * * * * * * * * * * UpdateToBestScores * * * * * * * * * * * * * * * */
+	/**
+	 * This method receives information from the DB
+	 * and the array location and updates the data in the array
+	 * @param resultSet
+	 * @param index
+	 * @throws SQLException
+	 */
 	public void UpdateToBestScores(ResultSet resultSet , int index) throws SQLException {
-		int current_name = resultSet.getInt("FirstID");
-		double current_score = resultSet.getDouble("Point");
+		int current_name = resultSet.getInt("FirstID"); 
+		double current_score = resultSet.getDouble("Point"); 
+		// **** Best Game player ***** //
 		if(current_name == TZVI_ID ) { // Check if we played the game
 			if(BestGame[index][1] != 0) { // If we've already played the game
 				if(current_score > BestGame[index][0]) // If the score is higher than the last high point
@@ -93,6 +104,7 @@ public class Statistics {
 				BestGame[index][1] = 1; // Mark we played
 			}
 		}
+		// **** Best Game Algorithm ***** //
 		else if(current_name == -TZVI_ID ) { // Check if we played the game
 			if(BestGameAlgo[index][1] != 0) { // If we've already played the game
 				if(current_score > BestGameAlgo[index][0]) // If the score is higher than the last high point
@@ -103,16 +115,12 @@ public class Statistics {
 				BestGameAlgo[index][1] = 1; // Mark we played
 			}
 		}
-		
+		// **** Average Game ***** //
 		else {
 			Average[index][0]+=resultSet.getDouble("Point"); // Add game scores to other players' games
 			Average[index][1]++; // Count games for the average calculation
 		}
 	}
-	public static double[][] getBestGameAlgo() {
-		return BestGameAlgo;
-	}
-
 	/* * * * * * * * * * * * * * * * * * GetAllScoresFromDB * * * * * * * * * * * * * * * */
 	/**
 	 * A method that records all the existing games in a database as a string
@@ -120,13 +128,18 @@ public class Statistics {
 	 * @throws SQLException
 	 */
 	public void GetAllScoresFromDB(ResultSet resultSet) throws SQLException {
-		ans = resultSet.getInt("FirstID")+"\t" +
-				resultSet.getInt("SecondID")+"\t" +
-				resultSet.getTimestamp("LogTime") +"\t" +
-				resultSet.getDouble("Point") +"\t" +
-				getMapID(resultSet.getString("SomeDouble")) + " : " + resultSet.getString("SomeDouble") + "\n" + ans;
+		ans = resultSet.getInt("FirstID")+"\t" + // First id
+				resultSet.getInt("SecondID")+"\t" + // Second id
+				resultSet.getTimestamp("LogTime") +"\t" + // Game start time
+				resultSet.getDouble("Point") +"\t" + // Score for current game
+				getMapID(resultSet.getString("SomeDouble")) + " : " + resultSet.getString("SomeDouble") + "\n" + ans; // Map id
 	}
 	/* * * * * * * * * * * * * * * * * * getMapID * * * * * * * * * * * * * * * */
+	/**
+	 * This method is responsible for returning a game file name
+	 * @param MapID
+	 * @return
+	 */
 	private String getMapID(String MapID) {
 		switch (MapID) // Select by file name
 		{
@@ -155,6 +168,7 @@ public class Statistics {
 	public static double[][] getbestGame() { return BestGame; }
 	public static double[][] getAverage() { return Average; }
 	public static double[][] getbestGameAlgo() { return BestGameAlgo; }
+	public static double[][] getBestGameAlgo() { return BestGameAlgo; }
 	/* * * * * * * * * * * * * * * * * * toString * * * * * * * * * * * * * * * */
 	public String toString()
 	{
