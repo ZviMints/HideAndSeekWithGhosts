@@ -33,17 +33,16 @@
 <p><strong>GameToMatrix - </strong> This Class is responsible to convert from Game to Matrix used for taking steps in the Algorithm.</strong></p>
 <p><strong>Maze - </strong> This Class is Responsible to Represent a Maze, Maze is a char[][] matrix with Objects such that Pacman that can be noticed by 'P' in the matrix, moreover we can see Objects Such that Fruit == 'F' ,Ghosts and Players.</strong></p>
 
-<h2><strong>The algorithm of the project a greedy algorithm:</strong></h2>
-<p><strong>Problem:</strong> for input number of pacmans and the input number of fruits we want to find the minimum route time such that all fruit will be eaten by the pacmans.</p>
+<h2><strong>The algorithm of the project is as following:</strong></h2>
+<p><strong>Problem:</strong> for input file with number of Pacmans,Ghosts,Fruits find a route for a player to get the <b>maximum</b> score, when player can eat pacmans and fruits, by damaged by ghosts.</p>
 <p><strong>Solution:</strong>&nbsp; (Pseudo code)</p>
-<p><span style="text-decoration: underline;"><strong>GreedyAlgorithm(Game game)</strong></span></p>
-<p>1. Init all pacmans time to 0</p>
-<p>2. While fruit list is not empty</p>
-<p>3.&nbsp; &nbsp; &nbsp; &nbsp;for each Pacman find the closest fruit to him by time, enter the value to the array</p>
-<p>4.&nbsp; &nbsp; &nbsp; &nbsp;find the minimum time in the array as a function of (current pacman time + time to next fruit)</p>
-<p>5.&nbsp; &nbsp; &nbsp; &nbsp; move Pacman to (Fruit - Pacman radius) point, update all the fields and add path to the solutions</p>
-<p>6.&nbsp; &nbsp; &nbsp; &nbsp; remove Fruit from the fruit list</p>
-<p><strong>Complexity:</strong> O(|F| * |P| * |F| )</p>
+<p><span style="text-decoration: underline;"><strong>Greedy Algorithm:</strong></span></p>
+<p>1. Convert current game into a Matrix as described before</p>
+<p>2.Make BFS SEARCH for finding the shortest path from an input Matrix, such that:</p>
+<p>3.&nbsp; &nbsp; &nbsp; &nbsp;if coordinate in Fruit or Pacman, return a path</p>
+<p>4.&nbsp; &nbsp; &nbsp; &nbsp;if coordinate is near Ghost, return</p>
+<p>5.&nbsp; &nbsp; &nbsp; &nbsp;if coordinate is in Box,or in invalid point, return</p>
+<p>6.&nbsp; &nbsp; &nbsp; &nbsp;else, add to a Queue all the neighbors of the current coordinate </p>
 
 <h1>Coords:</h1>
 <p>This Class is responsible for actions between Objects of the kind Point3D. The Class is used to Provide a solution for elementary actions between vectors and points in R^3 Vector space.</p>
