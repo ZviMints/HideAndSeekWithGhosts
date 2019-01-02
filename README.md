@@ -17,7 +17,7 @@
 <style="width: 290.667px;"><img src="./img/statistic.png" width="700px" height="410px"alt="" />
 
 <h1>Project Diagram:</h1>
-<p><img src="./ClassDiagram.jpg" /></p>
+<p><img src="./img/ClassDiagram.jpg" /></p>
 
 <h1>Class Hierarchy:</h1>
 <p><img src="./img/tree.png" /></p>
