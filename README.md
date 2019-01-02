@@ -5,13 +5,13 @@
 
 <p><strong>The Purpose of the game - </strong>Eat all the fruits and pacman on the board, and reach maximum score.</strong></p>
 <p><style="width: 290.667px;"><img src="./img/Load.png" alt="" /></p>
-<p><strong> First of all we need to load a CSV file that includes location of the pacman, fruit, ghost and boxes</strong></p>
+<p><strong> Load - </strong>First of all we need to load a CSV file that includes location of the pacman, fruit, ghost and boxes</p>
 <p><style="width: 290.667px;"><img src="./img/Start.png" alt="" /></p>
-<p><strong> Then we need to select an initial position for the player and when you click play by pressing the mouse to change the position of the player.</strong></p>
+<p><strong> Play - </strong>Then we need to select an initial position for the player and when you click play by pressing the mouse to change the position of the player.</p>
 <p><style="width: 290.667px;"><img src="./img/Algo.png" alt="" /></p>
-<p><strong> By clicking on an algo we allow the algorithms to run.</strong></p>
+<p><strong> Algo - </strong>By clicking on an algo we allow the algorithms to run.</p>
 <p><style="width: 290.667px;"><img src="./img/Stat.png" alt="" /></p>
-<p><strong>When we click on statistics we will connect to a database which keeps all the data for our high score, the average of the other participants, and high score of the algorithm. </strong></p>
+<p><strong> Rating - </strong>When we click on statistics we will connect to a database which keeps all the data for our high score, the average of the other participants, and high score of the algorithm.</p>
 
 <p><strong>Example:</strong></p>
 <style="width: 290.667px;"><img src="./img/statistic.png" width="700px" height="410px"alt="" />
@@ -32,6 +32,18 @@
 <p><strong>FindShortestPathFromMat - </strong> The class is responsible to find the Shorest Path From input matrix.</strong></p>
 <p><strong>GameToMatrix - </strong> This Class is responsible to convert from Game to Matrix used for taking steps in the Algorithm.</strong></p>
 <p><strong>Maze - </strong> This Class is Responsible to Represent a Maze, Maze is a char[][] matrix with Objects such that Pacman that can be noticed by 'P' in the matrix, moreover we can see Objects Such that Fruit == 'F' ,Ghosts and Players.</strong></p>
+
+<h2><strong>The algorithm of the project a greedy algorithm:</strong></h2>
+<p><strong>Problem:</strong> for input number of pacmans and the input number of fruits we want to find the minimum route time such that all fruit will be eaten by the pacmans.</p>
+<p><strong>Solution:</strong>&nbsp; (Pseudo code)</p>
+<p><span style="text-decoration: underline;"><strong>GreedyAlgorithm(Game game)</strong></span></p>
+<p>1. Init all pacmans time to 0</p>
+<p>2. While fruit list is not empty</p>
+<p>3.&nbsp; &nbsp; &nbsp; &nbsp;for each Pacman find the closest fruit to him by time, enter the value to the array</p>
+<p>4.&nbsp; &nbsp; &nbsp; &nbsp;find the minimum time in the array as a function of (current pacman time + time to next fruit)</p>
+<p>5.&nbsp; &nbsp; &nbsp; &nbsp; move Pacman to (Fruit - Pacman radius) point, update all the fields and add path to the solutions</p>
+<p>6.&nbsp; &nbsp; &nbsp; &nbsp; remove Fruit from the fruit list</p>
+<p><strong>Complexity:</strong> O(|F| * |P| * |F| )</p>
 
 <h1>Coords:</h1>
 <p>This Class is responsible for actions between Objects of the kind Point3D. The Class is used to Provide a solution for elementary actions between vectors and points in R^3 Vector space.</p>
