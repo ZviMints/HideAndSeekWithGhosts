@@ -33,16 +33,19 @@
 <p><strong>GameToMatrix - </strong> This Class is responsible to convert from Game to Matrix used for taking steps in the Algorithm.</strong></p>
 <p><strong>Maze - </strong> This Class is Responsible to Represent a Maze, Maze is a char[][] matrix with Objects such that Pacman that can be noticed by 'P' in the matrix, moreover we can see Objects Such that Fruit == 'F' ,Ghosts and Players.</strong></p>
 
-<h2><strong>The algorithm of the project is as following:</strong></h2>
-<p><strong>Problem:</strong> for input file with number of Pacmans,Ghosts,Fruits find a route for a player to get the <b>maximum</b> score, when player can eat pacmans and fruits, by damaged by ghosts.</p>
-<p><strong>Solution:</strong>&nbsp; (Pseudo code)</p>
+<h2><strong>The Algorithm of the project is as following:</strong></h2>
+<p><strong>Problem:</strong> for input file with number of Pacmans,Ghosts,Fruits find a route for a player to get the <b>maximum</b> score, when player can eat pacmans and fruits, and damaged by ghosts and boxes.</p>
+<p><strong>Solution: </strong>&nbsp; (Pseudo code)</p>
 <p><span style="text-decoration: underline;"><strong>Greedy Algorithm:</strong></span></p>
-<p>1. Convert current game into a Matrix as described before</p>
-<p>2.Make BFS SEARCH for finding the shortest path from an input Matrix, such that:</p>
-<p>3.&nbsp; &nbsp; &nbsp; &nbsp;if coordinate in Fruit or Pacman, return a path</p>
-<p>4.&nbsp; &nbsp; &nbsp; &nbsp;if coordinate is near Ghost, return</p>
-<p>5.&nbsp; &nbsp; &nbsp; &nbsp;if coordinate is in Box,or in invalid point, return</p>
-<p>6.&nbsp; &nbsp; &nbsp; &nbsp;else, add to a Queue all the neighbors of the current coordinate </p>
+<p>0.Make Empty Queue (for the coordinates) and make Empty ArrayList (for the path)</p>
+<p>1.Convert current game into a Matrix as described before</p>
+<p>2.Make BFS SEARCH for finding the shortest path from START Point(Player Point) to END Point, used by the Matrix.</p>
+<p>3.&nbsp; &nbsp; &nbsp; &nbsp;IF coordinate is intersects Fruit or Pacman, Make BackTracking and return the path</p>
+<p>4.&nbsp; &nbsp; &nbsp; &nbsp;IF coordinate is near Ghost, CONTINUE</p>
+<p>5.&nbsp; &nbsp; &nbsp; &nbsp;IF coordinate is intersects Box,or in invalid point, CONTINUE</p>
+<p>6.&nbsp; &nbsp; &nbsp; &nbsp;ELSE, add to the Queue all the neighbors of the current coordinate</p>
+<p><b>NOTE:</b> BackTracking is adding to the ArrayList each Pred of the current Point, until the Pred is null</p>
+
 
 <h1>Coords:</h1>
 <p>This Class is responsible for actions between Objects of the kind Point3D. The Class is used to Provide a solution for elementary actions between vectors and points in R^3 Vector space.</p>
