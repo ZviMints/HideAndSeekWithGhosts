@@ -21,13 +21,10 @@
 <h1>Class Hierarchy:</h1>
 <p><img src="https://github.com/ZviMints/Ex4/raw/master/img/tree.png" width="816" height="600" /></p>
 <h1>Packages:</h1>
-<p><img src="./img/allPack.png" alt="" width="150px" height="400x" /><img src="https://github.com/ZviMints/Ex4/raw/master/img/allPack.png" width="143" height="400" /></p>
+<p><img src="https://github.com/ZviMints/Ex4/raw/master/img/allPack.png" width="143" height="400" /></p>
 <p><strong>NOTE</strong>: Explanations for each class can be found on the Wiki page or later in this document</p>
 <h1>Package - Algorithm:&nbsp;</h1>
 <p><strong>Coordinate -&nbsp;</strong>This class is responsible for the representation of a Coordinate in the matrix. Each Coordinate has x and y values (in Pixels). In addition, there is an ancestor, an ancestor marked as PRED and an ancestor defined to be the Coordinate that reveals the current Coordinate, PRED used to Backtracking the path.</p>
-<div id="tw-target-text-container" class="gsrt tw-ta-container tw-nfl">
-<pre class="tw-data-text tw-ta tw-text-small" lang="en">&nbsp;</pre>
-</div>
 <p><strong>FindShortestPathFromMat - </strong> The class is responsible to find the Shorest Path From input matrix.</p>
 <p><strong>GameToMatrix - </strong> This Class is responsible to convert from Game to Matrix used for taking steps in the Algorithm.</p>
 <p><strong>Maze - </strong> This Class is Responsible to represent a Maze, Maze is a char[][] matrix with Objects such that Pacman that can be noticed by 'P' in the matrix, moreover we can see Objects Such that Fruit == 'F' ,Ghosts and Players.</p>
