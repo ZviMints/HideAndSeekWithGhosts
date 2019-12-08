@@ -1,4 +1,4 @@
-<h1><span style="text-decoration: underline;"><span style="color: #000000; text-decoration: underline;">OOP Ex4</span></span></h1>
+<h1><span style="text-decoration: underline;"><span style="color: #000000; text-decoration: underline;">OOP Ex4 - HideAndSeekWithGhosts</span></span></h1>
 <p>Other OOP Exercises:</p>
 <p>Ex 2 -&nbsp;<a href="https://github.com/ZviMints/OOP_2">https://github.com/ZviMints/OOP_2</a></p>
 <p>Ex 3 -&nbsp;<a href="https://github.com/ZviMints/OOP_">https://github.com/ZviMints/OOP_3</a></p>
@@ -26,7 +26,7 @@
 <h1>Package - Algorithm:&nbsp;</h1>
 <p><strong>Coordinate -&nbsp;</strong>This class is responsible for the representation of a Coordinate in the matrix. Each Coordinate has x and y values (in Pixels). In addition, there is an ancestor, an ancestor marked as PRED and an ancestor defined to be the Coordinate that reveals the current Coordinate, PRED used to Backtracking the path.</p>
 <p><strong>FindShortestPathFromMat - </strong> The class is responsible to find the Shorest Path From input matrix.</p>
-<p><strong>GameToMatrix - </strong> This Class is responsible to convert from Game to Matrix used for taking steps in the Algorithm.</p>
+<p><strong>GameToMatrix - </strong> This Class is responsible to convert from Game to Matrix used for taking steps in the Algorithm.</p
 <p><strong>Maze - </strong> This Class is Responsible to represent a Maze, Maze is a char[][] matrix with Objects such that Pacman that can be noticed by 'P' in the matrix, moreover we can see Objects Such that Fruit == 'F' ,Ghosts and Players.</p>
 <h2><strong>The Algorithm <img src="https://media.wired.com/photos/5af2249a0b975d475fa7afbf/master/pass/algorithms_landlord-FINAL.jpg" alt="" width="40" height="30" />:</strong></h2>
 <p><strong>Problem:</strong> for input file with number of Pacmans,Ghosts,Fruits find a route for a player to get the <strong>maximum</strong> score, when player can eat pacmans and fruits, and damaged by ghosts and boxes.</p>
